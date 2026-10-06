@@ -32,64 +32,62 @@ public class Main extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabelEmpresa = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jButtonBebidas = new javax.swing.JButton();
-        jButtonComida = new javax.swing.JButton();
+        btnBebidas = new javax.swing.JButton();
+        btnComidas = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
+        displayOperaciones = new javax.swing.JTextArea();
         jScrollPane5 = new javax.swing.JScrollPane();
-        jTextArea4 = new javax.swing.JTextArea();
+        displayResultado = new javax.swing.JTextArea();
         jPanelBotonesCalculadora = new javax.swing.JPanel();
-        jButtonSignoC = new javax.swing.JButton();
-        jButtonSignoCambioMasMenos = new javax.swing.JButton();
-        jButtonSignoPorcentaje = new javax.swing.JButton();
+        btn7 = new javax.swing.JButton();
+        btn8 = new javax.swing.JButton();
+        btn9 = new javax.swing.JButton();
         jButtonSignoDividir = new javax.swing.JButton();
-        jButtonNumero7 = new javax.swing.JButton();
-        jButtonNumero8 = new javax.swing.JButton();
-        jButtonNumero9 = new javax.swing.JButton();
-        jButtonSignoMultiplicacion = new javax.swing.JButton();
-        jButtonNumero4 = new javax.swing.JButton();
-        jButtonnumero5 = new javax.swing.JButton();
-        jButtonNumero6 = new javax.swing.JButton();
-        jButtonSignoMenos = new javax.swing.JButton();
-        jButtonNumero1 = new javax.swing.JButton();
-        jButtonNumero2 = new javax.swing.JButton();
-        jButtonNumero3 = new javax.swing.JButton();
-        jButtonSignoMas = new javax.swing.JButton();
-        jButtonNumero0 = new javax.swing.JButton();
+        btn4 = new javax.swing.JButton();
+        btn5 = new javax.swing.JButton();
+        btn6 = new javax.swing.JButton();
+        btnMult = new javax.swing.JButton();
+        btn1 = new javax.swing.JButton();
+        btn2 = new javax.swing.JButton();
+        btn3 = new javax.swing.JButton();
+        btnResta = new javax.swing.JButton();
+        jButtonSignoC = new javax.swing.JButton();
+        btn0 = new javax.swing.JButton();
         jButtonSignoPunto = new javax.swing.JButton();
+        btnSuma = new javax.swing.JButton();
         jButtonSignoIgual = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
-        jButtonCalculadora = new javax.swing.JButton();
+        btnModo = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
-        jButtonAñadir = new javax.swing.JButton();
-        jButtoBorrar = new javax.swing.JButton();
+        btnAñadir = new javax.swing.JButton();
+        btnBorrar = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
-        jButtonEfectivo = new javax.swing.JButton();
-        jButtonTarjeta = new javax.swing.JButton();
-        jButtonTicket = new javax.swing.JButton();
-        jButtonFactura = new javax.swing.JButton();
+        btnEfectivo = new javax.swing.JButton();
+        btnTarjeta = new javax.swing.JButton();
+        btnTicket = new javax.swing.JButton();
+        btnFactura = new javax.swing.JButton();
         jPanel15 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaProductos = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea2 = new javax.swing.JTextArea();
+        displayTotales = new javax.swing.JTextArea();
         jPanel14 = new javax.swing.JPanel();
-        jButton2 = new javax.swing.JButton();
-        jButton9 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton10 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jButton12 = new javax.swing.JButton();
-        jButton13 = new javax.swing.JButton();
-        jButton14 = new javax.swing.JButton();
+        btnMesa3 = new javax.swing.JButton();
+        btnMesa1 = new javax.swing.JButton();
+        btnMesa2 = new javax.swing.JButton();
+        btnMesa5 = new javax.swing.JButton();
+        btnMesa6 = new javax.swing.JButton();
+        btnMesa7 = new javax.swing.JButton();
+        btnMesa8 = new javax.swing.JButton();
+        btnMesa4 = new javax.swing.JButton();
         jPanel9 = new javax.swing.JPanel();
-        jButtonMesero1 = new javax.swing.JButton();
-        jButtonMesero2 = new javax.swing.JButton();
+        btnMesero1 = new javax.swing.JButton();
+        btnMesero2 = new javax.swing.JButton();
         jPanel16 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -119,37 +117,37 @@ public class Main extends javax.swing.JFrame {
         jPanel3.setForeground(new java.awt.Color(224, 225, 221));
         jPanel3.setLayout(new java.awt.GridLayout(1, 4, 40, 0));
 
-        jButtonBebidas.setBackground(new java.awt.Color(142, 202, 230));
-        jButtonBebidas.setText("Bebidas");
-        jButtonBebidas.addActionListener(this::jButtonBebidasActionPerformed);
-        jPanel3.add(jButtonBebidas);
+        btnBebidas.setBackground(new java.awt.Color(142, 202, 230));
+        btnBebidas.setText("Bebidas");
+        btnBebidas.addActionListener(this::btnBebidasActionPerformed);
+        jPanel3.add(btnBebidas);
 
-        jButtonComida.setBackground(new java.awt.Color(142, 202, 230));
-        jButtonComida.setForeground(new java.awt.Color(2, 48, 71));
-        jButtonComida.setText("Comidas");
-        jButtonComida.setMaximumSize(new java.awt.Dimension(120, 50));
-        jButtonComida.setMinimumSize(new java.awt.Dimension(120, 50));
-        jButtonComida.setPreferredSize(new java.awt.Dimension(120, 50));
-        jPanel3.add(jButtonComida);
+        btnComidas.setBackground(new java.awt.Color(142, 202, 230));
+        btnComidas.setForeground(new java.awt.Color(2, 48, 71));
+        btnComidas.setText("Comidas");
+        btnComidas.setMaximumSize(new java.awt.Dimension(120, 50));
+        btnComidas.setMinimumSize(new java.awt.Dimension(120, 50));
+        btnComidas.setPreferredSize(new java.awt.Dimension(120, 50));
+        jPanel3.add(btnComidas);
 
         jPanel4.setForeground(new java.awt.Color(224, 225, 221));
 
         jPanel6.setForeground(new java.awt.Color(224, 225, 221));
 
-        jTextArea3.setColumns(20);
-        jTextArea3.setFont(new java.awt.Font("Alef", 1, 14)); // NOI18N
-        jTextArea3.setForeground(new java.awt.Color(2, 48, 71));
-        jTextArea3.setRows(5);
-        jTextArea3.setText("display operaiones anteriores\n3+5+8+4\n/2");
-        jScrollPane4.setViewportView(jTextArea3);
+        displayOperaciones.setColumns(20);
+        displayOperaciones.setFont(new java.awt.Font("Alef", 1, 14)); // NOI18N
+        displayOperaciones.setForeground(new java.awt.Color(2, 48, 71));
+        displayOperaciones.setRows(5);
+        displayOperaciones.setText("display operaiones anteriores\n3+5+8+4\n/2");
+        jScrollPane4.setViewportView(displayOperaciones);
 
-        jTextArea4.setBackground(new java.awt.Color(255, 183, 3));
-        jTextArea4.setColumns(20);
-        jTextArea4.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
-        jTextArea4.setForeground(new java.awt.Color(2, 48, 71));
-        jTextArea4.setRows(5);
-        jTextArea4.setText("resultado\n10");
-        jScrollPane5.setViewportView(jTextArea4);
+        displayResultado.setBackground(new java.awt.Color(255, 224, 147));
+        displayResultado.setColumns(20);
+        displayResultado.setFont(new java.awt.Font("Monospaced", 1, 18)); // NOI18N
+        displayResultado.setForeground(new java.awt.Color(2, 48, 71));
+        displayResultado.setRows(5);
+        displayResultado.setText("resultado\n10");
+        jScrollPane5.setViewportView(displayResultado);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -173,6 +171,70 @@ public class Main extends javax.swing.JFrame {
         jPanelBotonesCalculadora.setForeground(new java.awt.Color(224, 225, 221));
         jPanelBotonesCalculadora.setLayout(new java.awt.GridLayout(5, 4));
 
+        btn7.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
+        btn7.setText("7");
+        btn7.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        jPanelBotonesCalculadora.add(btn7);
+
+        btn8.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
+        btn8.setText("8");
+        btn8.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        jPanelBotonesCalculadora.add(btn8);
+
+        btn9.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
+        btn9.setText("9");
+        btn9.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        jPanelBotonesCalculadora.add(btn9);
+
+        jButtonSignoDividir.setBackground(new java.awt.Color(142, 202, 230));
+        jButtonSignoDividir.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
+        jButtonSignoDividir.setText("/");
+        jButtonSignoDividir.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        jPanelBotonesCalculadora.add(jButtonSignoDividir);
+
+        btn4.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
+        btn4.setText("4");
+        btn4.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        jPanelBotonesCalculadora.add(btn4);
+
+        btn5.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
+        btn5.setText("5");
+        btn5.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        jPanelBotonesCalculadora.add(btn5);
+
+        btn6.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
+        btn6.setText("6");
+        btn6.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        jPanelBotonesCalculadora.add(btn6);
+
+        btnMult.setBackground(new java.awt.Color(142, 202, 230));
+        btnMult.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
+        btnMult.setText("x");
+        btnMult.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        jPanelBotonesCalculadora.add(btnMult);
+
+        btn1.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
+        btn1.setText("1");
+        btn1.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        jPanelBotonesCalculadora.add(btn1);
+
+        btn2.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
+        btn2.setText("2");
+        btn2.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        btn2.addActionListener(this::btn2ActionPerformed);
+        jPanelBotonesCalculadora.add(btn2);
+
+        btn3.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
+        btn3.setText("3");
+        btn3.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        jPanelBotonesCalculadora.add(btn3);
+
+        btnResta.setBackground(new java.awt.Color(142, 202, 230));
+        btnResta.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
+        btnResta.setText("-");
+        btnResta.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        jPanelBotonesCalculadora.add(btnResta);
+
         jButtonSignoC.setBackground(new java.awt.Color(251, 133, 0));
         jButtonSignoC.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
         jButtonSignoC.setForeground(new java.awt.Color(2, 48, 71));
@@ -181,97 +243,21 @@ public class Main extends javax.swing.JFrame {
         jButtonSignoC.addActionListener(this::jButtonSignoCActionPerformed);
         jPanelBotonesCalculadora.add(jButtonSignoC);
 
-        jButtonSignoCambioMasMenos.setBackground(new java.awt.Color(142, 202, 230));
-        jButtonSignoCambioMasMenos.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
-        jButtonSignoCambioMasMenos.setText("±");
-        jButtonSignoCambioMasMenos.setMargin(new java.awt.Insets(1, 1, 1, 1));
-        jPanelBotonesCalculadora.add(jButtonSignoCambioMasMenos);
-
-        jButtonSignoPorcentaje.setBackground(new java.awt.Color(142, 202, 230));
-        jButtonSignoPorcentaje.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
-        jButtonSignoPorcentaje.setText("%");
-        jButtonSignoPorcentaje.setMargin(new java.awt.Insets(1, 1, 1, 1));
-        jPanelBotonesCalculadora.add(jButtonSignoPorcentaje);
-
-        jButtonSignoDividir.setBackground(new java.awt.Color(142, 202, 230));
-        jButtonSignoDividir.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
-        jButtonSignoDividir.setText("/");
-        jButtonSignoDividir.setMargin(new java.awt.Insets(1, 1, 1, 1));
-        jPanelBotonesCalculadora.add(jButtonSignoDividir);
-
-        jButtonNumero7.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
-        jButtonNumero7.setText("7");
-        jButtonNumero7.setMargin(new java.awt.Insets(1, 1, 1, 1));
-        jPanelBotonesCalculadora.add(jButtonNumero7);
-
-        jButtonNumero8.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
-        jButtonNumero8.setText("8");
-        jButtonNumero8.setMargin(new java.awt.Insets(1, 1, 1, 1));
-        jPanelBotonesCalculadora.add(jButtonNumero8);
-
-        jButtonNumero9.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
-        jButtonNumero9.setText("9");
-        jButtonNumero9.setMargin(new java.awt.Insets(1, 1, 1, 1));
-        jPanelBotonesCalculadora.add(jButtonNumero9);
-
-        jButtonSignoMultiplicacion.setBackground(new java.awt.Color(142, 202, 230));
-        jButtonSignoMultiplicacion.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
-        jButtonSignoMultiplicacion.setText("x");
-        jButtonSignoMultiplicacion.setMargin(new java.awt.Insets(1, 1, 1, 1));
-        jPanelBotonesCalculadora.add(jButtonSignoMultiplicacion);
-
-        jButtonNumero4.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
-        jButtonNumero4.setText("4");
-        jButtonNumero4.setMargin(new java.awt.Insets(1, 1, 1, 1));
-        jPanelBotonesCalculadora.add(jButtonNumero4);
-
-        jButtonnumero5.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
-        jButtonnumero5.setText("5");
-        jButtonnumero5.setMargin(new java.awt.Insets(1, 1, 1, 1));
-        jPanelBotonesCalculadora.add(jButtonnumero5);
-
-        jButtonNumero6.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
-        jButtonNumero6.setText("6");
-        jButtonNumero6.setMargin(new java.awt.Insets(1, 1, 1, 1));
-        jPanelBotonesCalculadora.add(jButtonNumero6);
-
-        jButtonSignoMenos.setBackground(new java.awt.Color(142, 202, 230));
-        jButtonSignoMenos.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
-        jButtonSignoMenos.setText("-");
-        jButtonSignoMenos.setMargin(new java.awt.Insets(1, 1, 1, 1));
-        jPanelBotonesCalculadora.add(jButtonSignoMenos);
-
-        jButtonNumero1.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
-        jButtonNumero1.setText("1");
-        jButtonNumero1.setMargin(new java.awt.Insets(1, 1, 1, 1));
-        jPanelBotonesCalculadora.add(jButtonNumero1);
-
-        jButtonNumero2.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
-        jButtonNumero2.setText("2");
-        jButtonNumero2.setMargin(new java.awt.Insets(1, 1, 1, 1));
-        jButtonNumero2.addActionListener(this::jButtonNumero2ActionPerformed);
-        jPanelBotonesCalculadora.add(jButtonNumero2);
-
-        jButtonNumero3.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
-        jButtonNumero3.setText("3");
-        jButtonNumero3.setMargin(new java.awt.Insets(1, 1, 1, 1));
-        jPanelBotonesCalculadora.add(jButtonNumero3);
-
-        jButtonSignoMas.setBackground(new java.awt.Color(142, 202, 230));
-        jButtonSignoMas.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
-        jButtonSignoMas.setText("+");
-        jButtonSignoMas.setMargin(new java.awt.Insets(1, 1, 1, 1));
-        jPanelBotonesCalculadora.add(jButtonSignoMas);
-
-        jButtonNumero0.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
-        jButtonNumero0.setText("0");
-        jButtonNumero0.setMargin(new java.awt.Insets(1, 1, 1, 1));
-        jPanelBotonesCalculadora.add(jButtonNumero0);
+        btn0.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
+        btn0.setText("0");
+        btn0.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        jPanelBotonesCalculadora.add(btn0);
 
         jButtonSignoPunto.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
         jButtonSignoPunto.setText(".");
         jButtonSignoPunto.setMargin(new java.awt.Insets(1, 1, 1, 1));
         jPanelBotonesCalculadora.add(jButtonSignoPunto);
+
+        btnSuma.setBackground(new java.awt.Color(142, 202, 230));
+        btnSuma.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
+        btnSuma.setText("+");
+        btnSuma.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        jPanelBotonesCalculadora.add(btnSuma);
 
         jButtonSignoIgual.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
         jButtonSignoIgual.setText("=");
@@ -284,24 +270,24 @@ public class Main extends javax.swing.JFrame {
         jPanel7.setForeground(new java.awt.Color(224, 225, 221));
         jPanel7.setLayout(new java.awt.GridLayout(2, 0, 10, 10));
 
-        jButtonCalculadora.setBackground(new java.awt.Color(33, 158, 188));
-        jButtonCalculadora.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButtonCalculadora.setText("Modo Calculadora");
-        jPanel7.add(jButtonCalculadora);
+        btnModo.setBackground(new java.awt.Color(33, 158, 188));
+        btnModo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnModo.setText("Modo Calculadora");
+        jPanel7.add(btnModo);
 
         jPanel13.setLayout(new java.awt.GridLayout(1, 2, 30, 0));
 
-        jButtonAñadir.setBackground(new java.awt.Color(33, 158, 188));
-        jButtonAñadir.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButtonAñadir.setText("Añadir Producto");
-        jButtonAñadir.setMargin(new java.awt.Insets(1, 1, 1, 1));
-        jPanel13.add(jButtonAñadir);
+        btnAñadir.setBackground(new java.awt.Color(33, 158, 188));
+        btnAñadir.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnAñadir.setText("Añadir Producto");
+        btnAñadir.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        jPanel13.add(btnAñadir);
 
-        jButtoBorrar.setBackground(new java.awt.Color(251, 133, 0));
-        jButtoBorrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jButtoBorrar.setText("Borrar Seleccion");
-        jButtoBorrar.addActionListener(this::jButtoBorrarActionPerformed);
-        jPanel13.add(jButtoBorrar);
+        btnBorrar.setBackground(new java.awt.Color(251, 133, 0));
+        btnBorrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnBorrar.setText("Borrar Seleccion");
+        btnBorrar.addActionListener(this::btnBorrarActionPerformed);
+        jPanel13.add(btnBorrar);
 
         jPanel7.add(jPanel13);
 
@@ -325,12 +311,10 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(11, 11, 11)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(423, 423, 423)
-                        .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(11, 11, 11)
                         .addComponent(jPanelBotonesCalculadora, javax.swing.GroupLayout.PREFERRED_SIZE, 312, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -342,29 +326,29 @@ public class Main extends javax.swing.JFrame {
         jPanel11.setForeground(new java.awt.Color(224, 225, 221));
         jPanel11.setLayout(new java.awt.GridLayout(1, 4, 20, 0));
 
-        jButtonEfectivo.setBackground(new java.awt.Color(33, 158, 188));
-        jButtonEfectivo.setText("Efectivo");
-        jButtonEfectivo.addActionListener(this::jButtonEfectivoActionPerformed);
-        jPanel11.add(jButtonEfectivo);
+        btnEfectivo.setBackground(new java.awt.Color(33, 158, 188));
+        btnEfectivo.setText("Efectivo");
+        btnEfectivo.addActionListener(this::btnEfectivoActionPerformed);
+        jPanel11.add(btnEfectivo);
 
-        jButtonTarjeta.setBackground(new java.awt.Color(33, 158, 188));
-        jButtonTarjeta.setText("Tarjeta");
-        jPanel11.add(jButtonTarjeta);
+        btnTarjeta.setBackground(new java.awt.Color(33, 158, 188));
+        btnTarjeta.setText("Tarjeta");
+        jPanel11.add(btnTarjeta);
 
-        jButtonTicket.setBackground(new java.awt.Color(142, 202, 230));
-        jButtonTicket.setText("Ticket");
-        jButtonTicket.addActionListener(this::jButtonTicketActionPerformed);
-        jPanel11.add(jButtonTicket);
+        btnTicket.setBackground(new java.awt.Color(142, 202, 230));
+        btnTicket.setText("Ticket");
+        btnTicket.addActionListener(this::btnTicketActionPerformed);
+        jPanel11.add(btnTicket);
 
-        jButtonFactura.setBackground(new java.awt.Color(142, 202, 230));
-        jButtonFactura.setText("Factura");
-        jPanel11.add(jButtonFactura);
+        btnFactura.setBackground(new java.awt.Color(142, 202, 230));
+        btnFactura.setText("Factura");
+        jPanel11.add(btnFactura);
 
         jPanel15.setForeground(new java.awt.Color(224, 225, 221));
 
-        jTable1.setBackground(new java.awt.Color(2, 48, 71));
-        jTable1.setForeground(new java.awt.Color(255, 255, 255));
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tablaProductos.setBackground(new java.awt.Color(2, 48, 71));
+        tablaProductos.setForeground(new java.awt.Color(255, 255, 255));
+        tablaProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -375,17 +359,17 @@ public class Main extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(tablaProductos);
 
         jPanel8.setForeground(new java.awt.Color(224, 225, 221));
 
-        jTextArea2.setBackground(new java.awt.Color(255, 183, 3));
-        jTextArea2.setColumns(20);
-        jTextArea2.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
-        jTextArea2.setForeground(new java.awt.Color(2, 48, 71));
-        jTextArea2.setRows(5);
-        jTextArea2.setText("|   SUBTOTAL:      9.00 €    \n                                    \n│  IVA (21%):     1.89 €        CANTIDAD: [  1  ]               \n│  ─────────────────────       \n│  TOTAL:        10.89 €  ");
-        jScrollPane3.setViewportView(jTextArea2);
+        displayTotales.setBackground(new java.awt.Color(255, 221, 151));
+        displayTotales.setColumns(20);
+        displayTotales.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
+        displayTotales.setForeground(new java.awt.Color(2, 48, 71));
+        displayTotales.setRows(5);
+        displayTotales.setText("|   SUBTOTAL:      9.00 €    \n                                    \n│  IVA (21%):     1.89 €        CANTIDAD: [  1  ]               \n│  ─────────────────────       \n│  TOTAL:        10.89 €  ");
+        jScrollPane3.setViewportView(displayTotales);
 
         javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
         jPanel8.setLayout(jPanel8Layout);
@@ -425,70 +409,70 @@ public class Main extends javax.swing.JFrame {
 
         jPanel14.setForeground(new java.awt.Color(224, 225, 221));
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mesa3.png"))); // NOI18N
-        jButton2.setBorder(null);
-        jButton2.setBorderPainted(false);
-        jButton2.setContentAreaFilled(false);
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.S_RESIZE_CURSOR));
-        jButton2.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton2.setPreferredSize(new java.awt.Dimension(60, 60));
+        btnMesa3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mesa3.png"))); // NOI18N
+        btnMesa3.setBorder(null);
+        btnMesa3.setBorderPainted(false);
+        btnMesa3.setContentAreaFilled(false);
+        btnMesa3.setCursor(new java.awt.Cursor(java.awt.Cursor.S_RESIZE_CURSOR));
+        btnMesa3.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMesa3.setPreferredSize(new java.awt.Dimension(60, 60));
 
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mesa1.png"))); // NOI18N
-        jButton9.setBorder(null);
-        jButton9.setBorderPainted(false);
-        jButton9.setContentAreaFilled(false);
-        jButton9.setCursor(new java.awt.Cursor(java.awt.Cursor.S_RESIZE_CURSOR));
-        jButton9.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMesa1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mesa1.png"))); // NOI18N
+        btnMesa1.setBorder(null);
+        btnMesa1.setBorderPainted(false);
+        btnMesa1.setContentAreaFilled(false);
+        btnMesa1.setCursor(new java.awt.Cursor(java.awt.Cursor.S_RESIZE_CURSOR));
+        btnMesa1.setMargin(new java.awt.Insets(0, 0, 0, 0));
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mesa2.png"))); // NOI18N
-        jButton4.setBorder(null);
-        jButton4.setBorderPainted(false);
-        jButton4.setContentAreaFilled(false);
-        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.S_RESIZE_CURSOR));
-        jButton4.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton4.setPreferredSize(new java.awt.Dimension(60, 60));
+        btnMesa2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mesa2.png"))); // NOI18N
+        btnMesa2.setBorder(null);
+        btnMesa2.setBorderPainted(false);
+        btnMesa2.setContentAreaFilled(false);
+        btnMesa2.setCursor(new java.awt.Cursor(java.awt.Cursor.S_RESIZE_CURSOR));
+        btnMesa2.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMesa2.setPreferredSize(new java.awt.Dimension(60, 60));
 
-        jButton10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mesa5.png"))); // NOI18N
-        jButton10.setBorder(null);
-        jButton10.setBorderPainted(false);
-        jButton10.setContentAreaFilled(false);
-        jButton10.setCursor(new java.awt.Cursor(java.awt.Cursor.S_RESIZE_CURSOR));
-        jButton10.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton10.setPreferredSize(new java.awt.Dimension(60, 60));
+        btnMesa5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mesa5.png"))); // NOI18N
+        btnMesa5.setBorder(null);
+        btnMesa5.setBorderPainted(false);
+        btnMesa5.setContentAreaFilled(false);
+        btnMesa5.setCursor(new java.awt.Cursor(java.awt.Cursor.S_RESIZE_CURSOR));
+        btnMesa5.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMesa5.setPreferredSize(new java.awt.Dimension(60, 60));
 
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mesa6.png"))); // NOI18N
-        jButton11.setBorder(null);
-        jButton11.setBorderPainted(false);
-        jButton11.setContentAreaFilled(false);
-        jButton11.setCursor(new java.awt.Cursor(java.awt.Cursor.S_RESIZE_CURSOR));
-        jButton11.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton11.setPreferredSize(new java.awt.Dimension(60, 60));
-        jButton11.addActionListener(this::jButton11ActionPerformed);
+        btnMesa6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mesa6.png"))); // NOI18N
+        btnMesa6.setBorder(null);
+        btnMesa6.setBorderPainted(false);
+        btnMesa6.setContentAreaFilled(false);
+        btnMesa6.setCursor(new java.awt.Cursor(java.awt.Cursor.S_RESIZE_CURSOR));
+        btnMesa6.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMesa6.setPreferredSize(new java.awt.Dimension(60, 60));
+        btnMesa6.addActionListener(this::btnMesa6ActionPerformed);
 
-        jButton12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mesa7.png"))); // NOI18N
-        jButton12.setBorder(null);
-        jButton12.setBorderPainted(false);
-        jButton12.setContentAreaFilled(false);
-        jButton12.setCursor(new java.awt.Cursor(java.awt.Cursor.S_RESIZE_CURSOR));
-        jButton12.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton12.setPreferredSize(new java.awt.Dimension(60, 60));
+        btnMesa7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mesa7.png"))); // NOI18N
+        btnMesa7.setBorder(null);
+        btnMesa7.setBorderPainted(false);
+        btnMesa7.setContentAreaFilled(false);
+        btnMesa7.setCursor(new java.awt.Cursor(java.awt.Cursor.S_RESIZE_CURSOR));
+        btnMesa7.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMesa7.setPreferredSize(new java.awt.Dimension(60, 60));
 
-        jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mesa8.png"))); // NOI18N
-        jButton13.setBorder(null);
-        jButton13.setBorderPainted(false);
-        jButton13.setContentAreaFilled(false);
-        jButton13.setCursor(new java.awt.Cursor(java.awt.Cursor.S_RESIZE_CURSOR));
-        jButton13.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton13.setPreferredSize(new java.awt.Dimension(60, 60));
-        jButton13.addActionListener(this::jButton13ActionPerformed);
+        btnMesa8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mesa8.png"))); // NOI18N
+        btnMesa8.setBorder(null);
+        btnMesa8.setBorderPainted(false);
+        btnMesa8.setContentAreaFilled(false);
+        btnMesa8.setCursor(new java.awt.Cursor(java.awt.Cursor.S_RESIZE_CURSOR));
+        btnMesa8.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMesa8.setPreferredSize(new java.awt.Dimension(60, 60));
+        btnMesa8.addActionListener(this::btnMesa8ActionPerformed);
 
-        jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mesa4.png"))); // NOI18N
-        jButton14.setBorder(null);
-        jButton14.setBorderPainted(false);
-        jButton14.setContentAreaFilled(false);
-        jButton14.setCursor(new java.awt.Cursor(java.awt.Cursor.S_RESIZE_CURSOR));
-        jButton14.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        jButton14.setPreferredSize(new java.awt.Dimension(60, 60));
+        btnMesa4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mesa4.png"))); // NOI18N
+        btnMesa4.setBorder(null);
+        btnMesa4.setBorderPainted(false);
+        btnMesa4.setContentAreaFilled(false);
+        btnMesa4.setCursor(new java.awt.Cursor(java.awt.Cursor.S_RESIZE_CURSOR));
+        btnMesa4.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMesa4.setPreferredSize(new java.awt.Dimension(60, 60));
 
         javax.swing.GroupLayout jPanel14Layout = new javax.swing.GroupLayout(jPanel14);
         jPanel14.setLayout(jPanel14Layout);
@@ -499,20 +483,20 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
                         .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnMesa5, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnMesa1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnMesa6, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnMesa2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
                         .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnMesa3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnMesa7, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(btnMesa4, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnMesa8, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(25, 25, 25))
         );
         jPanel14Layout.setVerticalGroup(
@@ -520,20 +504,20 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel14Layout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jButton4, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton9, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnMesa2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMesa1, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton14, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnMesa3, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMesa4, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton10, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnMesa5, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMesa6, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButton12, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton13, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnMesa7, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnMesa8, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
@@ -568,17 +552,17 @@ public class Main extends javax.swing.JFrame {
         jPanel9.setForeground(new java.awt.Color(224, 225, 221));
         jPanel9.setLayout(new java.awt.GridLayout(1, 3, 10, 0));
 
-        jButtonMesero1.setBackground(new java.awt.Color(33, 158, 188));
-        jButtonMesero1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jButtonMesero1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mesero.png"))); // NOI18N
-        jButtonMesero1.setText("Mesero1");
-        jPanel9.add(jButtonMesero1);
+        btnMesero1.setBackground(new java.awt.Color(33, 158, 188));
+        btnMesero1.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnMesero1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/camarera.png"))); // NOI18N
+        btnMesero1.setText("Mesero1");
+        jPanel9.add(btnMesero1);
 
-        jButtonMesero2.setBackground(new java.awt.Color(33, 158, 188));
-        jButtonMesero2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
-        jButtonMesero2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mesero.png"))); // NOI18N
-        jButtonMesero2.setText("Mesero2");
-        jPanel9.add(jButtonMesero2);
+        btnMesero2.setBackground(new java.awt.Color(33, 158, 188));
+        btnMesero2.setFont(new java.awt.Font("Times New Roman", 0, 14)); // NOI18N
+        btnMesero2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/camarero.png"))); // NOI18N
+        btnMesero2.setText("Mesero2");
+        jPanel9.add(btnMesero2);
 
         jPanel16.setForeground(new java.awt.Color(224, 225, 221));
 
@@ -624,7 +608,7 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 57, Short.MAX_VALUE))
+                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -654,38 +638,38 @@ public class Main extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTicketActionPerformed
+    private void btnTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTicketActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonTicketActionPerformed
+    }//GEN-LAST:event_btnTicketActionPerformed
 
-    private void jButtonEfectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonEfectivoActionPerformed
+    private void btnEfectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEfectivoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonEfectivoActionPerformed
+    }//GEN-LAST:event_btnEfectivoActionPerformed
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+    private void btnMesa6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesa6ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton11ActionPerformed
+    }//GEN-LAST:event_btnMesa6ActionPerformed
 
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
+    private void btnMesa8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesa8ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton13ActionPerformed
+    }//GEN-LAST:event_btnMesa8ActionPerformed
 
-    private void jButtoBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtoBorrarActionPerformed
+    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButtoBorrarActionPerformed
+    }//GEN-LAST:event_btnBorrarActionPerformed
 
-    private void jButtonNumero2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNumero2ActionPerformed
+    private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButtonNumero2ActionPerformed
+    }//GEN-LAST:event_btn2ActionPerformed
 
     private void jButtonSignoCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSignoCActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonSignoCActionPerformed
 
-    private void jButtonBebidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonBebidasActionPerformed
+    private void btnBebidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBebidasActionPerformed
         // TODO add your handling code here:
         
-    }//GEN-LAST:event_jButtonBebidasActionPerformed
+    }//GEN-LAST:event_btnBebidasActionPerformed
 
     /**
      * @param args the command line arguments
@@ -713,44 +697,45 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtoBorrar;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton12;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton9;
-    private javax.swing.JButton jButtonAñadir;
-    private javax.swing.JButton jButtonBebidas;
-    private javax.swing.JButton jButtonCalculadora;
-    private javax.swing.JButton jButtonComida;
-    private javax.swing.JButton jButtonEfectivo;
-    private javax.swing.JButton jButtonFactura;
-    private javax.swing.JButton jButtonMesero1;
-    private javax.swing.JButton jButtonMesero2;
-    private javax.swing.JButton jButtonNumero0;
-    private javax.swing.JButton jButtonNumero1;
-    private javax.swing.JButton jButtonNumero2;
-    private javax.swing.JButton jButtonNumero3;
-    private javax.swing.JButton jButtonNumero4;
-    private javax.swing.JButton jButtonNumero6;
-    private javax.swing.JButton jButtonNumero7;
-    private javax.swing.JButton jButtonNumero8;
-    private javax.swing.JButton jButtonNumero9;
+    private javax.swing.JButton btn0;
+    private javax.swing.JButton btn1;
+    private javax.swing.JButton btn2;
+    private javax.swing.JButton btn3;
+    private javax.swing.JButton btn4;
+    private javax.swing.JButton btn5;
+    private javax.swing.JButton btn6;
+    private javax.swing.JButton btn7;
+    private javax.swing.JButton btn8;
+    private javax.swing.JButton btn9;
+    private javax.swing.JButton btnAñadir;
+    private javax.swing.JButton btnBebidas;
+    private javax.swing.JButton btnBorrar;
+    private javax.swing.JButton btnComidas;
+    private javax.swing.JButton btnEfectivo;
+    private javax.swing.JButton btnFactura;
+    private javax.swing.JButton btnMesa1;
+    private javax.swing.JButton btnMesa2;
+    private javax.swing.JButton btnMesa3;
+    private javax.swing.JButton btnMesa4;
+    private javax.swing.JButton btnMesa5;
+    private javax.swing.JButton btnMesa6;
+    private javax.swing.JButton btnMesa7;
+    private javax.swing.JButton btnMesa8;
+    private javax.swing.JButton btnMesero1;
+    private javax.swing.JButton btnMesero2;
+    private javax.swing.JButton btnModo;
+    private javax.swing.JButton btnMult;
+    private javax.swing.JButton btnResta;
+    private javax.swing.JButton btnSuma;
+    private javax.swing.JButton btnTarjeta;
+    private javax.swing.JButton btnTicket;
+    private javax.swing.JTextArea displayOperaciones;
+    private javax.swing.JTextArea displayResultado;
+    private javax.swing.JTextArea displayTotales;
     private javax.swing.JButton jButtonSignoC;
-    private javax.swing.JButton jButtonSignoCambioMasMenos;
     private javax.swing.JButton jButtonSignoDividir;
     private javax.swing.JButton jButtonSignoIgual;
-    private javax.swing.JButton jButtonSignoMas;
-    private javax.swing.JButton jButtonSignoMenos;
-    private javax.swing.JButton jButtonSignoMultiplicacion;
-    private javax.swing.JButton jButtonSignoPorcentaje;
     private javax.swing.JButton jButtonSignoPunto;
-    private javax.swing.JButton jButtonTarjeta;
-    private javax.swing.JButton jButtonTicket;
-    private javax.swing.JButton jButtonnumero5;
     private javax.swing.JLabel jLabelEmpresa;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel11;
@@ -772,9 +757,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextArea jTextArea2;
-    private javax.swing.JTextArea jTextArea3;
-    private javax.swing.JTextArea jTextArea4;
+    private javax.swing.JTable tablaProductos;
     // End of variables declaration//GEN-END:variables
 }

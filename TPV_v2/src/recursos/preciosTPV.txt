@@ -1,0 +1,15 @@
+bebida;Café solo;1.50
+bebida;Café con leche;1.80
+bebida;Batido vainilla;2.50
+bebida;Coca-Cola;1.50
+bebida;Kas limón;1.50
+bebida;Agua mineral;1.00
+bebida;Cerveza;2.00
+bebida;Vino tinto;2.50
+comida;Bocadillo jamón;4.50
+comida;Bocadillo queso;4.00
+comida;Pizza individual;5.50
+comida;Ensalada mixta;3.50
+comida;Patatas fritas;2.50
+comida;Croissant;1.80
+comida;Tarta del día;3.00

@@ -8,14 +8,14 @@ package GUI;
  *
  * @author DAM_204
  */
-public class Bebidas extends javax.swing.JDialog {
+public class Comidas extends javax.swing.JDialog {
     
-    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Bebidas.class.getName());
+    private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Comidas.class.getName());
 
     /**
      * Creates new form Bebidas
      */
-    public Bebidas(java.awt.Frame parent, boolean modal) {
+    public Comidas(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
     }
@@ -59,48 +59,50 @@ public class Bebidas extends javax.swing.JDialog {
         jLabelEmpresa.setFont(new java.awt.Font("Palatino Linotype", 1, 36)); // NOI18N
         jLabelEmpresa.setForeground(new java.awt.Color(2, 48, 71));
         jLabelEmpresa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelEmpresa.setText("Bebidas Frias ");
+        jLabelEmpresa.setText("Para Picar / entrantes");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(jLabelEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, 407, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelEmpresa, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jLabelEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, 64, Short.MAX_VALUE)
         );
 
         jPanel3.setPreferredSize(new java.awt.Dimension(500, 300));
         jPanel3.setLayout(new java.awt.GridLayout(2, 4, 30, 30));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/jugobotella.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/alitas-de-pollo.png"))); // NOI18N
         jButton1.setBorder(null);
         jButton1.addActionListener(this::jButton1ActionPerformed);
         jPanel3.add(jButton1);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Zumo.png"))); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/aros-de-cebolla.png"))); // NOI18N
         jButton2.setBorder(null);
         jButton2.addActionListener(this::jButton2ActionPerformed);
         jPanel3.add(jButton2);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/botella-de-agua.png"))); // NOI18N
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/croquetas.png"))); // NOI18N
         jButton4.setBorder(null);
         jButton4.addActionListener(this::jButton4ActionPerformed);
         jPanel3.add(jButton4);
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/te-helado (2).png"))); // NOI18N
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/embutido.png"))); // NOI18N
         jButton5.setBorder(null);
         jButton5.addActionListener(this::jButton5ActionPerformed);
         jPanel3.add(jButton5);
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cerveza.png"))); // NOI18N
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/nachos (1).png"))); // NOI18N
         jButton6.setBorder(null);
         jButton6.addActionListener(this::jButton6ActionPerformed);
         jPanel3.add(jButton6);
 
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/copa-de-vino.png"))); // NOI18N
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/papas-fritas.png"))); // NOI18N
         jButton7.setBorder(null);
         jButton7.addActionListener(this::jButton7ActionPerformed);
         jPanel3.add(jButton7);
@@ -111,20 +113,19 @@ public class Bebidas extends javax.swing.JDialog {
         jLabelEmpresa1.setFont(new java.awt.Font("Palatino Linotype", 1, 36)); // NOI18N
         jLabelEmpresa1.setForeground(new java.awt.Color(2, 48, 71));
         jLabelEmpresa1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabelEmpresa1.setText("Bebidas Calientes");
+        jLabelEmpresa1.setText("Platos Principales ");
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jLabelEmpresa1, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 231, Short.MAX_VALUE))
+                .addComponent(jLabelEmpresa1, javax.swing.GroupLayout.DEFAULT_SIZE, 415, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addComponent(jLabelEmpresa1, javax.swing.GroupLayout.DEFAULT_SIZE, 69, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -132,32 +133,32 @@ public class Bebidas extends javax.swing.JDialog {
         jPanel6.setPreferredSize(new java.awt.Dimension(500, 300));
         jPanel6.setLayout(new java.awt.GridLayout(2, 4, 30, 30));
 
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/expresso.png"))); // NOI18N
+        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/bollo-de-hamburguesa.png"))); // NOI18N
         jButton9.setBorder(null);
         jButton9.addActionListener(this::jButton9ActionPerformed);
         jPanel6.add(jButton9);
 
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/capuchino.png"))); // NOI18N
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/perritos-calientes.png"))); // NOI18N
         jButton8.setBorder(null);
         jButton8.addActionListener(this::jButton8ActionPerformed);
         jPanel6.add(jButton8);
 
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/te-verde.png"))); // NOI18N
+        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/sandwich-de-calamares.png"))); // NOI18N
         jButton11.setBorder(null);
         jButton11.addActionListener(this::jButton11ActionPerformed);
         jPanel6.add(jButton11);
 
-        jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/chocolate-caliente.png"))); // NOI18N
+        jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/sandwich.png"))); // NOI18N
         jButton13.setBorder(null);
         jButton13.addActionListener(this::jButton13ActionPerformed);
         jPanel6.add(jButton13);
 
-        jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/taza-de-cafe.png"))); // NOI18N
+        jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/tortilla-espanola.png"))); // NOI18N
         jButton14.setBorder(null);
         jButton14.addActionListener(this::jButton14ActionPerformed);
         jPanel6.add(jButton14);
 
-        jButton15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/caffe con leche.png"))); // NOI18N
+        jButton15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/tortilla.png"))); // NOI18N
         jButton15.setBorder(null);
         jButton15.addActionListener(this::jButton15ActionPerformed);
         jPanel6.add(jButton15);
@@ -166,40 +167,37 @@ public class Bebidas extends javax.swing.JDialog {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 628, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 397, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(1, 1, 1)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 205, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 414, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 421, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 18, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 623, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -279,7 +277,7 @@ public class Bebidas extends javax.swing.JDialog {
         java.awt.EventQueue.invokeLater(new Runnable() {
             @Override
             public void run() {
-                Bebidas dialog = new Bebidas(new javax.swing.JFrame(), true);
+                Comidas dialog = new Comidas(new javax.swing.JFrame(), true);
                 dialog.addWindowListener(new java.awt.event.WindowAdapter() {
                     @Override
                     public void windowClosing(java.awt.event.WindowEvent e) {
