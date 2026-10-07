@@ -34,11 +34,11 @@ public class Bebidas extends javax.swing.JDialog {
         jLabelEmpresa = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        jButton6 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabelEmpresa1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
@@ -48,6 +48,8 @@ public class Bebidas extends javax.swing.JDialog {
         jButton13 = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
         jButton15 = new javax.swing.JButton();
+        jPanel5 = new javax.swing.JPanel();
+        jButton3 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -75,35 +77,35 @@ public class Bebidas extends javax.swing.JDialog {
         jPanel3.setPreferredSize(new java.awt.Dimension(500, 300));
         jPanel3.setLayout(new java.awt.GridLayout(2, 4, 30, 30));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/jugobotella.png"))); // NOI18N
+        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/Zumo.png"))); // NOI18N
         jButton1.setBorder(null);
         jButton1.addActionListener(this::jButton1ActionPerformed);
         jPanel3.add(jButton1);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Zumo.png"))); // NOI18N
-        jButton2.setBorder(null);
-        jButton2.addActionListener(this::jButton2ActionPerformed);
-        jPanel3.add(jButton2);
+        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/te-helado (2).png"))); // NOI18N
+        jButton7.setBorder(null);
+        jButton7.addActionListener(this::jButton7ActionPerformed);
+        jPanel3.add(jButton7);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/botella-de-agua.png"))); // NOI18N
-        jButton4.setBorder(null);
-        jButton4.addActionListener(this::jButton4ActionPerformed);
-        jPanel3.add(jButton4);
-
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/te-helado (2).png"))); // NOI18N
-        jButton5.setBorder(null);
-        jButton5.addActionListener(this::jButton5ActionPerformed);
-        jPanel3.add(jButton5);
-
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cerveza.png"))); // NOI18N
+        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/jugobotella.png"))); // NOI18N
         jButton6.setBorder(null);
         jButton6.addActionListener(this::jButton6ActionPerformed);
         jPanel3.add(jButton6);
 
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/copa-de-vino.png"))); // NOI18N
-        jButton7.setBorder(null);
-        jButton7.addActionListener(this::jButton7ActionPerformed);
-        jPanel3.add(jButton7);
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/botella-de-agua.png"))); // NOI18N
+        jButton2.setBorder(null);
+        jButton2.addActionListener(this::jButton2ActionPerformed);
+        jPanel3.add(jButton2);
+
+        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/copa-de-vino.png"))); // NOI18N
+        jButton5.setBorder(null);
+        jButton5.addActionListener(this::jButton5ActionPerformed);
+        jPanel3.add(jButton5);
+
+        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/cerveza.png"))); // NOI18N
+        jButton4.setBorder(null);
+        jButton4.addActionListener(this::jButton4ActionPerformed);
+        jPanel3.add(jButton4);
 
         jPanel4.setPreferredSize(new java.awt.Dimension(527, 100));
 
@@ -132,35 +134,41 @@ public class Bebidas extends javax.swing.JDialog {
         jPanel6.setPreferredSize(new java.awt.Dimension(500, 300));
         jPanel6.setLayout(new java.awt.GridLayout(2, 4, 30, 30));
 
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/expresso.png"))); // NOI18N
+        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/capuchino.png"))); // NOI18N
         jButton9.setBorder(null);
         jButton9.addActionListener(this::jButton9ActionPerformed);
         jPanel6.add(jButton9);
 
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/capuchino.png"))); // NOI18N
+        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/chocolate-caliente.png"))); // NOI18N
         jButton8.setBorder(null);
         jButton8.addActionListener(this::jButton8ActionPerformed);
         jPanel6.add(jButton8);
 
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/te-verde.png"))); // NOI18N
+        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/expresso.png"))); // NOI18N
         jButton11.setBorder(null);
         jButton11.addActionListener(this::jButton11ActionPerformed);
         jPanel6.add(jButton11);
 
-        jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/chocolate-caliente.png"))); // NOI18N
+        jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/frappe2.png"))); // NOI18N
         jButton13.setBorder(null);
         jButton13.addActionListener(this::jButton13ActionPerformed);
         jPanel6.add(jButton13);
 
-        jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/taza-de-cafe.png"))); // NOI18N
+        jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/macchiato.png"))); // NOI18N
         jButton14.setBorder(null);
         jButton14.addActionListener(this::jButton14ActionPerformed);
         jPanel6.add(jButton14);
 
-        jButton15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/caffe con leche.png"))); // NOI18N
+        jButton15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/te-verde.png"))); // NOI18N
         jButton15.setBorder(null);
         jButton15.addActionListener(this::jButton15ActionPerformed);
         jPanel6.add(jButton15);
+
+        jPanel5.setLayout(new java.awt.GridLayout());
+
+        jButton3.setText("volver");
+        jButton3.addActionListener(this::jButton3ActionPerformed);
+        jPanel5.add(jButton3);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -169,12 +177,14 @@ public class Bebidas extends javax.swing.JDialog {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 628, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 399, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -187,8 +197,10 @@ public class Bebidas extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, 199, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -199,7 +211,9 @@ public class Bebidas extends javax.swing.JDialog {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 681, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -254,6 +268,10 @@ public class Bebidas extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton15ActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -298,6 +316,7 @@ public class Bebidas extends javax.swing.JDialog {
     private javax.swing.JButton jButton14;
     private javax.swing.JButton jButton15;
     private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
@@ -310,6 +329,7 @@ public class Bebidas extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     // End of variables declaration//GEN-END:variables
 }

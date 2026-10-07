@@ -31,11 +31,7 @@ public class Producto {
         return categoria;
     }
 
-    @Override
-    public String toString() {
-        return nombre + " - " + String.format("%.2f€", precio);
-        
-    }
+   
 }   
     
     
