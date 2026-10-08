@@ -1,15 +1,24 @@
-bebida;Café solo;1.50
-bebida;Café con leche;1.80
-bebida;Batido vainilla;2.50
-bebida;Coca-Cola;1.50
-bebida;Kas limón;1.50
-bebida;Agua mineral;1.00
-bebida;Cerveza;2.00
-bebida;Vino tinto;2.50
-comida;Bocadillo jamón;4.50
-comida;Bocadillo queso;4.00
-comida;Pizza individual;5.50
-comida;Ensalada mixta;3.50
-comida;Patatas fritas;2.50
-comida;Croissant;1.80
-comida;Tarta del día;3.00
+bebidas;Te helado;1.50
+bebidas;Zumo de naranja;1.80
+bebidas;Jugo natural;2.00
+bebidas;Agua;1.00
+bebidas;Cerveza;2.00
+bebidas;Vino;2.50
+bebidas;Capucchino;1.80
+bebidas;Chocolate;1.80
+bebidas;Expresso;1.50
+bebidas;Frappe;2.50
+bebidas;Cafe con leche;1.80
+bebidas;Te;1.50
+Comidas;Alitas;4.50
+Comidas;Anillos de calamar;4.00
+Comidas;Croquetas;3.50
+Comidas;Plato de embutidos;5.50
+Comidas;Tacos;3.50
+Comidas;PapasFritas;2.50
+Comidas;Hamburguesa;5.50
+Comidas;HotDog;3.50
+Comidas;BocadilloCalamar;4.50
+Comidas;Sandwich;4.00
+Comidas;TortillaDePatata;3.00
+Comidas;WrapDePollo;4.50
