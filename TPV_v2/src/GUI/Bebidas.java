@@ -4,6 +4,9 @@
  */
 package GUI;
 
+import dto.Producto;
+import java.util.List;
+
 /**
  *
  * @author DAM_204
@@ -11,15 +14,44 @@ package GUI;
 public class Bebidas extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Bebidas.class.getName());
-
+    
+      private List<Producto> listaProductos;
+    private Main mainRef;
+    private Producto productoSeleccionado;
     /**
      * Creates new form Bebidas
      */
-    public Bebidas(java.awt.Frame parent, boolean modal) {
+  public Bebidas(java.awt.Frame parent, boolean modal, List<Producto> productos, Main main) {
         super(parent, modal);
+        this.listaProductos = productos;
+        this.mainRef = main; // ⬅️ Guardamos la referencia
         initComponents();
     }
 
+  private void añadirSinCerrar(String nombreBuscado) {
+        for (Producto p : listaProductos) {
+            if (p.getNombre().equalsIgnoreCase(nombreBuscado)) {
+                if (mainRef != null) {
+                    mainRef.añadirProductoATabla(p, 1); // Añade directamente
+                }
+                break;
+            }
+        }
+        // NO llamamos a dispose() → la ventana sigue abierta
+    }
+   
+   
+   
+   private void seleccionarProducto(String nombreBuscado) {
+        for (Producto p : listaProductos) {
+            if (p.getNombre().equalsIgnoreCase(nombreBuscado)) {
+                this.productoSeleccionado = p;
+                break;
+            }
+        }
+        
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -33,21 +65,21 @@ public class Bebidas extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jLabelEmpresa = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        btnZumoDeNaranja = new javax.swing.JButton();
+        btnTeHelado = new javax.swing.JButton();
+        btnJugoNatural = new javax.swing.JButton();
+        btnAgua = new javax.swing.JButton();
+        btnVino = new javax.swing.JButton();
+        btnCerveza = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabelEmpresa1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        jButton9 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jButton13 = new javax.swing.JButton();
-        jButton14 = new javax.swing.JButton();
-        jButton15 = new javax.swing.JButton();
+        btnCapucchino = new javax.swing.JButton();
+        btnChocoloate = new javax.swing.JButton();
+        btnExpresso = new javax.swing.JButton();
+        btnFrappe = new javax.swing.JButton();
+        btnMachiatto = new javax.swing.JButton();
+        btnTeCaliente = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         btnVolver = new javax.swing.JButton();
 
@@ -77,35 +109,35 @@ public class Bebidas extends javax.swing.JDialog {
         jPanel3.setPreferredSize(new java.awt.Dimension(500, 300));
         jPanel3.setLayout(new java.awt.GridLayout(2, 4, 30, 30));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/Zumo.png"))); // NOI18N
-        jButton1.setBorder(null);
-        jButton1.addActionListener(this::jButton1ActionPerformed);
-        jPanel3.add(jButton1);
+        btnZumoDeNaranja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/Zumo.png"))); // NOI18N
+        btnZumoDeNaranja.setBorder(null);
+        btnZumoDeNaranja.addActionListener(this::btnZumoDeNaranjaActionPerformed);
+        jPanel3.add(btnZumoDeNaranja);
 
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/te-helado (2).png"))); // NOI18N
-        jButton7.setBorder(null);
-        jButton7.addActionListener(this::jButton7ActionPerformed);
-        jPanel3.add(jButton7);
+        btnTeHelado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/te-helado (2).png"))); // NOI18N
+        btnTeHelado.setBorder(null);
+        btnTeHelado.addActionListener(this::btnTeHeladoActionPerformed);
+        jPanel3.add(btnTeHelado);
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/jugobotella.png"))); // NOI18N
-        jButton6.setBorder(null);
-        jButton6.addActionListener(this::jButton6ActionPerformed);
-        jPanel3.add(jButton6);
+        btnJugoNatural.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/jugobotella.png"))); // NOI18N
+        btnJugoNatural.setBorder(null);
+        btnJugoNatural.addActionListener(this::btnJugoNaturalActionPerformed);
+        jPanel3.add(btnJugoNatural);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/botella-de-agua.png"))); // NOI18N
-        jButton2.setBorder(null);
-        jButton2.addActionListener(this::jButton2ActionPerformed);
-        jPanel3.add(jButton2);
+        btnAgua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/botella-de-agua.png"))); // NOI18N
+        btnAgua.setBorder(null);
+        btnAgua.addActionListener(this::btnAguaActionPerformed);
+        jPanel3.add(btnAgua);
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/copa-de-vino.png"))); // NOI18N
-        jButton5.setBorder(null);
-        jButton5.addActionListener(this::jButton5ActionPerformed);
-        jPanel3.add(jButton5);
+        btnVino.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/copa-de-vino.png"))); // NOI18N
+        btnVino.setBorder(null);
+        btnVino.addActionListener(this::btnVinoActionPerformed);
+        jPanel3.add(btnVino);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/cerveza.png"))); // NOI18N
-        jButton4.setBorder(null);
-        jButton4.addActionListener(this::jButton4ActionPerformed);
-        jPanel3.add(jButton4);
+        btnCerveza.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/cerveza.png"))); // NOI18N
+        btnCerveza.setBorder(null);
+        btnCerveza.addActionListener(this::btnCervezaActionPerformed);
+        jPanel3.add(btnCerveza);
 
         jPanel4.setPreferredSize(new java.awt.Dimension(527, 100));
 
@@ -134,35 +166,35 @@ public class Bebidas extends javax.swing.JDialog {
         jPanel6.setPreferredSize(new java.awt.Dimension(500, 300));
         jPanel6.setLayout(new java.awt.GridLayout(2, 4, 30, 30));
 
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/capuchino.png"))); // NOI18N
-        jButton9.setBorder(null);
-        jButton9.addActionListener(this::jButton9ActionPerformed);
-        jPanel6.add(jButton9);
+        btnCapucchino.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/capuchino.png"))); // NOI18N
+        btnCapucchino.setBorder(null);
+        btnCapucchino.addActionListener(this::btnCapucchinoActionPerformed);
+        jPanel6.add(btnCapucchino);
 
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/chocolate-caliente.png"))); // NOI18N
-        jButton8.setBorder(null);
-        jButton8.addActionListener(this::jButton8ActionPerformed);
-        jPanel6.add(jButton8);
+        btnChocoloate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/chocolate-caliente.png"))); // NOI18N
+        btnChocoloate.setBorder(null);
+        btnChocoloate.addActionListener(this::btnChocoloateActionPerformed);
+        jPanel6.add(btnChocoloate);
 
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/expresso.png"))); // NOI18N
-        jButton11.setBorder(null);
-        jButton11.addActionListener(this::jButton11ActionPerformed);
-        jPanel6.add(jButton11);
+        btnExpresso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/expresso.png"))); // NOI18N
+        btnExpresso.setBorder(null);
+        btnExpresso.addActionListener(this::btnExpressoActionPerformed);
+        jPanel6.add(btnExpresso);
 
-        jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/frappe2.png"))); // NOI18N
-        jButton13.setBorder(null);
-        jButton13.addActionListener(this::jButton13ActionPerformed);
-        jPanel6.add(jButton13);
+        btnFrappe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/frappe2.png"))); // NOI18N
+        btnFrappe.setBorder(null);
+        btnFrappe.addActionListener(this::btnFrappeActionPerformed);
+        jPanel6.add(btnFrappe);
 
-        jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/macchiato.png"))); // NOI18N
-        jButton14.setBorder(null);
-        jButton14.addActionListener(this::jButton14ActionPerformed);
-        jPanel6.add(jButton14);
+        btnMachiatto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/macchiato.png"))); // NOI18N
+        btnMachiatto.setBorder(null);
+        btnMachiatto.addActionListener(this::btnMachiattoActionPerformed);
+        jPanel6.add(btnMachiatto);
 
-        jButton15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/te-verde.png"))); // NOI18N
-        jButton15.setBorder(null);
-        jButton15.addActionListener(this::jButton15ActionPerformed);
-        jPanel6.add(jButton15);
+        btnTeCaliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/te-verde.png"))); // NOI18N
+        btnTeCaliente.setBorder(null);
+        btnTeCaliente.addActionListener(this::btnTeCalienteActionPerformed);
+        jPanel6.add(btnTeCaliente);
 
         jPanel5.setLayout(new java.awt.GridLayout(1, 0));
 
@@ -220,109 +252,78 @@ public class Bebidas extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnZumoDeNaranjaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZumoDeNaranjaActionPerformed
+        seleccionarProducto("Zumo de naranja");
+    }//GEN-LAST:event_btnZumoDeNaranjaActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnAguaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAguaActionPerformed
+        seleccionarProducto("Agua");
+    }//GEN-LAST:event_btnAguaActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void btnCervezaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCervezaActionPerformed
+        seleccionarProducto("Cerveza");
+    }//GEN-LAST:event_btnCervezaActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void btnVinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVinoActionPerformed
+        seleccionarProducto("Vino");
+    }//GEN-LAST:event_btnVinoActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    private void btnJugoNaturalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugoNaturalActionPerformed
+        seleccionarProducto("Jugo natural");
+    }//GEN-LAST:event_btnJugoNaturalActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+    private void btnTeHeladoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeHeladoActionPerformed
+        seleccionarProducto("Te helado");
+    }//GEN-LAST:event_btnTeHeladoActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+    private void btnChocoloateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChocoloateActionPerformed
+        seleccionarProducto("Chocolate");
+    }//GEN-LAST:event_btnChocoloateActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
+    private void btnCapucchinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapucchinoActionPerformed
+        seleccionarProducto("Capucchino");
+    }//GEN-LAST:event_btnCapucchinoActionPerformed
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton11ActionPerformed
+    private void btnExpressoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpressoActionPerformed
+         seleccionarProducto("Expresso");
+    }//GEN-LAST:event_btnExpressoActionPerformed
 
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton13ActionPerformed
+    private void btnFrappeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFrappeActionPerformed
+        seleccionarProducto("Frappe");
+    }//GEN-LAST:event_btnFrappeActionPerformed
 
-    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton14ActionPerformed
+    private void btnMachiattoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMachiattoActionPerformed
+        seleccionarProducto("Cafe con leche");
+    }//GEN-LAST:event_btnMachiattoActionPerformed
 
-    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton15ActionPerformed
+    private void btnTeCalienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeCalienteActionPerformed
+        seleccionarProducto("Te");
+    }//GEN-LAST:event_btnTeCalienteActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        // TODO add your handling code here:
+         this.productoSeleccionado = null; 
+        dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                Bebidas dialog = new Bebidas(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAgua;
+    private javax.swing.JButton btnCapucchino;
+    private javax.swing.JButton btnCerveza;
+    private javax.swing.JButton btnChocoloate;
+    private javax.swing.JButton btnExpresso;
+    private javax.swing.JButton btnFrappe;
+    private javax.swing.JButton btnJugoNatural;
+    private javax.swing.JButton btnMachiatto;
+    private javax.swing.JButton btnTeCaliente;
+    private javax.swing.JButton btnTeHelado;
+    private javax.swing.JButton btnVino;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JButton btnZumoDeNaranja;
     private javax.swing.JLabel jLabelEmpresa;
     private javax.swing.JLabel jLabelEmpresa1;
     private javax.swing.JPanel jPanel1;

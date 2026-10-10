@@ -4,6 +4,9 @@
  */
 package GUI;
 
+import dto.Producto;
+import java.util.List;
+
 /**
  *
  * @author DAM_204
@@ -12,13 +15,33 @@ public class Comidas extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Comidas.class.getName());
 
+    
+    private Producto productoSeleccionado;
+    private List<Producto> listaProductos;
+
+    public Comidas(java.awt.Frame parent, boolean modal, List<Producto> productos) {
+        super(parent, modal);
+        this.listaProductos = productos;
+        initComponents();
+    }
+
+    public Producto getProductoSeleccionado() {
+        return productoSeleccionado;
+    }
+
+    private void seleccionarProducto(String nombreBuscado) {
+        for (Producto p : listaProductos) {
+            if (p.getNombre().equalsIgnoreCase(nombreBuscado)) {
+                this.productoSeleccionado = p;
+                break;
+            }
+        }
+        dispose();
+    }
+
     /**
      * Creates new form Bebidas
      */
-    public Comidas(java.awt.Frame parent, boolean modal) {
-        super(parent, modal);
-        initComponents();
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -33,21 +56,21 @@ public class Comidas extends javax.swing.JDialog {
         jPanel2 = new javax.swing.JPanel();
         jLabelEmpresa = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton7 = new javax.swing.JButton();
+        btnAlitas = new javax.swing.JButton();
+        btnAnillosDeCalamar = new javax.swing.JButton();
+        btnCroquetas = new javax.swing.JButton();
+        btnChorizo = new javax.swing.JButton();
+        btnTacos = new javax.swing.JButton();
+        btnPapasFritas = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
         jLabelEmpresa1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
-        jButton9 = new javax.swing.JButton();
-        jButton8 = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
-        jButton13 = new javax.swing.JButton();
-        jButton14 = new javax.swing.JButton();
-        jButton15 = new javax.swing.JButton();
+        btnHamburguesa = new javax.swing.JButton();
+        btnPerroCaliente = new javax.swing.JButton();
+        btnBocadilloCalamar = new javax.swing.JButton();
+        btnSandwich = new javax.swing.JButton();
+        btnTortillaDePatata = new javax.swing.JButton();
+        btnWrap = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         btnVolver = new javax.swing.JButton();
 
@@ -79,35 +102,35 @@ public class Comidas extends javax.swing.JDialog {
         jPanel3.setPreferredSize(new java.awt.Dimension(500, 300));
         jPanel3.setLayout(new java.awt.GridLayout(2, 4, 30, 30));
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/alitas-de-pollo.png"))); // NOI18N
-        jButton1.setBorder(null);
-        jButton1.addActionListener(this::jButton1ActionPerformed);
-        jPanel3.add(jButton1);
+        btnAlitas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/alitas-de-pollo.png"))); // NOI18N
+        btnAlitas.setBorder(null);
+        btnAlitas.addActionListener(this::btnAlitasActionPerformed);
+        jPanel3.add(btnAlitas);
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/aros-de-cebolla.png"))); // NOI18N
-        jButton2.setBorder(null);
-        jButton2.addActionListener(this::jButton2ActionPerformed);
-        jPanel3.add(jButton2);
+        btnAnillosDeCalamar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/aros-de-cebolla.png"))); // NOI18N
+        btnAnillosDeCalamar.setBorder(null);
+        btnAnillosDeCalamar.addActionListener(this::btnAnillosDeCalamarActionPerformed);
+        jPanel3.add(btnAnillosDeCalamar);
 
-        jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/croquetas.png"))); // NOI18N
-        jButton4.setBorder(null);
-        jButton4.addActionListener(this::jButton4ActionPerformed);
-        jPanel3.add(jButton4);
+        btnCroquetas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/croquetas.png"))); // NOI18N
+        btnCroquetas.setBorder(null);
+        btnCroquetas.addActionListener(this::btnCroquetasActionPerformed);
+        jPanel3.add(btnCroquetas);
 
-        jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/embutido.png"))); // NOI18N
-        jButton5.setBorder(null);
-        jButton5.addActionListener(this::jButton5ActionPerformed);
-        jPanel3.add(jButton5);
+        btnChorizo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/embutido.png"))); // NOI18N
+        btnChorizo.setBorder(null);
+        btnChorizo.addActionListener(this::btnChorizoActionPerformed);
+        jPanel3.add(btnChorizo);
 
-        jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/nachos (1).png"))); // NOI18N
-        jButton6.setBorder(null);
-        jButton6.addActionListener(this::jButton6ActionPerformed);
-        jPanel3.add(jButton6);
+        btnTacos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/nachos (1).png"))); // NOI18N
+        btnTacos.setBorder(null);
+        btnTacos.addActionListener(this::btnTacosActionPerformed);
+        jPanel3.add(btnTacos);
 
-        jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/papas-fritas.png"))); // NOI18N
-        jButton7.setBorder(null);
-        jButton7.addActionListener(this::jButton7ActionPerformed);
-        jPanel3.add(jButton7);
+        btnPapasFritas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/papas-fritas.png"))); // NOI18N
+        btnPapasFritas.setBorder(null);
+        btnPapasFritas.addActionListener(this::btnPapasFritasActionPerformed);
+        jPanel3.add(btnPapasFritas);
 
         jPanel4.setPreferredSize(new java.awt.Dimension(527, 100));
 
@@ -135,35 +158,35 @@ public class Comidas extends javax.swing.JDialog {
         jPanel6.setPreferredSize(new java.awt.Dimension(500, 300));
         jPanel6.setLayout(new java.awt.GridLayout(2, 4, 30, 30));
 
-        jButton9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/bollo-de-hamburguesa.png"))); // NOI18N
-        jButton9.setBorder(null);
-        jButton9.addActionListener(this::jButton9ActionPerformed);
-        jPanel6.add(jButton9);
+        btnHamburguesa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/bollo-de-hamburguesa.png"))); // NOI18N
+        btnHamburguesa.setBorder(null);
+        btnHamburguesa.addActionListener(this::btnHamburguesaActionPerformed);
+        jPanel6.add(btnHamburguesa);
 
-        jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/perritos-calientes.png"))); // NOI18N
-        jButton8.setBorder(null);
-        jButton8.addActionListener(this::jButton8ActionPerformed);
-        jPanel6.add(jButton8);
+        btnPerroCaliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/perritos-calientes.png"))); // NOI18N
+        btnPerroCaliente.setBorder(null);
+        btnPerroCaliente.addActionListener(this::btnPerroCalienteActionPerformed);
+        jPanel6.add(btnPerroCaliente);
 
-        jButton11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/sandwich-de-calamares.png"))); // NOI18N
-        jButton11.setBorder(null);
-        jButton11.addActionListener(this::jButton11ActionPerformed);
-        jPanel6.add(jButton11);
+        btnBocadilloCalamar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/sandwich-de-calamares.png"))); // NOI18N
+        btnBocadilloCalamar.setBorder(null);
+        btnBocadilloCalamar.addActionListener(this::btnBocadilloCalamarActionPerformed);
+        jPanel6.add(btnBocadilloCalamar);
 
-        jButton13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/sandwich.png"))); // NOI18N
-        jButton13.setBorder(null);
-        jButton13.addActionListener(this::jButton13ActionPerformed);
-        jPanel6.add(jButton13);
+        btnSandwich.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/sandwich.png"))); // NOI18N
+        btnSandwich.setBorder(null);
+        btnSandwich.addActionListener(this::btnSandwichActionPerformed);
+        jPanel6.add(btnSandwich);
 
-        jButton14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/tortilla-espanola.png"))); // NOI18N
-        jButton14.setBorder(null);
-        jButton14.addActionListener(this::jButton14ActionPerformed);
-        jPanel6.add(jButton14);
+        btnTortillaDePatata.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/tortilla-espanola.png"))); // NOI18N
+        btnTortillaDePatata.setBorder(null);
+        btnTortillaDePatata.addActionListener(this::btnTortillaDePatataActionPerformed);
+        jPanel6.add(btnTortillaDePatata);
 
-        jButton15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/tortilla.png"))); // NOI18N
-        jButton15.setBorder(null);
-        jButton15.addActionListener(this::jButton15ActionPerformed);
-        jPanel6.add(jButton15);
+        btnWrap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/tortilla.png"))); // NOI18N
+        btnWrap.setBorder(null);
+        btnWrap.addActionListener(this::btnWrapActionPerformed);
+        jPanel6.add(btnWrap);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -197,6 +220,7 @@ public class Comidas extends javax.swing.JDialog {
         jPanel5.setLayout(new java.awt.GridLayout(1, 0));
 
         btnVolver.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/volver.png"))); // NOI18N
+        btnVolver.addActionListener(this::btnVolverActionPerformed);
         jPanel5.add(btnVolver);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -224,105 +248,78 @@ public class Comidas extends javax.swing.JDialog {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnAlitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlitasActionPerformed
+        seleccionarProducto("Alitas");
+    }//GEN-LAST:event_btnAlitasActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnAnillosDeCalamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnillosDeCalamarActionPerformed
+        seleccionarProducto("Anillos de calamar");
+    }//GEN-LAST:event_btnAnillosDeCalamarActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    private void btnCroquetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCroquetasActionPerformed
+        seleccionarProducto("Croquetas");
+    }//GEN-LAST:event_btnCroquetasActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton5ActionPerformed
+    private void btnChorizoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChorizoActionPerformed
+        seleccionarProducto("Chorizo");
+    }//GEN-LAST:event_btnChorizoActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    private void btnTacosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTacosActionPerformed
+         seleccionarProducto("Tacos");
+    }//GEN-LAST:event_btnTacosActionPerformed
 
-    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton7ActionPerformed
+    private void btnPapasFritasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPapasFritasActionPerformed
+        seleccionarProducto("PapasFritas");
+    }//GEN-LAST:event_btnPapasFritasActionPerformed
 
-    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton8ActionPerformed
+    private void btnPerroCalienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerroCalienteActionPerformed
+        seleccionarProducto("PerroCaliente"); 
+    }//GEN-LAST:event_btnPerroCalienteActionPerformed
 
-    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton9ActionPerformed
+    private void btnHamburguesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHamburguesaActionPerformed
+        seleccionarProducto("Hamburguesa");
+    }//GEN-LAST:event_btnHamburguesaActionPerformed
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton11ActionPerformed
+    private void btnBocadilloCalamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBocadilloCalamarActionPerformed
+         seleccionarProducto("BocadilloCalamar");
+    }//GEN-LAST:event_btnBocadilloCalamarActionPerformed
 
-    private void jButton13ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton13ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton13ActionPerformed
+    private void btnSandwichActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSandwichActionPerformed
+       seleccionarProducto("Sandwich");
+    }//GEN-LAST:event_btnSandwichActionPerformed
 
-    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton14ActionPerformed
+    private void btnTortillaDePatataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTortillaDePatataActionPerformed
+        seleccionarProducto("TortillaDePatata");
+    }//GEN-LAST:event_btnTortillaDePatataActionPerformed
 
-    private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton15ActionPerformed
+    private void btnWrapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWrapActionPerformed
+        seleccionarProducto("WrapDePollo");
+    }//GEN-LAST:event_btnWrapActionPerformed
+
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+       this.productoSeleccionado = null;
+        dispose();
+    }//GEN-LAST:event_btnVolverActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ReflectiveOperationException | javax.swing.UnsupportedLookAndFeelException ex) {
-            logger.log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-                Comidas dialog = new Comidas(new javax.swing.JFrame(), true);
-                dialog.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                dialog.setVisible(true);
-            }
-        });
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAlitas;
+    private javax.swing.JButton btnAnillosDeCalamar;
+    private javax.swing.JButton btnBocadilloCalamar;
+    private javax.swing.JButton btnChorizo;
+    private javax.swing.JButton btnCroquetas;
+    private javax.swing.JButton btnHamburguesa;
+    private javax.swing.JButton btnPapasFritas;
+    private javax.swing.JButton btnPerroCaliente;
+    private javax.swing.JButton btnSandwich;
+    private javax.swing.JButton btnTacos;
+    private javax.swing.JButton btnTortillaDePatata;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton11;
-    private javax.swing.JButton jButton13;
-    private javax.swing.JButton jButton14;
-    private javax.swing.JButton jButton15;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
-    private javax.swing.JButton jButton7;
-    private javax.swing.JButton jButton8;
-    private javax.swing.JButton jButton9;
+    private javax.swing.JButton btnWrap;
     private javax.swing.JLabel jLabelEmpresa;
     private javax.swing.JLabel jLabelEmpresa1;
     private javax.swing.JPanel jPanel1;

@@ -35,6 +35,10 @@ public class Main extends javax.swing.JFrame {
     private boolean modoCalculadoraActivo = false;
     private String operacionActual = "";
     private double resultadoCalculadora = 0;
+    private boolean modoCantidadActivo = false;
+    private enum EstadoFlujo { NORMAL, ESPERANDO_CANTIDAD, ESPERANDO_PRECIO }
+    private EstadoFlujo estadoFlujo = EstadoFlujo.NORMAL;
+    private int cantidadTemporal = 0;
 
     private Mesa mesaSeleccionada;
     private List<Mesa> listaMesas;
@@ -158,23 +162,7 @@ public class Main extends javax.swing.JFrame {
 /********************/
      
 
-      
-     private void abrirDialogoProductos(String categoria) {
-        if (mesaSeleccionada == null) {
-            JOptionPane.showMessageDialog(this, "Primero selecciona una MESA", "Aviso", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        // Asegúrate de haber creado la clase DialogoProductos.java
-        DialogoProductos dialogo = new DialogoProductos(this, true, todosProductos, categoria);
-        dialogo.setVisible(true);
-        
-        Producto elegido = dialogo.getProductoSeleccionado();
-        if (elegido != null) {
-            añadirProductoATabla(elegido, 1);
-        }
-    }
-     
-     private void añadirProductoATabla(Producto producto, int cantidad) {
+     void añadirProductoATabla(Producto producto, int cantidad) {
          if (mesaSeleccionada == null) return;
         mesaSeleccionada.agregarProducto(producto, cantidad);
         actualizarTablaVisual();
@@ -197,7 +185,7 @@ public class Main extends javax.swing.JFrame {
         double total = subtotal + iva;
 
         displaySubtotal.setText(String.format("SUBTOTAL: %8.2f €", subtotal));
-        displayIVA.setText(String.format("IVA 21%:    %8.2f €", iva));
+        displayIVA.setText(String.format("IVA 21%%:    %8.2f €", iva));
         displayTotal.setText(String.format("TOTAL:      %8.2f €", total));
     }
      
@@ -254,7 +242,7 @@ public class Main extends javax.swing.JFrame {
         double total = subtotal + iva;
         ticket.append("\n────────────────────────────────\n");
         ticket.append(String.format("SUBTOTAL: %25.2f€\n", subtotal));
-        ticket.append(String.format("IVA 21%:  %25.2f€\n", iva));
+        ticket.append(String.format("IVA 21%%:  %25.2f€\n", iva));
         ticket.append(String.format("TOTAL:    %25.2f€\n", total));
         ticket.append("════════════════════════════════\n");
         ticket.append("     ¡Gracias por su visita!\n");
@@ -288,7 +276,7 @@ public class Main extends javax.swing.JFrame {
         double total = subtotal + iva;
         factura.append("\n────────────────────────────────\n");
         factura.append(String.format("BASE IMPONIBLE: %20.2f€\n", subtotal));
-        factura.append(String.format("IVA 21%:        %20.2f€\n", iva));
+        factura.append(String.format("IVA 21%%:        %20.2f€\n", iva));
         factura.append(String.format("TOTAL FACTURA:  %20.2f€\n", total));
         factura.append("════════════════════════════════");
 
@@ -309,11 +297,58 @@ public class Main extends javax.swing.JFrame {
         actualizarVisualMesas();
     }
       
-     private void ingresarNumero(String numero) {
-        if (!modoCalculadoraActivo) return;
+    private void ingresarNumero(String numero) {
+    if (!modoCalculadoraActivo) return;
+    
+    if (modoCantidadActivo) {
+        // Escribiendo en el display de cantidad
+        if (displayCantidad.getText().equals("1") || displayCantidad.getText().equals("0")) {
+            displayCantidad.setText(numero);
+        } else {
+            displayCantidad.setText(displayCantidad.getText() + numero);
+        }
+    } else {
+        // Escribiendo en el display de la calculadora (precio/operación)
         operacionActual += numero;
-        displayCalculadora.setText(operacionActual);
+        jTextField1.setText(operacionActual);
     }
+}
+     
+ private double evaluarExpresion(String expr) {
+    if (expr == null || expr.trim().isEmpty()) return 0;
+    expr = expr.replace("x", "*").replace(",", ".");
+    
+    String[] sumas = expr.split("(?=[+-])|(?<=[+-])");
+    double total = 0;
+    String operadorActual = "+";
+    
+    for (String parte : sumas) {
+        if (parte.equals("+") || parte.equals("-")) {
+            operadorActual = parte;
+            continue;
+        }
+        double valor = evaluarMultiplicacionDivision(parte);
+        if (operadorActual.equals("+")) total += valor;
+        else if (operadorActual.equals("-")) total -= valor;
+    }
+    return total;
+}
+
+private double evaluarMultiplicacionDivision(String expr) {
+    String[] factores = expr.split("(?=[*/])|(?<=[*/])");
+    double resultado = 1;
+    String op = "*";
+    for (String f : factores) {
+        if (f.equals("*") || f.equals("/")) {
+            op = f;
+            continue;
+        }
+        double val = Double.parseDouble(f);
+        if (op.equals("*")) resultado *= val;
+        else if (op.equals("/")) resultado /= val;
+    }
+    return resultado;
+}
 
 
     
@@ -1007,13 +1042,28 @@ public class Main extends javax.swing.JFrame {
 
     private void btnCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCActionPerformed
        if (!modoCalculadoraActivo) return;
-        operacionActual = "";
-        resultadoCalculadora = 0;
-        displayCalculadora.setText("0");
+    
+    // Si está en medio del flujo de añadir producto, cancelarlo
+    if (estadoFlujo != EstadoFlujo.NORMAL) {
+        estadoFlujo = EstadoFlujo.NORMAL;
+        cantidadTemporal = 0;
+        JOptionPane.showMessageDialog(this, "❌ Operación de añadir producto cancelada");
+    }
+    
+    operacionActual = "";
+    resultadoCalculadora = 0;
+    displayCalculadora b.setText("0");
     }//GEN-LAST:event_btnCActionPerformed
 
     private void btnBebidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBebidasActionPerformed
-         abrirDialogoProductos("Bebidas");
+       if (mesaSeleccionada == null) {
+        JOptionPane.showMessageDialog(this, "️ Primero selecciona una MESA");
+        return;
+    }
+    // ️ Pasamos 'this' como referencia
+    Bebidas dialogoBebidas = new Bebidas(this, true, todosProductos, this);
+    dialogoBebidas.setVisible(true);
+    // Ya no necesitamos recuperar el producto, se añadió directamente
         
     }//GEN-LAST:event_btnBebidasActionPerformed
 
@@ -1034,7 +1084,17 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_displaySubtotalActionPerformed
 
     private void btnComidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComidasActionPerformed
-        abrirDialogoProductos("Comidas");        // TODO add your handling code here:
+       if (mesaSeleccionada == null) {
+            javax.swing.JOptionPane.showMessageDialog(this, "⚠️ Primero selecciona una MESA", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        Comidas dialogoComidas = new Comidas(this, true, todosProductos);
+        dialogoComidas.setVisible(true);
+        
+        Producto elegido = dialogoComidas.getProductoSeleccionado();
+        if (elegido != null) {
+            añadirProductoATabla(elegido, 1);
+        }
         
     }//GEN-LAST:event_btnComidasActionPerformed
 
@@ -1062,9 +1122,74 @@ public class Main extends javax.swing.JFrame {
 
     private void btnIgualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIgualActionPerformed
         if (!modoCalculadoraActivo) return;
-        try {
-            javax.script.ScriptEngineManager mgr = new javax.script.ScriptEngineManager();
-            resultadoCalculadora = (Double) mgr.getEngineByName("js").eval(operacionActual.replace("x", "*"));
+    
+    // ============================================
+    // CASO 1: Esperando CANTIDAD (fase 1 del flujo)
+    // ============================================
+        if (estadoFlujo == EstadoFlujo.ESPERANDO_CANTIDAD) {
+            try {
+                cantidadTemporal = Integer.parseInt(jTextField1.getText());
+                if (cantidadTemporal <= 0) {
+                    JOptionPane.showMessageDialog(this, "⚠️ La cantidad debe ser mayor que 0");
+                    return;
+                }
+
+                // Pasar a fase 2: pedir precio
+                estadoFlujo = EstadoFlujo.ESPERANDO_PRECIO;
+                operacionActual = "";
+                jTextField1.setText("0");
+
+                JOptionPane.showMessageDialog(this,
+                    "💰 FASE 2: Ingresa el PRECIO en la calculadora\n" +
+                    "y pulsa '=' para confirmar.\n\n" +
+                    "Ejemplo: pulsa 4 . 5 0 y luego =",
+                    "Añadir Producto",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "⚠️ Cantidad no válida. Usa solo números.");
+            }
+            return;
+        }
+        
+        if (estadoFlujo == EstadoFlujo.ESPERANDO_PRECIO) {
+            try {
+                double precio = Double.parseDouble(jTextField1.getText());
+                if (precio <= 0) {
+                    JOptionPane.showMessageDialog(this, "⚠️ El precio debe ser mayor que 0");
+                    return;
+                }
+
+                // Crear producto y añadirlo
+                Producto productoOtros = new Producto("Otros", precio, "otros");
+                mesaSeleccionada.agregarProducto(productoOtros, cantidadTemporal);
+                actualizarTablaVisual();
+                actualizarTotales();
+                actualizarVisualMesas();
+
+                // Resetear todo
+                estadoFlujo = EstadoFlujo.NORMAL;
+                cantidadTemporal = 0;
+                operacionActual = "";
+                resultadoCalculadora = 0;
+                jTextField1.setText("0");
+
+                JOptionPane.showMessageDialog(this,
+                    "✅ Producto añadido:\n" +
+                    "Cantidad: " + cantidadTemporal + "\n" +
+                    "Precio: " + String.format("%.2f€", precio) + "\n" +
+                    "Importe: " + String.format("%.2f€", precio * cantidadTemporal),
+                    "Producto Añadido",
+                    JOptionPane.INFORMATION_MESSAGE);
+
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "⚠️ Precio no válido. Usa números y punto decimal.");
+            }
+            return;
+        }
+        
+         try {
+            resultadoCalculadora = evaluarExpresion(operacionActual);
             displayCalculadora.setText(String.valueOf(resultadoCalculadora));
         } catch (Exception e) {
             displayCalculadora.setText("Error");
@@ -1119,35 +1244,27 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPuntoActionPerformed
 
     private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
-         if (!modoCalculadoraActivo) return;
-        if (mesaSeleccionada == null) {
-            JOptionPane.showMessageDialog(this, "⚠️ Primero selecciona una MESA");
-            return;
-        }
-
-        String cantStr = JOptionPane.showInputDialog(this,
-            "¿Qué cantidad de este producto desea añadir?",
-            "Cantidad",
-            JOptionPane.QUESTION_MESSAGE);
-
-        if (cantStr == null) return;
-
-        int cantidad = 1;
-        try {
-            cantidad = Integer.parseInt(cantStr);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Cantidad no válida, se usará 1.");
-        }
-
-        Producto productoOtros = new Producto("Otros", resultadoCalculadora, "otros");
-        mesaSeleccionada.agregarProducto(productoOtros, cantidad);
-        actualizarTablaVisual();
-        actualizarTotales();
-        actualizarVisualMesas();
-
-        operacionActual = "";
-        resultadoCalculadora = 0;
-        displayCalculadora.setText("0");
+      if (!modoCalculadoraActivo) return;
+    if (mesaSeleccionada == null) {
+        JOptionPane.showMessageDialog(this, "️ Primero selecciona una MESA");
+        return;
+    }
+    
+    // Iniciar el flujo: pedir cantidad
+    estadoFlujo = EstadoFlujo.ESPERANDO_CANTIDAD;
+    cantidadTemporal = 0;
+    
+    // Limpiar display para que el usuario empiece a teclear la cantidad
+    operacionActual = "";
+    displayCalculadora.setText("0");
+    
+    // Mostrar mensaje informativo (NO bloqueante, para que pueda usar la calculadora)
+    JOptionPane.showMessageDialog(this,
+        "🔢 FASE 1: Ingresa la CANTIDAD en la calculadora\n" +
+        "y pulsa '=' para confirmar.\n\n" +
+        "Ejemplo: pulsa 3 y luego =",
+        "Añadir Producto",
+        JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnAñadirActionPerformed
 
     private void btnMesa2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesa2ActionPerformed

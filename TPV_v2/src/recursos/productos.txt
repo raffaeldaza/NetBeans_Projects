@@ -13,11 +13,11 @@ bebidas;Te;1.50
 Comidas;Alitas;4.50
 Comidas;Anillos de calamar;4.00
 Comidas;Croquetas;3.50
-Comidas;Plato de embutidos;5.50
+Comidas;Chorizo;5.50
 Comidas;Tacos;3.50
 Comidas;PapasFritas;2.50
 Comidas;Hamburguesa;5.50
-Comidas;HotDog;3.50
+Comidas;PerroCaliente;3.50
 Comidas;BocadilloCalamar;4.50
 Comidas;Sandwich;4.00
 Comidas;TortillaDePatata;3.00
