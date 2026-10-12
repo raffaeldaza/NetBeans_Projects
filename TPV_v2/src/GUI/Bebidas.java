@@ -28,29 +28,22 @@ public class Bebidas extends javax.swing.JDialog {
         initComponents();
     }
 
-  private void añadirSinCerrar(String nombreBuscado) {
-        for (Producto p : listaProductos) {
-            if (p.getNombre().equalsIgnoreCase(nombreBuscado)) {
-                if (mainRef != null) {
-                    mainRef.añadirProductoATabla(p, 1); // Añade directamente
-                }
-                break;
+ private void añadirSinCerrar(String nombreBuscado) {
+    for (Producto p : listaProductos) {
+        if (p.getNombre().equalsIgnoreCase(nombreBuscado)) {
+            // Llama al método público de Main.java
+            // Asumiendo que tu instancia de Main se llama 'mainRef'
+            if (mainRef != null) {
+                mainRef.agregarProducto(p); 
             }
+            break;
         }
-        // NO llamamos a dispose() → la ventana sigue abierta
     }
+}
    
    
    
-   private void seleccionarProducto(String nombreBuscado) {
-        for (Producto p : listaProductos) {
-            if (p.getNombre().equalsIgnoreCase(nombreBuscado)) {
-                this.productoSeleccionado = p;
-                break;
-            }
-        }
-        
-    }
+ 
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -253,56 +246,55 @@ public class Bebidas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnZumoDeNaranjaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnZumoDeNaranjaActionPerformed
-        seleccionarProducto("Zumo de naranja");
+        añadirSinCerrar("Zumo de naranja");
     }//GEN-LAST:event_btnZumoDeNaranjaActionPerformed
 
     private void btnAguaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAguaActionPerformed
-        seleccionarProducto("Agua");
+        añadirSinCerrar("Agua");
     }//GEN-LAST:event_btnAguaActionPerformed
 
     private void btnCervezaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCervezaActionPerformed
-        seleccionarProducto("Cerveza");
+        añadirSinCerrar("Cerveza");
     }//GEN-LAST:event_btnCervezaActionPerformed
 
     private void btnVinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVinoActionPerformed
-        seleccionarProducto("Vino");
+        añadirSinCerrar("Vino");
     }//GEN-LAST:event_btnVinoActionPerformed
 
     private void btnJugoNaturalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnJugoNaturalActionPerformed
-        seleccionarProducto("Jugo natural");
+        añadirSinCerrar("Jugo natural");    
     }//GEN-LAST:event_btnJugoNaturalActionPerformed
 
     private void btnTeHeladoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeHeladoActionPerformed
-        seleccionarProducto("Te helado");
+        añadirSinCerrar("Te helado");
     }//GEN-LAST:event_btnTeHeladoActionPerformed
 
     private void btnChocoloateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChocoloateActionPerformed
-        seleccionarProducto("Chocolate");
+        añadirSinCerrar("Chocolate");
     }//GEN-LAST:event_btnChocoloateActionPerformed
 
     private void btnCapucchinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapucchinoActionPerformed
-        seleccionarProducto("Capucchino");
+         añadirSinCerrar("Capucchino");
     }//GEN-LAST:event_btnCapucchinoActionPerformed
 
     private void btnExpressoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpressoActionPerformed
-         seleccionarProducto("Expresso");
+         añadirSinCerrar("Expresso");
     }//GEN-LAST:event_btnExpressoActionPerformed
 
     private void btnFrappeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFrappeActionPerformed
-        seleccionarProducto("Frappe");
+        añadirSinCerrar("Frappe");
     }//GEN-LAST:event_btnFrappeActionPerformed
 
     private void btnMachiattoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMachiattoActionPerformed
-        seleccionarProducto("Cafe con leche");
+        añadirSinCerrar("Cafe con leche");
     }//GEN-LAST:event_btnMachiattoActionPerformed
 
     private void btnTeCalienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTeCalienteActionPerformed
-        seleccionarProducto("Te");
+         añadirSinCerrar("Te");
     }//GEN-LAST:event_btnTeCalienteActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-         this.productoSeleccionado = null; 
-        dispose();
+         dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
     /**

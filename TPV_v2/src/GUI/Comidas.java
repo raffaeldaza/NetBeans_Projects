@@ -15,29 +15,35 @@ public class Comidas extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Comidas.class.getName());
 
-    
+    private Main mainRef;
     private Producto productoSeleccionado;
     private List<Producto> listaProductos;
 
-    public Comidas(java.awt.Frame parent, boolean modal, List<Producto> productos) {
-        super(parent, modal);
-        this.listaProductos = productos;
-        initComponents();
-    }
+  
+    
+    public Comidas(java.awt.Frame parent, boolean modal, List<Producto> productos, Main main) {
+    super(parent, modal);
+    this.listaProductos = productos;
+    this.mainRef = main;
+    initComponents();
+}
 
     public Producto getProductoSeleccionado() {
         return productoSeleccionado;
     }
 
-    private void seleccionarProducto(String nombreBuscado) {
-        for (Producto p : listaProductos) {
-            if (p.getNombre().equalsIgnoreCase(nombreBuscado)) {
-                this.productoSeleccionado = p;
-                break;
+  private void añadirSinCerrar(String nombreBuscado) {
+    for (Producto p : listaProductos) {
+        if (p.getNombre().equalsIgnoreCase(nombreBuscado)) {
+            // Llama al método público de Main.java
+            // Asumiendo que tu instancia de Main se llama 'mainRef'
+            if (mainRef != null) {
+                mainRef.agregarProducto(p); 
             }
+            break;
         }
-        dispose();
     }
+}
 
     /**
      * Creates new form Bebidas
@@ -249,51 +255,51 @@ public class Comidas extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAlitasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAlitasActionPerformed
-        seleccionarProducto("Alitas");
+        añadirSinCerrar("Alitas");
     }//GEN-LAST:event_btnAlitasActionPerformed
 
     private void btnAnillosDeCalamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAnillosDeCalamarActionPerformed
-        seleccionarProducto("Anillos de calamar");
+        añadirSinCerrar("Anillos de calamar");
     }//GEN-LAST:event_btnAnillosDeCalamarActionPerformed
 
     private void btnCroquetasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCroquetasActionPerformed
-        seleccionarProducto("Croquetas");
+        añadirSinCerrar("Croquetas");
     }//GEN-LAST:event_btnCroquetasActionPerformed
 
     private void btnChorizoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChorizoActionPerformed
-        seleccionarProducto("Chorizo");
+        añadirSinCerrar("Chorizo");
     }//GEN-LAST:event_btnChorizoActionPerformed
 
     private void btnTacosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTacosActionPerformed
-         seleccionarProducto("Tacos");
+         añadirSinCerrar("Tacos");
     }//GEN-LAST:event_btnTacosActionPerformed
 
     private void btnPapasFritasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPapasFritasActionPerformed
-        seleccionarProducto("PapasFritas");
+        añadirSinCerrar("PapasFritas");
     }//GEN-LAST:event_btnPapasFritasActionPerformed
 
     private void btnPerroCalienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerroCalienteActionPerformed
-        seleccionarProducto("PerroCaliente"); 
+        añadirSinCerrar("PerroCaliente"); 
     }//GEN-LAST:event_btnPerroCalienteActionPerformed
 
     private void btnHamburguesaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHamburguesaActionPerformed
-        seleccionarProducto("Hamburguesa");
+        añadirSinCerrar("Hamburguesa");
     }//GEN-LAST:event_btnHamburguesaActionPerformed
 
     private void btnBocadilloCalamarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBocadilloCalamarActionPerformed
-         seleccionarProducto("BocadilloCalamar");
+         añadirSinCerrar("BocadilloCalamar");
     }//GEN-LAST:event_btnBocadilloCalamarActionPerformed
 
     private void btnSandwichActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSandwichActionPerformed
-       seleccionarProducto("Sandwich");
+       añadirSinCerrar("Sandwich");
     }//GEN-LAST:event_btnSandwichActionPerformed
 
     private void btnTortillaDePatataActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTortillaDePatataActionPerformed
-        seleccionarProducto("TortillaDePatata");
+        añadirSinCerrar("TortillaDePatata");
     }//GEN-LAST:event_btnTortillaDePatataActionPerformed
 
     private void btnWrapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnWrapActionPerformed
-        seleccionarProducto("WrapDePollo");
+        añadirSinCerrar("WrapDePollo");
     }//GEN-LAST:event_btnWrapActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed

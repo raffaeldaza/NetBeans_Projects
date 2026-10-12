@@ -20,7 +20,10 @@ import java.util.List;
 public class GestorProductos {
 
     public static List<Producto> cargarProductos(String rutaFichero) {
+        
+        
         List<Producto> productos = new ArrayList<>();
+        
         try (BufferedReader br = new BufferedReader(new FileReader(rutaFichero))) {
             String linea;
             while ((linea = br.readLine()) != null) {

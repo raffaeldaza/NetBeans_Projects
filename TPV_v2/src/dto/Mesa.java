@@ -6,6 +6,7 @@ package dto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  *
@@ -48,41 +49,42 @@ public class Mesa {
     }
 
     
-    
-    public void agregarProducto(Producto producto, int cantidad) {
-        boolean existe = false;
-        for (String[] fila : pedido) {
-            if (fila[0].equals(producto.getNombre())) {
-                int cantActual = Integer.parseInt(fila[1]);
-                fila[1] = String.valueOf(cantActual + cantidad);
-                double nuevoImporte = producto.getPrecio() * (cantActual + cantidad);
-                fila[3] = String.format("%.2f", nuevoImporte);
-                existe = true;
-                break;
-            }
+public void agregarProducto(Producto producto, int cantidad) {
+    boolean existe = false;
+    for (String[] fila : pedido) {
+        if (fila[0].equals(producto.getNombre())) {
+            int cantActual = Integer.parseInt(fila[1]);
+            fila[1] = String.valueOf(cantActual + cantidad);
+            double nuevoImporte = producto.getPrecio() * (cantActual + cantidad);
+            // USAR Locale.US para guardar SIEMPRE con punto
+            fila[3] = String.format(Locale.US, "%.2f", nuevoImporte);
+            existe = true;
+            break;
         }
-        if (!existe) {
-            double importe = producto.getPrecio() * cantidad;
-            pedido.add(new String[]{
-                producto.getNombre(),
-                String.valueOf(cantidad),
-                String.format("%.2f", producto.getPrecio()),
-                String.format("%.2f", importe)
-            });
-        }
-        ocupada = true;
     }
+    if (!existe) {
+        double importe = producto.getPrecio() * cantidad;
+        pedido.add(new String[]{
+            producto.getNombre(),
+            String.valueOf(cantidad),
+            String.format(Locale.US, "%.2f", producto.getPrecio()),
+            String.format(Locale.US, "%.2f", importe)
+        });
+    }
+    ocupada = true;
+}
     
-    public void eliminarLinea(int indice) {
+ public void eliminarLinea(int indice) {
         if (indice >= 0 && indice < pedido.size()) {
             pedido.remove(indice);
             if (pedido.isEmpty()) {
-                ocupada = false; // Si no hay productos, la mesa queda libre
+                ocupada = false;
             }
         }
     }
+
     
-    public double getTotal() {
+     public double getTotal() {
         double total = 0;
         for (String[] fila : pedido) {
             total += Double.parseDouble(fila[3]);

@@ -12,6 +12,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -31,15 +32,13 @@ public class Main extends javax.swing.JFrame {
      * Creates new form Main
      */
     
-    
-    private boolean modoCalculadoraActivo = false;
+     private boolean modoCalculadoraActivo = false;
     private String operacionActual = "";
     private double resultadoCalculadora = 0;
-    private boolean modoCantidadActivo = false;
     private enum EstadoFlujo { NORMAL, ESPERANDO_CANTIDAD, ESPERANDO_PRECIO }
     private EstadoFlujo estadoFlujo = EstadoFlujo.NORMAL;
     private int cantidadTemporal = 0;
-
+    
     private Mesa mesaSeleccionada;
     private List<Mesa> listaMesas;
     private List<Producto> todosProductos;
@@ -51,80 +50,27 @@ public class Main extends javax.swing.JFrame {
     private final Color COLOR_DISPLAY = new Color(255, 183, 3);
     private final Color COLOR_ERROR = new Color(251, 133, 0);
     private final Color COLOR_OPACO = new Color(200, 200, 200);
+    
 
-     public Main() {
-       initComponents();
-       
+    public Main() {
+        initComponents();
+        
         listaMesas = new ArrayList<>();
         for (int i = 1; i <= 8; i++) {
             listaMesas.add(new Mesa(i));
         }
         todosProductos = GestorProductos.cargarProductos("recursos/productos.txt");
-
-       
-        aplicarColorFondo();
-        configurarDisplays();
-        configurarTabla();
         actualizarEstadosVisuales();
         actualizarVisualMesas();
     }
     
-    private void aplicarColorFondo() {
-        getContentPane().setBackground(COLOR_FONDO);
-        java.awt.Component[] componentes = getContentPane().getComponents();
-        for (java.awt.Component c : componentes) {
-            if (c instanceof javax.swing.JPanel) {
-                ((javax.swing.JPanel) c).setBackground(COLOR_FONDO);
-                ((javax.swing.JPanel) c).setOpaque(true);
-            }
-        }
-    }
-
-     
-    private void configurarDisplays() {
-        // Display de la calculadora
-        displayCalculadora.setEditable(false);
-        displayCalculadora.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        displayCalculadora.setFont(new Font("Monospaced", Font.BOLD, 28));
-        displayCalculadora.setBackground(COLOR_DISPLAY);
-        displayCalculadora.setForeground(COLOR_TEXTO);
-        displayCalculadora.setText("0");
-
-        // Displays de totales
-        javax.swing.JTextField[] displaysTotales = {displaySubtotal, displayIVA, displayTotal};
-        for (javax.swing.JTextField d : displaysTotales) {
-            d.setEditable(false);
-            d.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-            d.setFont(new Font("Monospaced", Font.BOLD, 16));
-            d.setBackground(COLOR_DISPLAY);
-            d.setForeground(COLOR_TEXTO);
-            d.setBorder(javax.swing.BorderFactory.createLineBorder(COLOR_TEXTO, 1));
-        }
-        displayTotal.setFont(new Font("Monospaced", Font.BOLD, 22));
-
-        actualizarTotales();
-    }
     
-   private void configurarTabla() {
-        DefaultTableModel modelo = new DefaultTableModel(
-            new Object[][]{},
-            new String[]{"Producto", "Cantidad", "Precio", "Importe"}
-        ) {
-            @Override
-            public boolean isCellEditable(int row, int column) { return false; }
-        };
-        tablaProductos.setModel(modelo);
-        tablaProductos.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        tablaProductos.setRowHeight(30);
-    }
 
-
-    
     private void actualizarEstadosVisuales() {
         if (modoCalculadoraActivo) {
             btnModoCalculadora.setBackground(COLOR_ACTIVO);
             btnModoCalculadora.setForeground(Color.WHITE);
-            btnAñadir.setBackground(COLOR_ACTIVO); // Nombre correcto de tu botón
+            btnAñadir.setBackground(COLOR_ACTIVO);
             btnAñadir.setForeground(Color.WHITE);
             btnAñadir.setEnabled(true);
             activarBotonesCalculadora(true);
@@ -139,10 +85,10 @@ public class Main extends javax.swing.JFrame {
     }
 
     
-      private void activarBotonesCalculadora(boolean activo) {
+    private void activarBotonesCalculadora(boolean activo) {
         JButton[] botones = {
             btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9,
-            btnPunto, btnC, btnIgual, btnSuma, btnResta, btnMult, jButtonSignoDividir
+            btnPunto, btnC, btnIgual, btnSuma, btnResta, btnMult, btnDividir
         };
         for (JButton b : botones) {
             b.setEnabled(activo);
@@ -151,62 +97,63 @@ public class Main extends javax.swing.JFrame {
                 b.setForeground(Color.GRAY);
             } else {
                 if (b == btnC) b.setBackground(COLOR_ERROR);
-                else if (b == btnSuma || b == btnResta || b == btnMult || b == jButtonSignoDividir) b.setBackground(COLOR_PRIMARIO);
+                else if (b == btnSuma || b == btnResta || b == btnMult || b == btnDividir) b.setBackground(COLOR_PRIMARIO);
                 else b.setBackground(Color.WHITE);
                 b.setForeground(COLOR_TEXTO);
             }
         }
         displayCalculadora.setBackground(activo ? COLOR_DISPLAY : new Color(230, 230, 230));
     }
-
-/********************/
-     
-
-     void añadirProductoATabla(Producto producto, int cantidad) {
-         if (mesaSeleccionada == null) return;
-        mesaSeleccionada.agregarProducto(producto, cantidad);
-        actualizarTablaVisual();
-        actualizarTotales();
-        actualizarVisualMesas();
-    }
-     
-     private void actualizarTablaVisual() {
-        DefaultTableModel modelo = (DefaultTableModel) tablaProductos.getModel();
-        modelo.setRowCount(0);
-        if (mesaSeleccionada == null) return;
-        for (String[] fila : mesaSeleccionada.getPedido()) {
-            modelo.addRow(fila);
+    
+    private double parsearNumero(String s) {
+        if (s == null || s.trim().isEmpty()) return -1;
+        try {
+            return Double.parseDouble(s.trim().replace(',', '.'));
+        } catch (NumberFormatException e) {
+            return -1;
         }
     }
-     
-     private void actualizarTotales() {
-        double subtotal = (mesaSeleccionada != null) ? mesaSeleccionada.getTotal() : 0;
+
+    private String formatoEuros(double valor) {
+        return String.format(Locale.US, "%.2f €", valor);
+    }
+    
+    
+    private void recargarTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) tablaProductos.getModel();
+        modelo.setRowCount(0);
+        
+        double subtotal = 0;
+        if (mesaSeleccionada != null) {
+            for (String[] fila : mesaSeleccionada.getPedido()) {
+                modelo.addRow(fila);
+                subtotal += Double.parseDouble(fila[3]);
+            }
+        }
+        
         double iva = subtotal * 0.21;
         double total = subtotal + iva;
-
-        displaySubtotal.setText(String.format("SUBTOTAL: %8.2f €", subtotal));
-        displayIVA.setText(String.format("IVA 21%%:    %8.2f €", iva));
-        displayTotal.setText(String.format("TOTAL:      %8.2f €", total));
+        
+        lblSubtotal.setText("SUBTOTAL: " + formatoEuros(subtotal));
+        lblIva.setText("IVA 21%:    " + formatoEuros(iva));
+        lblTotal.setText("TOTAL:      " + formatoEuros(total));
     }
-     
-     private void seleccionarMesa(int numero) {
+    
+    private void seleccionarMesa(int numero) {
         mesaSeleccionada = listaMesas.get(numero - 1);
         actualizarVisualMesas();
 
         if (mesaSeleccionada.isOcupada()) {
-            actualizarTablaVisual();
-            actualizarTotales();
+            recargarTabla();
             JOptionPane.showMessageDialog(this,
                 "Mesa " + numero + " seleccionada.\nEsta mesa tiene un pedido activo.",
                 "Mesa Ocupada", JOptionPane.INFORMATION_MESSAGE);
         } else {
-            ((DefaultTableModel) tablaProductos.getModel()).setRowCount(0);
-            actualizarTotales();
+            recargarTabla();
         }
     }
 
-     
-     private void actualizarVisualMesas() {
+    private void actualizarVisualMesas() {
         JButton[] botones = {btnMesa1, btnMesa2, btnMesa3, btnMesa4,
                              btnMesa5, btnMesa6, btnMesa7, btnMesa8};
         for (int i = 0; i < botones.length; i++) {
@@ -223,135 +170,176 @@ public class Main extends javax.swing.JFrame {
             }
         }
     }
-     
-     private void imprimirTicket() {
-        StringBuilder ticket = new StringBuilder();
-        ticket.append("════════════════════════════════\n");
-        ticket.append("       CAFETERÍA PANRIN\n");
-        ticket.append("    C/ Ejemplo 123, Valladolid\n");
-        ticket.append("    CIF: B12345678\n");
-        ticket.append("════════════════════════════════\n\n");
-        ticket.append("Mesa: ").append(mesaSeleccionada.getNumero()).append("\n");
-        ticket.append("Fecha: ").append(new java.util.Date()).append("\n\n");
-        for (String[] fila : mesaSeleccionada.getPedido()) {
-            ticket.append(String.format("%-20s %2s x %5s€ = %6s€\n",
-                fila[0], fila[1], fila[2], fila[3]));
+    
+    
+    public void agregarProducto(Producto p) {
+        if (mesaSeleccionada == null) {
+            JOptionPane.showMessageDialog(this, "Primero selecciona una MESA");
+            return;
         }
-        double subtotal = mesaSeleccionada.getTotal();
-        double iva = subtotal * 0.21;
-        double total = subtotal + iva;
-        ticket.append("\n────────────────────────────────\n");
-        ticket.append(String.format("SUBTOTAL: %25.2f€\n", subtotal));
-        ticket.append(String.format("IVA 21%%:  %25.2f€\n", iva));
-        ticket.append(String.format("TOTAL:    %25.2f€\n", total));
-        ticket.append("════════════════════════════════\n");
-        ticket.append("     ¡Gracias por su visita!\n");
-        ticket.append("════════════════════════════════");
-
-        javax.swing.JTextArea area = new javax.swing.JTextArea(ticket.toString());
-        area.setEditable(false);
-        area.setFont(new Font("Monospaced", Font.PLAIN, 13));
-        JOptionPane.showMessageDialog(this, area, "TICKET", JOptionPane.INFORMATION_MESSAGE);
-    }
-     
-     private void imprimirFactura(String tipoDoc, String numeroDoc, String nombreCliente) {
-        StringBuilder factura = new StringBuilder();
-        factura.append("════════════════════════════════\n");
-        factura.append("            FACTURA\n");
-        factura.append("       CAFETERÍA PANRIN\n");
-        factura.append("    C/ Ejemplo 123, Valladolid\n");
-        factura.append("    CIF: B12345678\n");
-        factura.append("════════════════════════════════\n\n");
-        factura.append("CLIENTE:\n");
-        factura.append("  Nombre: ").append(nombreCliente).append("\n");
-        factura.append("  ").append(tipoDoc).append(": ").append(numeroDoc).append("\n\n");
-        factura.append("Mesa: ").append(mesaSeleccionada.getNumero()).append("\n");
-        factura.append("Fecha: ").append(new java.util.Date()).append("\n\n");
-        for (String[] fila : mesaSeleccionada.getPedido()) {
-            factura.append(String.format("%-20s %2s x %5s€ = %6s€\n",
-                fila[0], fila[1], fila[2], fila[3]));
+        
+        int cantidad = 1;
+        if (!modoCalculadoraActivo && !displayCalculadora.getText().equals("0")) {
+            cantidad = (int) parsearNumero(displayCalculadora.getText());
+            displayCalculadora.setText("0");
         }
-        double subtotal = mesaSeleccionada.getTotal();
-        double iva = subtotal * 0.21;
-        double total = subtotal + iva;
-        factura.append("\n────────────────────────────────\n");
-        factura.append(String.format("BASE IMPONIBLE: %20.2f€\n", subtotal));
-        factura.append(String.format("IVA 21%%:        %20.2f€\n", iva));
-        factura.append(String.format("TOTAL FACTURA:  %20.2f€\n", total));
-        factura.append("════════════════════════════════");
-
-        javax.swing.JTextArea area = new javax.swing.JTextArea(factura.toString());
-        area.setEditable(false);
-        area.setFont(new Font("Monospaced", Font.PLAIN, 13));
-        JOptionPane.showMessageDialog(this, area, "FACTURA", JOptionPane.INFORMATION_MESSAGE);
-    }
-     
-      private void liberarMesa() {
-        if (mesaSeleccionada != null) {
-            mesaSeleccionada.limpiar();
-        }
-        mesaSeleccionada = null;
-        DefaultTableModel modelo = (DefaultTableModel) tablaProductos.getModel();
-        modelo.setRowCount(0);
-        actualizarTotales();
+        
+        mesaSeleccionada.agregarProducto(p, cantidad);
+        recargarTabla();
         actualizarVisualMesas();
     }
-      
+    
     private void ingresarNumero(String numero) {
-    if (!modoCalculadoraActivo) return;
-    
-    if (modoCantidadActivo) {
-        // Escribiendo en el display de cantidad
-        if (displayCantidad.getText().equals("1") || displayCantidad.getText().equals("0")) {
-            displayCantidad.setText(numero);
-        } else {
-            displayCantidad.setText(displayCantidad.getText() + numero);
-        }
-    } else {
-        // Escribiendo en el display de la calculadora (precio/operación)
+        if (!modoCalculadoraActivo) return;
         operacionActual += numero;
-        jTextField1.setText(operacionActual);
+        displayCalculadora.setText(operacionActual);
     }
-}
+
+    private double evaluarExpresion(String expr) {
+        if (expr == null || expr.trim().isEmpty()) return 0;
+        expr = expr.replace("x", "*").replace(",", ".");
+        
+        String[] sumas = expr.split("(?=[+-])|(?<=[+-])");
+        double total = 0;
+        String operadorActual = "+";
+        
+        for (String parte : sumas) {
+            if (parte.equals("+") || parte.equals("-")) {
+                operadorActual = parte;
+                continue;
+            }
+            double valor = evaluarMultiplicacionDivision(parte);
+            if (operadorActual.equals("+")) total += valor;
+            else if (operadorActual.equals("-")) total -= valor;
+        }
+        return total;
+    }
+
+    private double evaluarMultiplicacionDivision(String expr) {
+        String[] factores = expr.split("(?=[*/])|(?<=[*/])");
+        double resultado = 1;
+        String op = "*";
+        for (String f : factores) {
+            if (f.equals("*") || f.equals("/")) {
+                op = f;
+                continue;
+            }
+            double val = Double.parseDouble(f);
+            if (op.equals("*")) resultado *= val;
+            else if (op.equals("/")) resultado /= val;
+        }
+        return resultado;
+    }
+    
+    /***--------------------------///////////////////////////////////////////////////////////////////////***/
+    
+    private void procesarPago(Mesa mesa, String tipoDocumento, String idCliente) {
+        String[] opciones = {"Efectivo", "Tarjeta"};
+        int eleccion = JOptionPane.showOptionDialog(this, 
+            "Total a pagar: " + formatoEuros(mesa.getTotal() * 1.21), 
+            "Forma de Pago", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, 
+            null, opciones, opciones[0]);
+            
+        if (eleccion == 0) {
+            procesarPagoEfectivo(mesa, tipoDocumento, idCliente);
+        } else if (eleccion == 1) {
+            procesarPagoTarjeta(mesa, tipoDocumento, idCliente);
+        }
+    }
+    
+    private void procesarPagoEfectivo(Mesa mesa, String tipoDoc, String idCliente) {
+        double total = mesa.getTotal() * 1.21;
+        while (true) {
+            String recibidoStr = JOptionPane.showInputDialog(this, 
+                "Total: " + formatoEuros(total) + "\n¿Cuánto dinero entrega el cliente?");
+            if (recibidoStr == null) return;
+            
+            double recibido = parsearNumero(recibidoStr);
+            if (recibido >= total) {
+                double cambio = recibido - total;
+                JOptionPane.showMessageDialog(this, 
+                    "💵 Recibido: " + formatoEuros(recibido) + "\n💰 Cambio: " + formatoEuros(cambio));
+                
+                imprimirDocumento(tipoDoc, idCliente);
+                mesa.limpiar();
+                limpiarInterfaz();
+                return;
+            }
+            JOptionPane.showMessageDialog(this, "⚠️ Importe insuficiente.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+    
+    private void procesarPagoTarjeta(Mesa mesa, String tipoDoc, String idCliente) {
+        JOptionPane.showMessageDialog(this, "💳 Procesando pago...\nAcerque o inserte la tarjeta.", "Pago con Tarjeta", JOptionPane.INFORMATION_MESSAGE);
+        
+        try { Thread.sleep(1500); } catch (InterruptedException e) {}
+        
+        JOptionPane.showMessageDialog(this, "✅ Pago aprobado.");
+        imprimirDocumento(tipoDoc, idCliente);
+        mesa.limpiar();
+        limpiarInterfaz();
+    }
+
+    private void limpiarInterfaz() {
+        mesaSeleccionada = null;
+        recargarTabla();
+        actualizarVisualMesas();
+    }
+
+
+    
+    
+    private void imprimirDocumento(String tipo, String idCliente) {
+        StringBuilder doc = new StringBuilder();
+        doc.append("════════════════════════════════\n");
+        doc.append("       CAFETERÍA PANRIN\n");
+        doc.append("    C/ Ejemplo 123, Valladolid\n");
+        doc.append("    CIF: B12345678\n");
+        doc.append("════════════════════════════════\n\n");
+        doc.append(tipo).append(" - Mesa: ").append(mesaSeleccionada.getNumero()).append("\n");
+        if (idCliente != null) doc.append("Cliente: ").append(idCliente).append("\n");
+        doc.append("Fecha: ").append(new java.util.Date()).append("\n\n");
+        
+        for (String[] fila : mesaSeleccionada.getPedido()) {
+            doc.append(String.format("%-18s %2s x %5s€ = %6s€\n", fila[0], fila[1], fila[2], fila[3]));
+        }
+        
+        double sub = mesaSeleccionada.getTotal();
+        doc.append("\n────────────────────────────────\n");
+        doc.append(String.format(Locale.US, "SUBTOTAL: %25.2f€\n", sub));
+        doc.append(String.format(Locale.US, "IVA 21%%:  %25.2f€\n", sub * 0.21));
+        doc.append(String.format(Locale.US, "TOTAL:    %25.2f€\n", sub * 1.21));
+        doc.append("════════════════════════════════\n");
+        doc.append("     ¡Gracias por su visita!\n");
+        doc.append("════════════════════════════════");
+
+        javax.swing.JTextArea area = new javax.swing.JTextArea(doc.toString());
+        area.setEditable(false);
+        area.setFont(new Font("Monospaced", Font.PLAIN, 13));
+        
+        Object[] botones = {"🖨️ Imprimir", "❌ Cerrar"};
+        int opcion = JOptionPane.showOptionDialog(this, new javax.swing.JScrollPane(area), 
+            tipo, JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, botones, botones[1]);
+            
+        if (opcion == 0) {
+            try { area.print(); } 
+            catch (java.awt.print.PrinterException ex) {
+                JOptionPane.showMessageDialog(this, "Error al imprimir: " + ex.getMessage());
+            }
+        }
+    }
+ 
+      
+      
+      
+/********************----------------------------------------------------*****************************/
      
- private double evaluarExpresion(String expr) {
-    if (expr == null || expr.trim().isEmpty()) return 0;
-    expr = expr.replace("x", "*").replace(",", ".");
-    
-    String[] sumas = expr.split("(?=[+-])|(?<=[+-])");
-    double total = 0;
-    String operadorActual = "+";
-    
-    for (String parte : sumas) {
-        if (parte.equals("+") || parte.equals("-")) {
-            operadorActual = parte;
-            continue;
-        }
-        double valor = evaluarMultiplicacionDivision(parte);
-        if (operadorActual.equals("+")) total += valor;
-        else if (operadorActual.equals("-")) total -= valor;
-    }
-    return total;
-}
 
-private double evaluarMultiplicacionDivision(String expr) {
-    String[] factores = expr.split("(?=[*/])|(?<=[*/])");
-    double resultado = 1;
-    String op = "*";
-    for (String f : factores) {
-        if (f.equals("*") || f.equals("/")) {
-            op = f;
-            continue;
-        }
-        double val = Double.parseDouble(f);
-        if (op.equals("*")) resultado *= val;
-        else if (op.equals("/")) resultado /= val;
-    }
-    return resultado;
-}
+     
 
+ 
 
-    
+/********************----------------------------------------------------*****************************/
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -374,7 +362,7 @@ private double evaluarMultiplicacionDivision(String expr) {
         btn7 = new javax.swing.JButton();
         btn8 = new javax.swing.JButton();
         btn9 = new javax.swing.JButton();
-        jButtonSignoDividir = new javax.swing.JButton();
+        btnDividir = new javax.swing.JButton();
         btn4 = new javax.swing.JButton();
         btn5 = new javax.swing.JButton();
         btn6 = new javax.swing.JButton();
@@ -406,9 +394,9 @@ private double evaluarMultiplicacionDivision(String expr) {
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaProductos = new javax.swing.JTable();
         jPanel8 = new javax.swing.JPanel();
-        displaySubtotal = new javax.swing.JTextField();
-        displayIVA = new javax.swing.JTextField();
-        displayTotal = new javax.swing.JTextField();
+        lblSubtotal = new javax.swing.JTextField();
+        lblIva = new javax.swing.JTextField();
+        lblTotal = new javax.swing.JTextField();
         jPanel14 = new javax.swing.JPanel();
         btnMesa3 = new javax.swing.JButton();
         btnMesa1 = new javax.swing.JButton();
@@ -469,8 +457,8 @@ private double evaluarMultiplicacionDivision(String expr) {
 
         jPanel6.setForeground(new java.awt.Color(224, 225, 221));
 
-        displayCalculadora.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
-        displayCalculadora.setForeground(new java.awt.Color(255, 236, 183));
+        displayCalculadora.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
+        displayCalculadora.setForeground(new java.awt.Color(0, 102, 204));
         displayCalculadora.addActionListener(this::displayCalculadoraActionPerformed);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -511,12 +499,12 @@ private double evaluarMultiplicacionDivision(String expr) {
         btn9.addActionListener(this::btn9ActionPerformed);
         jPanelBotonesCalculadora.add(btn9);
 
-        jButtonSignoDividir.setBackground(new java.awt.Color(142, 202, 230));
-        jButtonSignoDividir.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
-        jButtonSignoDividir.setText("/");
-        jButtonSignoDividir.setMargin(new java.awt.Insets(1, 1, 1, 1));
-        jButtonSignoDividir.addActionListener(this::jButtonSignoDividirActionPerformed);
-        jPanelBotonesCalculadora.add(jButtonSignoDividir);
+        btnDividir.setBackground(new java.awt.Color(142, 202, 230));
+        btnDividir.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
+        btnDividir.setText("/");
+        btnDividir.setMargin(new java.awt.Insets(1, 1, 1, 1));
+        btnDividir.addActionListener(this::btnDividirActionPerformed);
+        jPanelBotonesCalculadora.add(btnDividir);
 
         btn4.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
         btn4.setText("4");
@@ -628,7 +616,7 @@ private double evaluarMultiplicacionDivision(String expr) {
         btn10.setText("0");
         btn10.setMargin(new java.awt.Insets(1, 1, 1, 1));
 
-        jPanel10.setLayout(new java.awt.GridLayout());
+        jPanel10.setLayout(new java.awt.GridLayout(1, 0));
 
         btnIgual.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         btnIgual.setText("=");
@@ -691,6 +679,7 @@ private double evaluarMultiplicacionDivision(String expr) {
 
         btnTarjeta.setBackground(new java.awt.Color(33, 158, 188));
         btnTarjeta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/tarjeta-de-credito.png"))); // NOI18N
+        btnTarjeta.addActionListener(this::btnTarjetaActionPerformed);
         jPanel11.add(btnTarjeta);
 
         btnTicket.setBackground(new java.awt.Color(142, 202, 230));
@@ -723,11 +712,11 @@ private double evaluarMultiplicacionDivision(String expr) {
         jPanel8.setForeground(new java.awt.Color(224, 225, 221));
         jPanel8.setLayout(new java.awt.GridLayout(3, 0));
 
-        displaySubtotal.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
-        displaySubtotal.addActionListener(this::displaySubtotalActionPerformed);
-        jPanel8.add(displaySubtotal);
-        jPanel8.add(displayIVA);
-        jPanel8.add(displayTotal);
+        lblSubtotal.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
+        lblSubtotal.addActionListener(this::lblSubtotalActionPerformed);
+        jPanel8.add(lblSubtotal);
+        jPanel8.add(lblIva);
+        jPanel8.add(lblTotal);
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
         jPanel15.setLayout(jPanel15Layout);
@@ -759,15 +748,18 @@ private double evaluarMultiplicacionDivision(String expr) {
         btnMesa3.setContentAreaFilled(false);
         btnMesa3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnMesa3.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMesa3.setOpaque(true);
         btnMesa3.setPreferredSize(new java.awt.Dimension(60, 60));
         btnMesa3.addActionListener(this::btnMesa3ActionPerformed);
 
+        btnMesa1.setBackground(new java.awt.Color(242, 242, 242));
         btnMesa1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mesas/mesa1.png"))); // NOI18N
         btnMesa1.setBorder(null);
         btnMesa1.setBorderPainted(false);
         btnMesa1.setContentAreaFilled(false);
         btnMesa1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnMesa1.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMesa1.setOpaque(true);
         btnMesa1.addActionListener(this::btnMesa1ActionPerformed);
 
         btnMesa2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mesas/mesa2.png"))); // NOI18N
@@ -776,6 +768,7 @@ private double evaluarMultiplicacionDivision(String expr) {
         btnMesa2.setContentAreaFilled(false);
         btnMesa2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnMesa2.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMesa2.setOpaque(true);
         btnMesa2.setPreferredSize(new java.awt.Dimension(60, 60));
         btnMesa2.addActionListener(this::btnMesa2ActionPerformed);
 
@@ -785,6 +778,7 @@ private double evaluarMultiplicacionDivision(String expr) {
         btnMesa5.setContentAreaFilled(false);
         btnMesa5.setCursor(new java.awt.Cursor(java.awt.Cursor.S_RESIZE_CURSOR));
         btnMesa5.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMesa5.setOpaque(true);
         btnMesa5.setPreferredSize(new java.awt.Dimension(60, 60));
         btnMesa5.addActionListener(this::btnMesa5ActionPerformed);
 
@@ -794,6 +788,7 @@ private double evaluarMultiplicacionDivision(String expr) {
         btnMesa6.setContentAreaFilled(false);
         btnMesa6.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnMesa6.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMesa6.setOpaque(true);
         btnMesa6.setPreferredSize(new java.awt.Dimension(60, 60));
         btnMesa6.addActionListener(this::btnMesa6ActionPerformed);
 
@@ -803,6 +798,7 @@ private double evaluarMultiplicacionDivision(String expr) {
         btnMesa7.setContentAreaFilled(false);
         btnMesa7.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnMesa7.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMesa7.setOpaque(true);
         btnMesa7.setPreferredSize(new java.awt.Dimension(60, 60));
         btnMesa7.addActionListener(this::btnMesa7ActionPerformed);
 
@@ -812,6 +808,7 @@ private double evaluarMultiplicacionDivision(String expr) {
         btnMesa8.setContentAreaFilled(false);
         btnMesa8.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         btnMesa8.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMesa8.setOpaque(true);
         btnMesa8.setPreferredSize(new java.awt.Dimension(60, 60));
         btnMesa8.addActionListener(this::btnMesa8ActionPerformed);
 
@@ -821,6 +818,7 @@ private double evaluarMultiplicacionDivision(String expr) {
         btnMesa4.setContentAreaFilled(false);
         btnMesa4.setCursor(new java.awt.Cursor(java.awt.Cursor.S_RESIZE_CURSOR));
         btnMesa4.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        btnMesa4.setOpaque(true);
         btnMesa4.setPreferredSize(new java.awt.Dimension(60, 60));
         btnMesa4.addActionListener(this::btnMesa4ActionPerformed);
 
@@ -926,10 +924,10 @@ private double evaluarMultiplicacionDivision(String expr) {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 761, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(188, 188, 188))
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 704, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -966,72 +964,42 @@ private double evaluarMultiplicacionDivision(String expr) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTicketActionPerformed
-          if (mesaSeleccionada == null || mesaSeleccionada.getPedido().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No hay productos en el pedido");
+        if (mesaSeleccionada == null || !mesaSeleccionada.isOcupada()) {
+            JOptionPane.showMessageDialog(this, "Selecciona una mesa con cuenta activa.");
             return;
         }
-        String[] opciones = {"Efectivo", "Tarjeta", "Cancelar"};
-        int opcion = JOptionPane.showOptionDialog(this, "Selecciona forma de pago:",
-            "Pago del Ticket", JOptionPane.DEFAULT_OPTION,
-            JOptionPane.QUESTION_MESSAGE, null, opciones, opciones[0]);
-
-        if (opcion == 2) return;
-
-        double total = mesaSeleccionada.getTotal() * 1.21;
-
-        if (opcion == 1) {
-            JOptionPane.showMessageDialog(this, " Pagando con tarjeta...\n\nAcerque la tarjeta al datáfono");
-            try { Thread.sleep(1500); } catch (InterruptedException e) {}
-            JOptionPane.showMessageDialog(this, "✅ Pago con tarjeta aprobado");
-            imprimirTicket();
-            liberarMesa();
-        } else if (opcion == 0) {
-            String recibidoStr = JOptionPane.showInputDialog(this,
-                "Total a pagar: " + String.format("%.2f €", total) + "\n\n¿Cuánto recibe el cliente?");
-            if (recibidoStr == null) return;
-            try {
-                double recibido = Double.parseDouble(recibidoStr);
-                if (recibido < total) {
-                    JOptionPane.showMessageDialog(this, "⚠️ El importe recibido es insuficiente");
-                    return;
-                }
-                double cambio = recibido - total;
-                JOptionPane.showMessageDialog(this,
-                    "💵 Recibido: " + String.format("%.2f €", recibido) + "\n" +
-                    "💰 Devolver: " + String.format("%.2f €", cambio));
-                imprimirTicket();
-                liberarMesa();
-            } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "Importe no válido");
-            }
-        }
+        imprimirDocumento("TICKET", null);
     }//GEN-LAST:event_btnTicketActionPerformed
 
     private void btnEfectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEfectivoActionPerformed
-        // TODO add your handling code here:
+       if (mesaSeleccionada == null || !mesaSeleccionada.isOcupada()) {
+            JOptionPane.showMessageDialog(this, "Selecciona una mesa con cuenta activa.");
+            return;
+        }
+        procesarPagoEfectivo(mesaSeleccionada, "TICKET", null);
     }//GEN-LAST:event_btnEfectivoActionPerformed
 
     private void btnMesa6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesa6ActionPerformed
         seleccionarMesa(6);
+       
     }//GEN-LAST:event_btnMesa6ActionPerformed
 
     private void btnMesa8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesa8ActionPerformed
         seleccionarMesa(8);
+        
     }//GEN-LAST:event_btnMesa8ActionPerformed
 
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
-        int filaSeleccionada = tablaProductos.getSelectedRow();
-        if (filaSeleccionada == -1) {
-            JOptionPane.showMessageDialog(this, "⚠️ Selecciona un producto de la tabla primero");
+        int fila = tablaProductos.getSelectedRow();
+        if (mesaSeleccionada == null || fila < 0) {
+            JOptionPane.showMessageDialog(this, "⚠️ Selecciona una línea de la tabla primero.");
             return;
         }
-        int confirm = JOptionPane.showConfirmDialog(this,
-            "¿Eliminar este producto del pedido?",
-            "Confirmar Eliminación", JOptionPane.YES_NO_OPTION);
-        if (confirm == JOptionPane.YES_OPTION && mesaSeleccionada != null) {
-            mesaSeleccionada.eliminarLinea(filaSeleccionada);
-            actualizarTablaVisual();
-            actualizarTotales();
+        
+        int confirm = JOptionPane.showConfirmDialog(this, "¿Eliminar este producto?", "Confirmar", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+            mesaSeleccionada.eliminarLinea(fila);
+            recargarTabla();
             actualizarVisualMesas();
         }
     }//GEN-LAST:event_btnBorrarActionPerformed
@@ -1051,8 +1019,7 @@ private double evaluarMultiplicacionDivision(String expr) {
     }
     
     operacionActual = "";
-    resultadoCalculadora = 0;
-    displayCalculadora b.setText("0");
+    displayCalculadora.setText("0");
     }//GEN-LAST:event_btnCActionPerformed
 
     private void btnBebidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBebidasActionPerformed
@@ -1060,6 +1027,8 @@ private double evaluarMultiplicacionDivision(String expr) {
         JOptionPane.showMessageDialog(this, "️ Primero selecciona una MESA");
         return;
     }
+       
+    
     // ️ Pasamos 'this' como referencia
     Bebidas dialogoBebidas = new Bebidas(this, true, todosProductos, this);
     dialogoBebidas.setVisible(true);
@@ -1079,23 +1048,17 @@ private double evaluarMultiplicacionDivision(String expr) {
        ingresarNumero("5");
     }//GEN-LAST:event_btn5ActionPerformed
 
-    private void displaySubtotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_displaySubtotalActionPerformed
+    private void lblSubtotalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblSubtotalActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_displaySubtotalActionPerformed
+    }//GEN-LAST:event_lblSubtotalActionPerformed
 
     private void btnComidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComidasActionPerformed
        if (mesaSeleccionada == null) {
-            javax.swing.JOptionPane.showMessageDialog(this, "⚠️ Primero selecciona una MESA", "Aviso", javax.swing.JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        Comidas dialogoComidas = new Comidas(this, true, todosProductos);
-        dialogoComidas.setVisible(true);
-        
-        Producto elegido = dialogoComidas.getProductoSeleccionado();
-        if (elegido != null) {
-            añadirProductoATabla(elegido, 1);
-        }
-        
+        JOptionPane.showMessageDialog(this, "⚠️ Primero selecciona una MESA");
+        return;
+    }
+    Comidas dialogoComidas = new Comidas(this, true, todosProductos, this);
+    dialogoComidas.setVisible(true);
     }//GEN-LAST:event_btnComidasActionPerformed
 
     private void btnModoCalculadoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModoCalculadoraActionPerformed
@@ -1122,30 +1085,24 @@ private double evaluarMultiplicacionDivision(String expr) {
 
     private void btnIgualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIgualActionPerformed
         if (!modoCalculadoraActivo) return;
-    
-    // ============================================
-    // CASO 1: Esperando CANTIDAD (fase 1 del flujo)
-    // ============================================
+        
+        
         if (estadoFlujo == EstadoFlujo.ESPERANDO_CANTIDAD) {
             try {
-                cantidadTemporal = Integer.parseInt(jTextField1.getText());
+                cantidadTemporal = Integer.parseInt(displayCalculadora.getText());
                 if (cantidadTemporal <= 0) {
                     JOptionPane.showMessageDialog(this, "⚠️ La cantidad debe ser mayor que 0");
                     return;
                 }
-
-                // Pasar a fase 2: pedir precio
+                
                 estadoFlujo = EstadoFlujo.ESPERANDO_PRECIO;
                 operacionActual = "";
-                jTextField1.setText("0");
-
+                displayCalculadora.setText("0");
+                
                 JOptionPane.showMessageDialog(this,
                     "💰 FASE 2: Ingresa el PRECIO en la calculadora\n" +
-                    "y pulsa '=' para confirmar.\n\n" +
-                    "Ejemplo: pulsa 4 . 5 0 y luego =",
-                    "Añadir Producto",
-                    JOptionPane.INFORMATION_MESSAGE);
-
+                    "y pulsa '=' para confirmar.",
+                    "Añadir Producto", JOptionPane.INFORMATION_MESSAGE);
             } catch (NumberFormatException e) {
                 JOptionPane.showMessageDialog(this, "⚠️ Cantidad no válida. Usa solo números.");
             }
@@ -1154,41 +1111,36 @@ private double evaluarMultiplicacionDivision(String expr) {
         
         if (estadoFlujo == EstadoFlujo.ESPERANDO_PRECIO) {
             try {
-                double precio = Double.parseDouble(jTextField1.getText());
+                double precio = Double.parseDouble(displayCalculadora.getText());
                 if (precio <= 0) {
-                    JOptionPane.showMessageDialog(this, "⚠️ El precio debe ser mayor que 0");
+                    JOptionPane.showMessageDialog(this, "️ El precio debe ser mayor que 0");
                     return;
                 }
-
-                // Crear producto y añadirlo
+                
                 Producto productoOtros = new Producto("Otros", precio, "otros");
                 mesaSeleccionada.agregarProducto(productoOtros, cantidadTemporal);
-                actualizarTablaVisual();
-                actualizarTotales();
+                recargarTabla();
                 actualizarVisualMesas();
-
-                // Resetear todo
-                estadoFlujo = EstadoFlujo.NORMAL;
-                cantidadTemporal = 0;
-                operacionActual = "";
-                resultadoCalculadora = 0;
-                jTextField1.setText("0");
-
+                
                 JOptionPane.showMessageDialog(this,
                     "✅ Producto añadido:\n" +
                     "Cantidad: " + cantidadTemporal + "\n" +
-                    "Precio: " + String.format("%.2f€", precio) + "\n" +
-                    "Importe: " + String.format("%.2f€", precio * cantidadTemporal),
-                    "Producto Añadido",
-                    JOptionPane.INFORMATION_MESSAGE);
-
+                    "Precio: " + formatoEuros(precio) + "\n" +
+                    "Importe: " + formatoEuros(precio * cantidadTemporal),
+                    "Producto Añadido", JOptionPane.INFORMATION_MESSAGE);
+                
+                estadoFlujo = EstadoFlujo.NORMAL;
+                cantidadTemporal = 0;
+                operacionActual = "";
+                displayCalculadora.setText("0");
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "⚠️ Precio no válido. Usa números y punto decimal.");
+                JOptionPane.showMessageDialog(this, "⚠️ Precio no válido.");
             }
             return;
         }
         
-         try {
+        
+        try {
             resultadoCalculadora = evaluarExpresion(operacionActual);
             displayCalculadora.setText(String.valueOf(resultadoCalculadora));
         } catch (Exception e) {
@@ -1231,11 +1183,11 @@ private double evaluarMultiplicacionDivision(String expr) {
         displayCalculadora.setText(operacionActual);
     }//GEN-LAST:event_btnMultActionPerformed
 
-    private void jButtonSignoDividirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSignoDividirActionPerformed
+    private void btnDividirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDividirActionPerformed
          if (!modoCalculadoraActivo) return;
         operacionActual += "/";
         displayCalculadora.setText(operacionActual);
-    }//GEN-LAST:event_jButtonSignoDividirActionPerformed
+    }//GEN-LAST:event_btnDividirActionPerformed
 
     private void btnPuntoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPuntoActionPerformed
         if (!modoCalculadoraActivo) return;
@@ -1244,35 +1196,34 @@ private double evaluarMultiplicacionDivision(String expr) {
     }//GEN-LAST:event_btnPuntoActionPerformed
 
     private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
-      if (!modoCalculadoraActivo) return;
-    if (mesaSeleccionada == null) {
-        JOptionPane.showMessageDialog(this, "️ Primero selecciona una MESA");
-        return;
-    }
-    
-    // Iniciar el flujo: pedir cantidad
-    estadoFlujo = EstadoFlujo.ESPERANDO_CANTIDAD;
-    cantidadTemporal = 0;
-    
-    // Limpiar display para que el usuario empiece a teclear la cantidad
-    operacionActual = "";
-    displayCalculadora.setText("0");
-    
-    // Mostrar mensaje informativo (NO bloqueante, para que pueda usar la calculadora)
-    JOptionPane.showMessageDialog(this,
-        "🔢 FASE 1: Ingresa la CANTIDAD en la calculadora\n" +
-        "y pulsa '=' para confirmar.\n\n" +
-        "Ejemplo: pulsa 3 y luego =",
-        "Añadir Producto",
-        JOptionPane.INFORMATION_MESSAGE);
+         if (!modoCalculadoraActivo) {
+            JOptionPane.showMessageDialog(this, "️ Activa el 'Modo Calculadora' para añadir productos manuales.");
+            return;
+        }
+        if (mesaSeleccionada == null) {
+            JOptionPane.showMessageDialog(this, "⚠️ Primero selecciona una MESA");
+            return;
+        }
+        
+        estadoFlujo = EstadoFlujo.ESPERANDO_CANTIDAD;
+        cantidadTemporal = 0;
+        operacionActual = "";
+        displayCalculadora.setText("0");
+        
+        JOptionPane.showMessageDialog(this,
+            "🔢 FASE 1: Ingresa la CANTIDAD en la calculadora\n" +
+            "y pulsa '=' para confirmar.",
+            "Añadir Producto", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnAñadirActionPerformed
 
     private void btnMesa2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesa2ActionPerformed
         seleccionarMesa(2);
+        
     }//GEN-LAST:event_btnMesa2ActionPerformed
 
     private void btnMesa3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesa3ActionPerformed
         seleccionarMesa(3);
+        
     }//GEN-LAST:event_btnMesa3ActionPerformed
 
     private void btnMesa4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesa4ActionPerformed
@@ -1285,38 +1236,38 @@ private double evaluarMultiplicacionDivision(String expr) {
 
     private void btnMesa7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesa7ActionPerformed
         seleccionarMesa(7);
+        
     }//GEN-LAST:event_btnMesa7ActionPerformed
 
     private void btnFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturaActionPerformed
-        if (mesaSeleccionada == null || mesaSeleccionada.getPedido().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No hay productos en el pedido");
+        if (mesaSeleccionada == null || !mesaSeleccionada.isOcupada()) {
+            JOptionPane.showMessageDialog(this, "Selecciona una mesa con cuenta activa.");
             return;
         }
-        String[] tipos = {"DNI", "NIE", "CIF", "Cancelar"};
-        int tipo = JOptionPane.showOptionDialog(this, "Tipo de documento fiscal:",
-            "Datos para Factura", JOptionPane.DEFAULT_OPTION,
-            JOptionPane.QUESTION_MESSAGE, null, tipos, tipos[0]);
-        if (tipo == 3) return;
-
-        String tipoDoc = tipos[tipo];
-        String numeroDoc = JOptionPane.showInputDialog(this,
-            "Introduce el número de " + tipoDoc + ":");
-        if (numeroDoc == null || numeroDoc.trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Documento obligatorio para factura");
-            return;
-        }
-        String nombreCliente = JOptionPane.showInputDialog(this, "Nombre / Razón Social:");
-        if (nombreCliente == null) return;
-
-        imprimirFactura(tipoDoc, numeroDoc, nombreCliente);
-        liberarMesa();
+        
+        String idCliente = JOptionPane.showInputDialog(this, "Introduce DNI, NIE o CIF del cliente:");
+        if (idCliente == null || idCliente.trim().isEmpty()) return;
+        
+        procesarPago(mesaSeleccionada, "FACTURA", idCliente.trim().toUpperCase());
     }//GEN-LAST:event_btnFacturaActionPerformed
 
     private void btn0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn0ActionPerformed
         ingresarNumero("0");
     }//GEN-LAST:event_btn0ActionPerformed
-    
 
+    private void btnTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTarjetaActionPerformed
+       if (mesaSeleccionada == null || !mesaSeleccionada.isOcupada()) {
+            JOptionPane.showMessageDialog(this, "Selecciona una mesa con cuenta activa.");
+            return;
+        }
+        procesarPagoTarjeta(mesaSeleccionada, "TICKET", null);
+    }//GEN-LAST:event_btnTarjetaActionPerformed
+    
+   
+    
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -1359,6 +1310,7 @@ private double evaluarMultiplicacionDivision(String expr) {
     private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnC;
     private javax.swing.JButton btnComidas;
+    private javax.swing.JButton btnDividir;
     private javax.swing.JButton btnEfectivo;
     private javax.swing.JButton btnFactura;
     private javax.swing.JButton btnIgual;
@@ -1378,10 +1330,6 @@ private double evaluarMultiplicacionDivision(String expr) {
     private javax.swing.JButton btnTarjeta;
     private javax.swing.JButton btnTicket;
     private javax.swing.JTextField displayCalculadora;
-    private javax.swing.JTextField displayIVA;
-    private javax.swing.JTextField displaySubtotal;
-    private javax.swing.JTextField displayTotal;
-    private javax.swing.JButton jButtonSignoDividir;
     private javax.swing.JLabel jLabelEmpresa;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -1400,6 +1348,9 @@ private double evaluarMultiplicacionDivision(String expr) {
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanelBotonesCalculadora;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField lblIva;
+    private javax.swing.JTextField lblSubtotal;
+    private javax.swing.JTextField lblTotal;
     private javax.swing.JTable tablaProductos;
     // End of variables declaration//GEN-END:variables
 }
