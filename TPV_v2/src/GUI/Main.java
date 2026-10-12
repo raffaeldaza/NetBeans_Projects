@@ -27,17 +27,15 @@ import javax.swing.table.DefaultTableModel;
 public class Main extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Main.class.getName());
-
-    /**
-     * Creates new form Main
-     */
     
-     private boolean modoCalculadoraActivo = false;
+   private boolean modoCalculadoraActivo = false;
     private String operacionActual = "";
     private double resultadoCalculadora = 0;
-    private enum EstadoFlujo { NORMAL, ESPERANDO_CANTIDAD, ESPERANDO_PRECIO }
+    
+    private enum EstadoFlujo { NORMAL, ESPERANDO_CANTIDAD, ESPERANDO_PRECIO, ESPERANDO_EFECTIVO }
     private EstadoFlujo estadoFlujo = EstadoFlujo.NORMAL;
     private int cantidadTemporal = 0;
+    private String nombreProductoTemporal = "";
     
     private Mesa mesaSeleccionada;
     private List<Mesa> listaMesas;
@@ -50,7 +48,6 @@ public class Main extends javax.swing.JFrame {
     private final Color COLOR_DISPLAY = new Color(255, 183, 3);
     private final Color COLOR_ERROR = new Color(251, 133, 0);
     private final Color COLOR_OPACO = new Color(200, 200, 200);
-    
 
     public Main() {
         initComponents();
@@ -60,12 +57,43 @@ public class Main extends javax.swing.JFrame {
             listaMesas.add(new Mesa(i));
         }
         todosProductos = GestorProductos.cargarProductos("recursos/productos.txt");
+        
         actualizarEstadosVisuales();
         actualizarVisualMesas();
+        mensajeBienvenida();
     }
     
-    
+    // ============================================================
+    // SISTEMA DE MENSAJES INTERACTIVOS (SIN EMOJIS)
+    // ============================================================
+    private void mostrarMensaje(String mensaje) {
+        jTextMensaje.setText(mensaje);
+        jTextMensaje.setCaretPosition(0); 
+    }
 
+    private void mensajeBienvenida() {
+        mostrarMensaje("¡Bienvenido a Cafetería PanRin! Selecciona una mesa para comenzar.");
+    }
+
+    private void mensajeProceso(String proceso) {
+        mostrarMensaje("PROCESO: " + proceso);
+    }
+
+    private void mensajeExito(String mensaje) {
+        mostrarMensaje("EXITO: " + mensaje);
+    }
+
+    private void mensajeError(String error) {
+        mostrarMensaje("ERROR: " + error);
+    }
+
+    private void mensajeAyuda(String ayuda) {
+        mostrarMensaje("AYUDA: " + ayuda);
+    }
+
+    // ============================================================
+    // CONFIGURACIÓN VISUAL
+    // ============================================================
     private void actualizarEstadosVisuales() {
         if (modoCalculadoraActivo) {
             btnModoCalculadora.setBackground(COLOR_ACTIVO);
@@ -84,7 +112,6 @@ public class Main extends javax.swing.JFrame {
         }
     }
 
-    
     private void activarBotonesCalculadora(boolean activo) {
         JButton[] botones = {
             btn0, btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9,
@@ -104,54 +131,6 @@ public class Main extends javax.swing.JFrame {
         }
         displayCalculadora.setBackground(activo ? COLOR_DISPLAY : new Color(230, 230, 230));
     }
-    
-    private double parsearNumero(String s) {
-        if (s == null || s.trim().isEmpty()) return -1;
-        try {
-            return Double.parseDouble(s.trim().replace(',', '.'));
-        } catch (NumberFormatException e) {
-            return -1;
-        }
-    }
-
-    private String formatoEuros(double valor) {
-        return String.format(Locale.US, "%.2f €", valor);
-    }
-    
-    
-    private void recargarTabla() {
-        DefaultTableModel modelo = (DefaultTableModel) tablaProductos.getModel();
-        modelo.setRowCount(0);
-        
-        double subtotal = 0;
-        if (mesaSeleccionada != null) {
-            for (String[] fila : mesaSeleccionada.getPedido()) {
-                modelo.addRow(fila);
-                subtotal += Double.parseDouble(fila[3]);
-            }
-        }
-        
-        double iva = subtotal * 0.21;
-        double total = subtotal + iva;
-        
-        lblSubtotal.setText("SUBTOTAL: " + formatoEuros(subtotal));
-        lblIva.setText("IVA 21%:    " + formatoEuros(iva));
-        lblTotal.setText("TOTAL:      " + formatoEuros(total));
-    }
-    
-    private void seleccionarMesa(int numero) {
-        mesaSeleccionada = listaMesas.get(numero - 1);
-        actualizarVisualMesas();
-
-        if (mesaSeleccionada.isOcupada()) {
-            recargarTabla();
-            JOptionPane.showMessageDialog(this,
-                "Mesa " + numero + " seleccionada.\nEsta mesa tiene un pedido activo.",
-                "Mesa Ocupada", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            recargarTabla();
-        }
-    }
 
     private void actualizarVisualMesas() {
         JButton[] botones = {btnMesa1, btnMesa2, btnMesa3, btnMesa4,
@@ -165,30 +144,85 @@ public class Main extends javax.swing.JFrame {
                 botones[i].setBackground(COLOR_ERROR);
                 botones[i].setForeground(Color.WHITE);
             } else {
-                botones[i].setBackground(COLOR_PRIMARIO);
+                botones[i].setBackground(COLOR_OPACO);
                 botones[i].setForeground(COLOR_TEXTO);
             }
         }
     }
-    
-    
+
+    // ============================================================
+    // UTILIDADES
+    // ============================================================
+    private double parsearNumero(String s) {
+        if (s == null || s.trim().isEmpty()) return -1;
+        try {
+            return Double.parseDouble(s.trim().replace(',', '.'));
+        } catch (NumberFormatException e) {
+            return -1;
+        }
+    }
+
+    private String formatoEuros(double valor) {
+        return String.format(Locale.US, "%.2f €", valor);
+    }
+
+    private void recargarTabla() {
+        DefaultTableModel modelo = (DefaultTableModel) tablaProductos.getModel();
+        modelo.setRowCount(0);
+        
+        double subtotal = 0;
+        if (mesaSeleccionada != null) {
+            for (String[] fila : mesaSeleccionada.getPedido()) {
+                modelo.addRow(fila);
+                subtotal += Double.parseDouble(fila[3]);
+            }
+        }
+        
+        double iva = subtotal * 0.10;
+        double total = subtotal + iva;
+        
+        lblSubtotal.setText("SUBTOTAL: " + formatoEuros(subtotal));
+        lblIva.setText("IVA 10%:    " + formatoEuros(iva));
+        lblTotal.setText("TOTAL:      " + formatoEuros(total));
+    }
+
     public void agregarProducto(Producto p) {
         if (mesaSeleccionada == null) {
-            JOptionPane.showMessageDialog(this, "Primero selecciona una MESA");
+            mensajeError("Primero selecciona una MESA");
             return;
         }
         
         int cantidad = 1;
         if (!modoCalculadoraActivo && !displayCalculadora.getText().equals("0")) {
-            cantidad = (int) parsearNumero(displayCalculadora.getText());
+            double cantidadParseada = parsearNumero(displayCalculadora.getText());
+            if (cantidadParseada > 0) {
+                cantidad = (int) cantidadParseada;
+            }
             displayCalculadora.setText("0");
         }
         
         mesaSeleccionada.agregarProducto(p, cantidad);
         recargarTabla();
         actualizarVisualMesas();
+        mostrarMensaje("AÑADIDO: " + p.getNombre() + " (Cant: " + cantidad + ")");
     }
     
+    private void seleccionarMesa(int numero) {
+        mesaSeleccionada = listaMesas.get(numero - 1);
+        actualizarVisualMesas();
+
+        if (mesaSeleccionada.isOcupada()) {
+            recargarTabla();
+            mostrarMensaje("MESA " + numero + " seleccionada (OCUPADA) | Productos en cuenta: " + mesaSeleccionada.getPedido().size());
+        } else {
+            recargarTabla();
+            mostrarMensaje("MESA " + numero + " seleccionada (LIBRE) | Lista para añadir productos.");
+        }
+    }
+
+    // ============================================================
+    // LÓGICA DE LA CALCULADORA
+    // ============================================================
     private void ingresarNumero(String numero) {
         if (!modoCalculadoraActivo) return;
         operacionActual += numero;
@@ -230,51 +264,53 @@ public class Main extends javax.swing.JFrame {
         }
         return resultado;
     }
-    
-    /***--------------------------///////////////////////////////////////////////////////////////////////***/
-    
+      
+    // ============================================================
+    // PROCESOS DE PAGO
+    // ============================================================
     private void procesarPago(Mesa mesa, String tipoDocumento, String idCliente) {
         String[] opciones = {"Efectivo", "Tarjeta"};
         int eleccion = JOptionPane.showOptionDialog(this, 
-            "Total a pagar: " + formatoEuros(mesa.getTotal() * 1.21), 
+            "Total a pagar: " + formatoEuros(mesa.getTotal() * 1.10), 
             "Forma de Pago", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, 
             null, opciones, opciones[0]);
             
         if (eleccion == 0) {
-            procesarPagoEfectivo(mesa, tipoDocumento, idCliente);
+            procesarPagoEfectivoModal(mesa, tipoDocumento, idCliente);
         } else if (eleccion == 1) {
             procesarPagoTarjeta(mesa, tipoDocumento, idCliente);
         }
     }
-    
-    private void procesarPagoEfectivo(Mesa mesa, String tipoDoc, String idCliente) {
-        double total = mesa.getTotal() * 1.21;
+
+    private void procesarPagoEfectivoModal(Mesa mesa, String tipoDoc, String idCliente) {
+        double total = mesa.getTotal() * 1.10;
         while (true) {
             String recibidoStr = JOptionPane.showInputDialog(this, 
                 "Total: " + formatoEuros(total) + "\n¿Cuánto dinero entrega el cliente?");
-            if (recibidoStr == null) return;
+            if (recibidoStr == null) {
+                mostrarMensaje("CANCELADO: Pago en efectivo cancelado.");
+                return;
+            }
             
             double recibido = parsearNumero(recibidoStr);
             if (recibido >= total) {
                 double cambio = recibido - total;
-                JOptionPane.showMessageDialog(this, 
-                    "💵 Recibido: " + formatoEuros(recibido) + "\n💰 Cambio: " + formatoEuros(cambio));
+                mostrarMensaje("PAGO RECIBIDO: " + formatoEuros(recibido) + " | Cambio: " + formatoEuros(cambio));
                 
                 imprimirDocumento(tipoDoc, idCliente);
                 mesa.limpiar();
                 limpiarInterfaz();
                 return;
             }
-            JOptionPane.showMessageDialog(this, "⚠️ Importe insuficiente.", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Importe insuficiente.", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
     
     private void procesarPagoTarjeta(Mesa mesa, String tipoDoc, String idCliente) {
-        JOptionPane.showMessageDialog(this, "💳 Procesando pago...\nAcerque o inserte la tarjeta.", "Pago con Tarjeta", JOptionPane.INFORMATION_MESSAGE);
-        
+        JOptionPane.showMessageDialog(this, "Procesando pago...\nAcerque o inserte la tarjeta.", "Pago con Tarjeta", JOptionPane.INFORMATION_MESSAGE);
         try { Thread.sleep(1500); } catch (InterruptedException e) {}
         
-        JOptionPane.showMessageDialog(this, "✅ Pago aprobado.");
+        mostrarMensaje("PAGO CON TARJETA APROBADO.");
         imprimirDocumento(tipoDoc, idCliente);
         mesa.limpiar();
         limpiarInterfaz();
@@ -282,13 +318,12 @@ public class Main extends javax.swing.JFrame {
 
     private void limpiarInterfaz() {
         mesaSeleccionada = null;
+        estadoFlujo = EstadoFlujo.NORMAL;
         recargarTabla();
         actualizarVisualMesas();
+        mensajeBienvenida();
     }
 
-
-    
-    
     private void imprimirDocumento(String tipo, String idCliente) {
         StringBuilder doc = new StringBuilder();
         doc.append("════════════════════════════════\n");
@@ -307,8 +342,8 @@ public class Main extends javax.swing.JFrame {
         double sub = mesaSeleccionada.getTotal();
         doc.append("\n────────────────────────────────\n");
         doc.append(String.format(Locale.US, "SUBTOTAL: %25.2f€\n", sub));
-        doc.append(String.format(Locale.US, "IVA 21%%:  %25.2f€\n", sub * 0.21));
-        doc.append(String.format(Locale.US, "TOTAL:    %25.2f€\n", sub * 1.21));
+        doc.append(String.format(Locale.US, "IVA 10%%:  %25.2f€\n", sub * 0.10));
+        doc.append(String.format(Locale.US, "TOTAL:    %25.2f€\n", sub * 1.10));
         doc.append("════════════════════════════════\n");
         doc.append("     ¡Gracias por su visita!\n");
         doc.append("════════════════════════════════");
@@ -317,7 +352,7 @@ public class Main extends javax.swing.JFrame {
         area.setEditable(false);
         area.setFont(new Font("Monospaced", Font.PLAIN, 13));
         
-        Object[] botones = {"🖨️ Imprimir", "❌ Cerrar"};
+        Object[] botones = {"Imprimir", "Cerrar"};
         int opcion = JOptionPane.showOptionDialog(this, new javax.swing.JScrollPane(area), 
             tipo, JOptionPane.DEFAULT_OPTION, JOptionPane.PLAIN_MESSAGE, null, botones, botones[1]);
             
@@ -328,14 +363,8 @@ public class Main extends javax.swing.JFrame {
             }
         }
     }
- 
-      
-      
-      
-/********************----------------------------------------------------*****************************/
-     
 
-     
+    
 
  
 
@@ -406,7 +435,8 @@ public class Main extends javax.swing.JFrame {
         btnMesa7 = new javax.swing.JButton();
         btnMesa8 = new javax.swing.JButton();
         btnMesa4 = new javax.swing.JButton();
-        jPanel16 = new javax.swing.JPanel();
+        jPanel9 = new javax.swing.JPanel();
+        jTextMensaje = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
@@ -704,18 +734,28 @@ public class Main extends javax.swing.JFrame {
                 {null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Producto", "Cantidad", "Precio", "Importe"
             }
         ));
+        tablaProductos.setSelectionBackground(new java.awt.Color(2, 48, 71));
         jScrollPane2.setViewportView(tablaProductos);
 
         jPanel8.setForeground(new java.awt.Color(224, 225, 221));
         jPanel8.setLayout(new java.awt.GridLayout(3, 0));
 
+        lblSubtotal.setEditable(false);
+        lblSubtotal.setBackground(new java.awt.Color(240, 248, 255));
         lblSubtotal.setFont(new java.awt.Font("Monospaced", 0, 14)); // NOI18N
+        lblSubtotal.setForeground(new java.awt.Color(0, 0, 51));
         lblSubtotal.addActionListener(this::lblSubtotalActionPerformed);
         jPanel8.add(lblSubtotal);
+
+        lblIva.setEditable(false);
+        lblIva.setBackground(new java.awt.Color(240, 248, 255));
         jPanel8.add(lblIva);
+
+        lblTotal.setEditable(false);
+        lblTotal.setBackground(new java.awt.Color(240, 248, 255));
         jPanel8.add(lblTotal);
 
         javax.swing.GroupLayout jPanel15Layout = new javax.swing.GroupLayout(jPanel15);
@@ -752,7 +792,7 @@ public class Main extends javax.swing.JFrame {
         btnMesa3.setPreferredSize(new java.awt.Dimension(60, 60));
         btnMesa3.addActionListener(this::btnMesa3ActionPerformed);
 
-        btnMesa1.setBackground(new java.awt.Color(242, 242, 242));
+        btnMesa1.setBackground(new java.awt.Color(227, 234, 242));
         btnMesa1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mesas/mesa1.png"))); // NOI18N
         btnMesa1.setBorder(null);
         btnMesa1.setBorderPainted(false);
@@ -827,7 +867,7 @@ public class Main extends javax.swing.JFrame {
         jPanel14Layout.setHorizontalGroup(
             jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel14Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(27, Short.MAX_VALUE)
                 .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel14Layout.createSequentialGroup()
                         .addGroup(jPanel14Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -874,20 +914,21 @@ public class Main extends javax.swing.JFrame {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel5Layout.createSequentialGroup()
-                        .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, 261, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 761, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(60, 60, 60)
+                .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 761, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(74, 74, 74))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -895,17 +936,25 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(102, Short.MAX_VALUE))
         );
 
-        jPanel16.setForeground(new java.awt.Color(224, 225, 221));
+        jTextMensaje.setEditable(false);
+        jTextMensaje.setBackground(new java.awt.Color(240, 248, 255));
+        jTextMensaje.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        jTextMensaje.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
-        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
-        jPanel16.setLayout(jPanel16Layout);
-        jPanel16Layout.setHorizontalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        javax.swing.GroupLayout jPanel9Layout = new javax.swing.GroupLayout(jPanel9);
+        jPanel9.setLayout(jPanel9Layout);
+        jPanel9Layout.setHorizontalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addComponent(jTextMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 6, Short.MAX_VALUE))
         );
-        jPanel16Layout.setVerticalGroup(
-            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+        jPanel9Layout.setVerticalGroup(
+            jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel9Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jTextMensaje, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -914,30 +963,27 @@ public class Main extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(521, 521, 521)
-                        .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(16, 16, 16))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, 772, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(70, 70, 70)
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 704, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(60, 60, 60))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(22, 22, 22)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -949,8 +995,9 @@ public class Main extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -964,19 +1011,27 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnTicketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTicketActionPerformed
-        if (mesaSeleccionada == null || !mesaSeleccionada.isOcupada()) {
-            JOptionPane.showMessageDialog(this, "Selecciona una mesa con cuenta activa.");
+       if (mesaSeleccionada == null || !mesaSeleccionada.isOcupada()) {
+            mensajeError("Selecciona una mesa con productos primero");
             return;
         }
+        mostrarMensaje("PREPARANDO TICKET de la Mesa " + mesaSeleccionada.getNumero());
         imprimirDocumento("TICKET", null);
     }//GEN-LAST:event_btnTicketActionPerformed
 
     private void btnEfectivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEfectivoActionPerformed
-       if (mesaSeleccionada == null || !mesaSeleccionada.isOcupada()) {
-            JOptionPane.showMessageDialog(this, "Selecciona una mesa con cuenta activa.");
+      if (mesaSeleccionada == null || !mesaSeleccionada.isOcupada()) {
+            mensajeError("Selecciona una mesa con cuenta activa.");
             return;
         }
-        procesarPagoEfectivo(mesaSeleccionada, "TICKET", null);
+        
+        double total = mesaSeleccionada.getTotal() * 1.10;
+        estadoFlujo = EstadoFlujo.ESPERANDO_EFECTIVO;
+        operacionActual = "";
+        displayCalculadora.setText("0");
+        
+        mostrarMensaje("PAGO EN EFECTIVO | Total: " + formatoEuros(total) + " | Ingresa el dinero recibido en la calculadora y pulsa '='");
+    
     }//GEN-LAST:event_btnEfectivoActionPerformed
 
     private void btnMesa6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesa6ActionPerformed
@@ -992,7 +1047,7 @@ public class Main extends javax.swing.JFrame {
     private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
         int fila = tablaProductos.getSelectedRow();
         if (mesaSeleccionada == null || fila < 0) {
-            JOptionPane.showMessageDialog(this, "⚠️ Selecciona una línea de la tabla primero.");
+            mensajeError("Selecciona una línea de la tabla primero.");
             return;
         }
         
@@ -1001,6 +1056,7 @@ public class Main extends javax.swing.JFrame {
             mesaSeleccionada.eliminarLinea(fila);
             recargarTabla();
             actualizarVisualMesas();
+            mostrarMensaje("ELIMINADO: Producto eliminado de la cuenta.");
         }
     }//GEN-LAST:event_btnBorrarActionPerformed
 
@@ -1010,29 +1066,26 @@ public class Main extends javax.swing.JFrame {
 
     private void btnCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCActionPerformed
        if (!modoCalculadoraActivo) return;
-    
-    // Si está en medio del flujo de añadir producto, cancelarlo
-    if (estadoFlujo != EstadoFlujo.NORMAL) {
-        estadoFlujo = EstadoFlujo.NORMAL;
-        cantidadTemporal = 0;
-        JOptionPane.showMessageDialog(this, "❌ Operación de añadir producto cancelada");
-    }
-    
-    operacionActual = "";
-    displayCalculadora.setText("0");
+        
+        if (estadoFlujo != EstadoFlujo.NORMAL) {
+            estadoFlujo = EstadoFlujo.NORMAL;
+            cantidadTemporal = 0;
+            nombreProductoTemporal = "";
+            mostrarMensaje("CANCELADO: Operación cancelada. ");
+        }
+        
+        operacionActual = "";
+        resultadoCalculadora = 0;
+        displayCalculadora.setText("0");
     }//GEN-LAST:event_btnCActionPerformed
 
     private void btnBebidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBebidasActionPerformed
        if (mesaSeleccionada == null) {
-        JOptionPane.showMessageDialog(this, "️ Primero selecciona una MESA");
-        return;
-    }
-       
-    
-    // ️ Pasamos 'this' como referencia
-    Bebidas dialogoBebidas = new Bebidas(this, true, todosProductos, this);
-    dialogoBebidas.setVisible(true);
-    // Ya no necesitamos recuperar el producto, se añadió directamente
+            mensajeError("Primero selecciona una MESA");
+            return;
+        }
+        Bebidas dialogoBebidas = new Bebidas(this, true, todosProductos, this);
+        dialogoBebidas.setVisible(true);
         
     }//GEN-LAST:event_btnBebidasActionPerformed
 
@@ -1053,22 +1106,23 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_lblSubtotalActionPerformed
 
     private void btnComidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComidasActionPerformed
-       if (mesaSeleccionada == null) {
-        JOptionPane.showMessageDialog(this, "⚠️ Primero selecciona una MESA");
-        return;
-    }
-    Comidas dialogoComidas = new Comidas(this, true, todosProductos, this);
-    dialogoComidas.setVisible(true);
+        if (mesaSeleccionada == null) {
+            mensajeError("Primero selecciona una MESA");
+            return;
+        }
+        Comidas dialogoComidas = new Comidas(this, true, todosProductos, this);
+        dialogoComidas.setVisible(true);
     }//GEN-LAST:event_btnComidasActionPerformed
 
     private void btnModoCalculadoraActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModoCalculadoraActionPerformed
-   modoCalculadoraActivo = !modoCalculadoraActivo;
+         modoCalculadoraActivo = !modoCalculadoraActivo;
         if (modoCalculadoraActivo) {
             operacionActual = "";
             resultadoCalculadora = 0;
             displayCalculadora.setText("0");
         }
         actualizarEstadosVisuales();
+        mostrarMensaje(modoCalculadoraActivo ? "MODO CALCULADORA ACTIVADO" : "MODO PRODUCTO ACTIVADO");
     }//GEN-LAST:event_btnModoCalculadoraActionPerformed
  
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
@@ -1084,68 +1138,83 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btn4ActionPerformed
 
     private void btnIgualActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIgualActionPerformed
-        if (!modoCalculadoraActivo) return;
-        
-        
+         if (!modoCalculadoraActivo) return;
+
         if (estadoFlujo == EstadoFlujo.ESPERANDO_CANTIDAD) {
             try {
                 cantidadTemporal = Integer.parseInt(displayCalculadora.getText());
                 if (cantidadTemporal <= 0) {
-                    JOptionPane.showMessageDialog(this, "⚠️ La cantidad debe ser mayor que 0");
+                    mensajeError("La cantidad debe ser mayor que 0. Intenta de nuevo.");
                     return;
                 }
-                
                 estadoFlujo = EstadoFlujo.ESPERANDO_PRECIO;
                 operacionActual = "";
                 displayCalculadora.setText("0");
-                
-                JOptionPane.showMessageDialog(this,
-                    "💰 FASE 2: Ingresa el PRECIO en la calculadora\n" +
-                    "y pulsa '=' para confirmar.",
-                    "Añadir Producto", JOptionPane.INFORMATION_MESSAGE);
+                mostrarMensaje("PASO 2/2: Ingresa el PRECIO de '" + nombreProductoTemporal + "' y pulsa '='");
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "⚠️ Cantidad no válida. Usa solo números.");
+                mensajeError("Cantidad no válida. Usa solo números y pulsa '=' de nuevo.");
             }
             return;
         }
-        
+
         if (estadoFlujo == EstadoFlujo.ESPERANDO_PRECIO) {
             try {
-                double precio = Double.parseDouble(displayCalculadora.getText());
+                double precio = parsearNumero(displayCalculadora.getText());
                 if (precio <= 0) {
-                    JOptionPane.showMessageDialog(this, "️ El precio debe ser mayor que 0");
+                    mensajeError("El precio debe ser mayor que 0. Intenta de nuevo.");
                     return;
                 }
                 
-                Producto productoOtros = new Producto("Otros", precio, "otros");
-                mesaSeleccionada.agregarProducto(productoOtros, cantidadTemporal);
+                Producto productoNuevo = new Producto(nombreProductoTemporal, precio, "Manual");
+                mesaSeleccionada.agregarProducto(productoNuevo, cantidadTemporal);
                 recargarTabla();
                 actualizarVisualMesas();
                 
-                JOptionPane.showMessageDialog(this,
-                    "✅ Producto añadido:\n" +
-                    "Cantidad: " + cantidadTemporal + "\n" +
-                    "Precio: " + formatoEuros(precio) + "\n" +
-                    "Importe: " + formatoEuros(precio * cantidadTemporal),
-                    "Producto Añadido", JOptionPane.INFORMATION_MESSAGE);
+                double importe = precio * cantidadTemporal;
+                mostrarMensaje("AÑADIDO: '" + nombreProductoTemporal + "' | Cant: " + cantidadTemporal + " | Precio: " + formatoEuros(precio) + " | Total: " + formatoEuros(importe));
                 
                 estadoFlujo = EstadoFlujo.NORMAL;
+                nombreProductoTemporal = "";
                 cantidadTemporal = 0;
                 operacionActual = "";
                 displayCalculadora.setText("0");
+                
             } catch (NumberFormatException e) {
-                JOptionPane.showMessageDialog(this, "⚠️ Precio no válido.");
+                mensajeError("Precio no válido. Usa números y punto decimal (ej: 2.50)");
             }
             return;
         }
-        
-        
+
+        if (estadoFlujo == EstadoFlujo.ESPERANDO_EFECTIVO) {
+            try {
+                double recibido = parsearNumero(displayCalculadora.getText());
+                double total = mesaSeleccionada.getTotal() * 1.10;
+                
+                if (recibido >= total) {
+                    double cambio = recibido - total;
+                    mostrarMensaje("PAGO RECIBIDO: " + formatoEuros(recibido) + " | Cambio: " + formatoEuros(cambio) + " | ¡Completado!");
+                    
+                    imprimirDocumento("TICKET", null);
+                    mesaSeleccionada.limpiar();
+                    limpiarInterfaz();
+                } else {
+                    double falta = total - recibido;
+                    mensajeError("Importe insuficiente. Faltan: " + formatoEuros(falta));
+                }
+            } catch (NumberFormatException e) {
+                mensajeError("Importe no válido. Ingresa el número y pulsa '='");
+            }
+            return;
+        }
+
         try {
-            resultadoCalculadora = evaluarExpresion(operacionActual);
-            displayCalculadora.setText(String.valueOf(resultadoCalculadora));
+            double resultado = evaluarExpresion(operacionActual);
+            displayCalculadora.setText(String.valueOf(resultado));
+            mostrarMensaje("CALCULADORA: " + operacionActual + " = " + resultado);
         } catch (Exception e) {
             displayCalculadora.setText("Error");
             operacionActual = "";
+            mensajeError("Error en la operación. Pulsa 'C' para limpiar.");
         }
     }//GEN-LAST:event_btnIgualActionPerformed
 
@@ -1166,19 +1235,19 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btn9ActionPerformed
 
     private void btnSumaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSumaActionPerformed
-         if (!modoCalculadoraActivo) return;
+       if (!modoCalculadoraActivo) return;
         operacionActual += "+";
         displayCalculadora.setText(operacionActual);
     }//GEN-LAST:event_btnSumaActionPerformed
 
     private void btnRestaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRestaActionPerformed
-       if (!modoCalculadoraActivo) return;
+        if (!modoCalculadoraActivo) return;
         operacionActual += "-";
         displayCalculadora.setText(operacionActual);
     }//GEN-LAST:event_btnRestaActionPerformed
 
     private void btnMultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMultActionPerformed
-       if (!modoCalculadoraActivo) return;
+        if (!modoCalculadoraActivo) return;
         operacionActual += "x";
         displayCalculadora.setText(operacionActual);
     }//GEN-LAST:event_btnMultActionPerformed
@@ -1196,24 +1265,28 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPuntoActionPerformed
 
     private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
-         if (!modoCalculadoraActivo) {
-            JOptionPane.showMessageDialog(this, "️ Activa el 'Modo Calculadora' para añadir productos manuales.");
+        if (!modoCalculadoraActivo) {
+            mensajeError("Activa el 'Modo Calculadora' primero (botón azul)");
             return;
         }
         if (mesaSeleccionada == null) {
-            JOptionPane.showMessageDialog(this, "⚠️ Primero selecciona una MESA");
+            mensajeError("Primero selecciona una mesa haciendo clic en ella");
             return;
         }
         
+        String nombre = JOptionPane.showInputDialog(this, "¿Cómo se llama el producto?", "Nuevo Producto", JOptionPane.QUESTION_MESSAGE);
+        if (nombre == null || nombre.trim().isEmpty()) {
+            mostrarMensaje("CANCELADO: Operación cancelada.");
+            return;
+        }
+        
+        nombreProductoTemporal = nombre.trim();
         estadoFlujo = EstadoFlujo.ESPERANDO_CANTIDAD;
         cantidadTemporal = 0;
         operacionActual = "";
         displayCalculadora.setText("0");
         
-        JOptionPane.showMessageDialog(this,
-            "🔢 FASE 1: Ingresa la CANTIDAD en la calculadora\n" +
-            "y pulsa '=' para confirmar.",
-            "Añadir Producto", JOptionPane.INFORMATION_MESSAGE);
+        mostrarMensaje("PASO 1/2: Ingresa la CANTIDAD para '" + nombreProductoTemporal + "' en la calculadora y pulsa '='");
     }//GEN-LAST:event_btnAñadirActionPerformed
 
     private void btnMesa2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesa2ActionPerformed
@@ -1241,12 +1314,17 @@ public class Main extends javax.swing.JFrame {
 
     private void btnFacturaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturaActionPerformed
         if (mesaSeleccionada == null || !mesaSeleccionada.isOcupada()) {
-            JOptionPane.showMessageDialog(this, "Selecciona una mesa con cuenta activa.");
+            mensajeError("Selecciona una mesa con productos primero");
             return;
         }
         
+        mostrarMensaje("PREPARANDO FACTURA para Mesa " + mesaSeleccionada.getNumero());
+        
         String idCliente = JOptionPane.showInputDialog(this, "Introduce DNI, NIE o CIF del cliente:");
-        if (idCliente == null || idCliente.trim().isEmpty()) return;
+        if (idCliente == null || idCliente.trim().isEmpty()) {
+            mostrarMensaje("CANCELADO: Operación de factura cancelada.");
+            return;
+        }
         
         procesarPago(mesaSeleccionada, "FACTURA", idCliente.trim().toUpperCase());
     }//GEN-LAST:event_btnFacturaActionPerformed
@@ -1256,10 +1334,11 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btn0ActionPerformed
 
     private void btnTarjetaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTarjetaActionPerformed
-       if (mesaSeleccionada == null || !mesaSeleccionada.isOcupada()) {
-            JOptionPane.showMessageDialog(this, "Selecciona una mesa con cuenta activa.");
+        if (mesaSeleccionada == null || !mesaSeleccionada.isOcupada()) {
+            mensajeError("Selecciona una mesa con cuenta activa.");
             return;
         }
+        mostrarMensaje("PROCESANDO PAGO CON TARJETA...");
         procesarPagoTarjeta(mesaSeleccionada, "TICKET", null);
     }//GEN-LAST:event_btnTarjetaActionPerformed
     
@@ -1338,7 +1417,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
-    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
@@ -1346,8 +1424,10 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel jPanelBotonesCalculadora;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextField jTextMensaje;
     private javax.swing.JTextField lblIva;
     private javax.swing.JTextField lblSubtotal;
     private javax.swing.JTextField lblTotal;
