@@ -109,31 +109,37 @@ public class Comidas extends javax.swing.JDialog {
         jPanel3.setLayout(new java.awt.GridLayout(2, 4, 30, 30));
 
         btnAlitas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/alitas-de-pollo.png"))); // NOI18N
+        btnAlitas.setToolTipText("Alitas");
         btnAlitas.setBorder(null);
         btnAlitas.addActionListener(this::btnAlitasActionPerformed);
         jPanel3.add(btnAlitas);
 
         btnAnillosDeCalamar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/aros-de-cebolla.png"))); // NOI18N
+        btnAnillosDeCalamar.setToolTipText("Aros de calamar");
         btnAnillosDeCalamar.setBorder(null);
         btnAnillosDeCalamar.addActionListener(this::btnAnillosDeCalamarActionPerformed);
         jPanel3.add(btnAnillosDeCalamar);
 
         btnCroquetas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/croquetas.png"))); // NOI18N
+        btnCroquetas.setToolTipText("Croquetas");
         btnCroquetas.setBorder(null);
         btnCroquetas.addActionListener(this::btnCroquetasActionPerformed);
         jPanel3.add(btnCroquetas);
 
         btnChorizo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/embutido.png"))); // NOI18N
+        btnChorizo.setToolTipText("Chorizo");
         btnChorizo.setBorder(null);
         btnChorizo.addActionListener(this::btnChorizoActionPerformed);
         jPanel3.add(btnChorizo);
 
         btnTacos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/nachos (1).png"))); // NOI18N
+        btnTacos.setToolTipText("Tacos");
         btnTacos.setBorder(null);
         btnTacos.addActionListener(this::btnTacosActionPerformed);
         jPanel3.add(btnTacos);
 
         btnPapasFritas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidasPicar/papas-fritas.png"))); // NOI18N
+        btnPapasFritas.setToolTipText("Papas fritas");
         btnPapasFritas.setBorder(null);
         btnPapasFritas.addActionListener(this::btnPapasFritasActionPerformed);
         jPanel3.add(btnPapasFritas);
@@ -165,31 +171,37 @@ public class Comidas extends javax.swing.JDialog {
         jPanel6.setLayout(new java.awt.GridLayout(2, 4, 30, 30));
 
         btnHamburguesa.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/bollo-de-hamburguesa.png"))); // NOI18N
+        btnHamburguesa.setToolTipText("Hamburguesa");
         btnHamburguesa.setBorder(null);
         btnHamburguesa.addActionListener(this::btnHamburguesaActionPerformed);
         jPanel6.add(btnHamburguesa);
 
         btnPerroCaliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/perritos-calientes.png"))); // NOI18N
+        btnPerroCaliente.setToolTipText("Perro caliente");
         btnPerroCaliente.setBorder(null);
         btnPerroCaliente.addActionListener(this::btnPerroCalienteActionPerformed);
         jPanel6.add(btnPerroCaliente);
 
         btnBocadilloCalamar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/sandwich-de-calamares.png"))); // NOI18N
+        btnBocadilloCalamar.setToolTipText("Bocadillo de Calamar");
         btnBocadilloCalamar.setBorder(null);
         btnBocadilloCalamar.addActionListener(this::btnBocadilloCalamarActionPerformed);
         jPanel6.add(btnBocadilloCalamar);
 
         btnSandwich.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/sandwich.png"))); // NOI18N
+        btnSandwich.setToolTipText("Sandwich");
         btnSandwich.setBorder(null);
         btnSandwich.addActionListener(this::btnSandwichActionPerformed);
         jPanel6.add(btnSandwich);
 
         btnTortillaDePatata.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/tortilla-espanola.png"))); // NOI18N
+        btnTortillaDePatata.setToolTipText("Pincho de Tortilla");
         btnTortillaDePatata.setBorder(null);
         btnTortillaDePatata.addActionListener(this::btnTortillaDePatataActionPerformed);
         jPanel6.add(btnTortillaDePatata);
 
         btnWrap.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/ComidasPrincipales/tortilla.png"))); // NOI18N
+        btnWrap.setToolTipText("Wrap de Pollo");
         btnWrap.setBorder(null);
         btnWrap.addActionListener(this::btnWrapActionPerformed);
         jPanel6.add(btnWrap);

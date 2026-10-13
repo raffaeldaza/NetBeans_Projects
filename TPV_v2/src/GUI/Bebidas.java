@@ -67,9 +67,9 @@ public class Bebidas extends javax.swing.JDialog {
         jPanel4 = new javax.swing.JPanel();
         jLabelEmpresa1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
+        btnExpresso = new javax.swing.JButton();
         btnCapucchino = new javax.swing.JButton();
         btnChocoloate = new javax.swing.JButton();
-        btnExpresso = new javax.swing.JButton();
         btnFrappe = new javax.swing.JButton();
         btnMachiatto = new javax.swing.JButton();
         btnTeCaliente = new javax.swing.JButton();
@@ -103,31 +103,37 @@ public class Bebidas extends javax.swing.JDialog {
         jPanel3.setLayout(new java.awt.GridLayout(2, 4, 30, 30));
 
         btnZumoDeNaranja.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/Zumo.png"))); // NOI18N
+        btnZumoDeNaranja.setToolTipText("Zumo naranja");
         btnZumoDeNaranja.setBorder(null);
         btnZumoDeNaranja.addActionListener(this::btnZumoDeNaranjaActionPerformed);
         jPanel3.add(btnZumoDeNaranja);
 
         btnTeHelado.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/te-helado (2).png"))); // NOI18N
+        btnTeHelado.setToolTipText("Té helado");
         btnTeHelado.setBorder(null);
         btnTeHelado.addActionListener(this::btnTeHeladoActionPerformed);
         jPanel3.add(btnTeHelado);
 
         btnJugoNatural.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/jugobotella.png"))); // NOI18N
+        btnJugoNatural.setToolTipText("Jugo natural");
         btnJugoNatural.setBorder(null);
         btnJugoNatural.addActionListener(this::btnJugoNaturalActionPerformed);
         jPanel3.add(btnJugoNatural);
 
         btnAgua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/botella-de-agua.png"))); // NOI18N
+        btnAgua.setToolTipText("Agua");
         btnAgua.setBorder(null);
         btnAgua.addActionListener(this::btnAguaActionPerformed);
         jPanel3.add(btnAgua);
 
         btnVino.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/copa-de-vino.png"))); // NOI18N
+        btnVino.setToolTipText("Copa de Vino");
         btnVino.setBorder(null);
         btnVino.addActionListener(this::btnVinoActionPerformed);
         jPanel3.add(btnVino);
 
         btnCerveza.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasFrias/cerveza.png"))); // NOI18N
+        btnCerveza.setToolTipText("Caña Cerveza ");
         btnCerveza.setBorder(null);
         btnCerveza.addActionListener(this::btnCervezaActionPerformed);
         jPanel3.add(btnCerveza);
@@ -159,32 +165,38 @@ public class Bebidas extends javax.swing.JDialog {
         jPanel6.setPreferredSize(new java.awt.Dimension(500, 300));
         jPanel6.setLayout(new java.awt.GridLayout(2, 4, 30, 30));
 
+        btnExpresso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/expresso.png"))); // NOI18N
+        btnExpresso.setToolTipText("Expresso");
+        btnExpresso.setBorder(null);
+        btnExpresso.addActionListener(this::btnExpressoActionPerformed);
+        jPanel6.add(btnExpresso);
+
         btnCapucchino.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/capuchino.png"))); // NOI18N
+        btnCapucchino.setToolTipText("Capuchinno");
         btnCapucchino.setBorder(null);
         btnCapucchino.addActionListener(this::btnCapucchinoActionPerformed);
         jPanel6.add(btnCapucchino);
 
         btnChocoloate.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/chocolate-caliente.png"))); // NOI18N
+        btnChocoloate.setToolTipText("Chocolate");
         btnChocoloate.setBorder(null);
         btnChocoloate.addActionListener(this::btnChocoloateActionPerformed);
         jPanel6.add(btnChocoloate);
 
-        btnExpresso.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/expresso.png"))); // NOI18N
-        btnExpresso.setBorder(null);
-        btnExpresso.addActionListener(this::btnExpressoActionPerformed);
-        jPanel6.add(btnExpresso);
-
         btnFrappe.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/frappe2.png"))); // NOI18N
+        btnFrappe.setToolTipText("Frappe");
         btnFrappe.setBorder(null);
         btnFrappe.addActionListener(this::btnFrappeActionPerformed);
         jPanel6.add(btnFrappe);
 
         btnMachiatto.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/macchiato.png"))); // NOI18N
+        btnMachiatto.setToolTipText("Machiatto");
         btnMachiatto.setBorder(null);
         btnMachiatto.addActionListener(this::btnMachiattoActionPerformed);
         jPanel6.add(btnMachiatto);
 
         btnTeCaliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidasCalientes/te-verde.png"))); // NOI18N
+        btnTeCaliente.setToolTipText("Té caliente");
         btnTeCaliente.setBorder(null);
         btnTeCaliente.addActionListener(this::btnTeCalienteActionPerformed);
         jPanel6.add(btnTeCaliente);

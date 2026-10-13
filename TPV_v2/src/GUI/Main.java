@@ -63,16 +63,14 @@ public class Main extends javax.swing.JFrame {
         mensajeBienvenida();
     }
     
-    // ============================================================
-    // SISTEMA DE MENSAJES INTERACTIVOS (SIN EMOJIS)
-    // ============================================================
+    
     private void mostrarMensaje(String mensaje) {
         jTextMensaje.setText(mensaje);
         jTextMensaje.setCaretPosition(0); 
     }
 
     private void mensajeBienvenida() {
-        mostrarMensaje("¡Bienvenido a Cafetería PanRin! Selecciona una mesa para comenzar.");
+        mostrarMensaje("Selecciona un camarero y mesa");
     }
 
     private void mensajeProceso(String proceso) {
@@ -91,16 +89,14 @@ public class Main extends javax.swing.JFrame {
         mostrarMensaje("AYUDA: " + ayuda);
     }
 
-    // ============================================================
-    // CONFIGURACIÓN VISUAL
-    // ============================================================
     private void actualizarEstadosVisuales() {
         if (modoCalculadoraActivo) {
             btnModoCalculadora.setBackground(COLOR_ACTIVO);
             btnModoCalculadora.setForeground(Color.WHITE);
-            btnAñadir.setBackground(COLOR_ACTIVO);
+            btnAñadir.setBackground( Color.green);
             btnAñadir.setForeground(Color.WHITE);
             btnAñadir.setEnabled(true);
+            
             activarBotonesCalculadora(true);
         } else {
             btnModoCalculadora.setBackground(COLOR_OPACO);
@@ -122,6 +118,7 @@ public class Main extends javax.swing.JFrame {
             if (!activo) {
                 b.setBackground(new Color(230, 230, 230));
                 b.setForeground(Color.GRAY);
+                btnIgual.setBackground(Color.GREEN);
             } else {
                 if (b == btnC) b.setBackground(COLOR_ERROR);
                 else if (b == btnSuma || b == btnResta || b == btnMult || b == btnDividir) b.setBackground(COLOR_PRIMARIO);
@@ -150,9 +147,7 @@ public class Main extends javax.swing.JFrame {
         }
     }
 
-    // ============================================================
-    // UTILIDADES
-    // ============================================================
+   
     private double parsearNumero(String s) {
         if (s == null || s.trim().isEmpty()) return -1;
         try {
@@ -188,7 +183,7 @@ public class Main extends javax.swing.JFrame {
 
     public void agregarProducto(Producto p) {
         if (mesaSeleccionada == null) {
-            mensajeError("Primero selecciona una MESA");
+            mensajeError("Selecciona una MESA");
             return;
         }
         
@@ -213,16 +208,14 @@ public class Main extends javax.swing.JFrame {
 
         if (mesaSeleccionada.isOcupada()) {
             recargarTabla();
-            mostrarMensaje("MESA " + numero + " seleccionada (OCUPADA) | Productos en cuenta: " + mesaSeleccionada.getPedido().size());
+            mostrarMensaje("(OCUPADA) | Productos en cuenta: " + mesaSeleccionada.getPedido().size());
         } else {
             recargarTabla();
-            mostrarMensaje("MESA " + numero + " seleccionada (LIBRE) | Lista para añadir productos.");
+            mostrarMensaje("(LIBRE) | Lista para añadir productos.");
         }
     }
 
-    // ============================================================
-    // LÓGICA DE LA CALCULADORA
-    // ============================================================
+  
     private void ingresarNumero(String numero) {
         if (!modoCalculadoraActivo) return;
         operacionActual += numero;
@@ -265,10 +258,8 @@ public class Main extends javax.swing.JFrame {
         return resultado;
     }
       
-    // ============================================================
-    // PROCESOS DE PAGO
-    // ============================================================
-    private void procesarPago(Mesa mesa, String tipoDocumento, String idCliente) {
+   
+    private void procesarPago(Mesa mesa, String tipoDocumento, String nombreCliente, String idCliente) {
         String[] opciones = {"Efectivo", "Tarjeta"};
         int eleccion = JOptionPane.showOptionDialog(this, 
             "Total a pagar: " + formatoEuros(mesa.getTotal() * 1.10), 
@@ -288,7 +279,7 @@ public class Main extends javax.swing.JFrame {
             String recibidoStr = JOptionPane.showInputDialog(this, 
                 "Total: " + formatoEuros(total) + "\n¿Cuánto dinero entrega el cliente?");
             if (recibidoStr == null) {
-                mostrarMensaje("CANCELADO: Pago en efectivo cancelado.");
+                mostrarMensaje("Pago en efectivo CANCELADO");
                 return;
             }
             
@@ -301,8 +292,17 @@ public class Main extends javax.swing.JFrame {
                 mesa.limpiar();
                 limpiarInterfaz();
                 return;
+            }else {
+                double faltante= total - recibido;
+                mostrarMensaje("FALTANTE:" +formatoEuros(faltante) );
+                String recibidoFaltante = JOptionPane.showInputDialog(this, 
+                "Total: " + formatoEuros(total) + "\n¿Cuánto dinero entrega el cliente?");
+                if (recibidoFaltante >= total){
+                    return;
+                }
             }
-            JOptionPane.showMessageDialog(this, "Importe insuficiente.", "Error", JOptionPane.ERROR_MESSAGE);
+            
+            JOptionPane.showMessageDialog(this, "Importe insuficiente.", "", JOptionPane.ERROR_MESSAGE);
         }
     }
     
@@ -328,7 +328,7 @@ public class Main extends javax.swing.JFrame {
         StringBuilder doc = new StringBuilder();
         doc.append("════════════════════════════════\n");
         doc.append("       CAFETERÍA PANRIN\n");
-        doc.append("    C/ Ejemplo 123, Valladolid\n");
+        doc.append("    C/ Santiago 123, Valladolid\n");
         doc.append("    CIF: B12345678\n");
         doc.append("════════════════════════════════\n\n");
         doc.append(tipo).append(" - Mesa: ").append(mesaSeleccionada.getNumero()).append("\n");
@@ -381,6 +381,8 @@ public class Main extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabelEmpresa = new javax.swing.JLabel();
+        jPanel16 = new javax.swing.JPanel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jPanel3 = new javax.swing.JPanel();
         btnComidas = new javax.swing.JButton();
         btnBebidas = new javax.swing.JButton();
@@ -406,10 +408,10 @@ public class Main extends javax.swing.JFrame {
         btnSuma = new javax.swing.JButton();
         jPanel12 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
-        btnModoCalculadora = new javax.swing.JButton();
         jPanel13 = new javax.swing.JPanel();
         btnAñadir = new javax.swing.JButton();
         btnBorrar = new javax.swing.JButton();
+        btnModoCalculadora = new javax.swing.JButton();
         btn10 = new javax.swing.JButton();
         jPanel10 = new javax.swing.JPanel();
         btnIgual = new javax.swing.JButton();
@@ -453,17 +455,44 @@ public class Main extends javax.swing.JFrame {
         jLabelEmpresa.setText("Cafeteria PanRin");
         jLabelEmpresa.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        jComboBox1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Camarero 1", "Camarero 2", "Camarero 3", "Camarero 4" }));
+
+        javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
+        jPanel16.setLayout(jPanel16Layout);
+        jPanel16Layout.setHorizontalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
+                .addContainerGap(62, Short.MAX_VALUE)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
+        );
+        jPanel16Layout.setVerticalGroup(
+            jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
+                .addContainerGap(24, Short.MAX_VALUE)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabelEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabelEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
+            .addComponent(jLabelEmpresa, javax.swing.GroupLayout.DEFAULT_SIZE, 106, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(14, 14, 14))
         );
 
         jPanel3.setForeground(new java.awt.Color(224, 225, 221));
@@ -487,8 +516,9 @@ public class Main extends javax.swing.JFrame {
 
         jPanel6.setForeground(new java.awt.Color(224, 225, 221));
 
+        displayCalculadora.setEditable(false);
         displayCalculadora.setFont(new java.awt.Font("Monospaced", 0, 24)); // NOI18N
-        displayCalculadora.setForeground(new java.awt.Color(0, 102, 204));
+        displayCalculadora.setForeground(new java.awt.Color(0, 0, 102));
         displayCalculadora.addActionListener(this::displayCalculadoraActionPerformed);
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -497,8 +527,7 @@ public class Main extends javax.swing.JFrame {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(displayCalculadora)
-                .addContainerGap())
+                .addComponent(displayCalculadora))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -619,12 +648,6 @@ public class Main extends javax.swing.JFrame {
         jPanel7.setForeground(new java.awt.Color(224, 225, 221));
         jPanel7.setLayout(new java.awt.GridLayout(2, 0, 10, 10));
 
-        btnModoCalculadora.setBackground(new java.awt.Color(33, 158, 188));
-        btnModoCalculadora.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        btnModoCalculadora.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/calculadora.png"))); // NOI18N
-        btnModoCalculadora.addActionListener(this::btnModoCalculadoraActionPerformed);
-        jPanel7.add(btnModoCalculadora);
-
         jPanel13.setLayout(new java.awt.GridLayout(1, 2, 30, 0));
 
         btnAñadir.setBackground(new java.awt.Color(33, 197, 79));
@@ -640,6 +663,12 @@ public class Main extends javax.swing.JFrame {
         btnBorrar.addActionListener(this::btnBorrarActionPerformed);
         jPanel13.add(btnBorrar);
 
+        btnModoCalculadora.setBackground(new java.awt.Color(33, 158, 188));
+        btnModoCalculadora.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btnModoCalculadora.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/calculadora (1).png"))); // NOI18N
+        btnModoCalculadora.addActionListener(this::btnModoCalculadoraActionPerformed);
+        jPanel13.add(btnModoCalculadora);
+
         jPanel7.add(jPanel13);
 
         btn10.setFont(new java.awt.Font("Alef", 1, 20)); // NOI18N
@@ -649,7 +678,7 @@ public class Main extends javax.swing.JFrame {
         jPanel10.setLayout(new java.awt.GridLayout(1, 0));
 
         btnIgual.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
-        btnIgual.setText("=");
+        btnIgual.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/igual (1).png"))); // NOI18N
         btnIgual.addActionListener(this::btnIgualActionPerformed);
         jPanel10.add(btnIgual);
 
@@ -659,7 +688,7 @@ public class Main extends javax.swing.JFrame {
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(314, 314, 314)
-                .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jPanel12, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE))
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -672,9 +701,9 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addGap(0, 134, Short.MAX_VALUE)
                     .addComponent(btn10, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                    .addGap(0, 135, Short.MAX_VALUE)))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -682,10 +711,10 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(11, 11, 11)
-                .addComponent(jPanelBotonesCalculadora, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanelBotonesCalculadora, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel10, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -765,11 +794,8 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel15Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel15Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 490, Short.MAX_VALUE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
         jPanel15Layout.setVerticalGroup(
             jPanel15Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -780,6 +806,7 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
+        jPanel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel14.setForeground(new java.awt.Color(224, 225, 221));
 
         btnMesa3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mesas/mesa3.png"))); // NOI18N
@@ -916,9 +943,9 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(60, 60, 60)
                 .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 16, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addGap(27, 27, 27))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel11, javax.swing.GroupLayout.PREFERRED_SIZE, 761, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -966,14 +993,14 @@ public class Main extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(70, 70, 70)
                         .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 609, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(60, 60, 60))
+                .addGap(42, 42, 42))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1030,7 +1057,7 @@ public class Main extends javax.swing.JFrame {
         operacionActual = "";
         displayCalculadora.setText("0");
         
-        mostrarMensaje("PAGO EN EFECTIVO | Total: " + formatoEuros(total) + " | Ingresa el dinero recibido en la calculadora y pulsa '='");
+        mostrarMensaje("PAGO EN EFECTIVO | Total: " + formatoEuros(total) );
     
     }//GEN-LAST:event_btnEfectivoActionPerformed
 
@@ -1056,7 +1083,7 @@ public class Main extends javax.swing.JFrame {
             mesaSeleccionada.eliminarLinea(fila);
             recargarTabla();
             actualizarVisualMesas();
-            mostrarMensaje("ELIMINADO: Producto eliminado de la cuenta.");
+            mostrarMensaje("Producto ELIMINADO de la cuenta.");
         }
     }//GEN-LAST:event_btnBorrarActionPerformed
 
@@ -1071,7 +1098,7 @@ public class Main extends javax.swing.JFrame {
             estadoFlujo = EstadoFlujo.NORMAL;
             cantidadTemporal = 0;
             nombreProductoTemporal = "";
-            mostrarMensaje("CANCELADO: Operación cancelada. ");
+            mostrarMensaje("Operación CANCELADO ");
         }
         
         operacionActual = "";
@@ -1144,15 +1171,15 @@ public class Main extends javax.swing.JFrame {
             try {
                 cantidadTemporal = Integer.parseInt(displayCalculadora.getText());
                 if (cantidadTemporal <= 0) {
-                    mensajeError("La cantidad debe ser mayor que 0. Intenta de nuevo.");
+                    mensajeError("La cantidad debe ser mayor que 0.");
                     return;
                 }
                 estadoFlujo = EstadoFlujo.ESPERANDO_PRECIO;
                 operacionActual = "";
                 displayCalculadora.setText("0");
-                mostrarMensaje("PASO 2/2: Ingresa el PRECIO de '" + nombreProductoTemporal + "' y pulsa '='");
+                mostrarMensaje("Ingresa el PRECIO de '" + nombreProductoTemporal + "");
             } catch (NumberFormatException e) {
-                mensajeError("Cantidad no válida. Usa solo números y pulsa '=' de nuevo.");
+                mensajeError("Cantidad no válida.");
             }
             return;
         }
@@ -1161,7 +1188,7 @@ public class Main extends javax.swing.JFrame {
             try {
                 double precio = parsearNumero(displayCalculadora.getText());
                 if (precio <= 0) {
-                    mensajeError("El precio debe ser mayor que 0. Intenta de nuevo.");
+                    mensajeError("El precio debe ser mayor que 0.");
                     return;
                 }
                 
@@ -1180,7 +1207,7 @@ public class Main extends javax.swing.JFrame {
                 displayCalculadora.setText("0");
                 
             } catch (NumberFormatException e) {
-                mensajeError("Precio no válido. Usa números y punto decimal (ej: 2.50)");
+                mensajeError("Precio no válido.)");
             }
             return;
         }
@@ -1214,7 +1241,7 @@ public class Main extends javax.swing.JFrame {
         } catch (Exception e) {
             displayCalculadora.setText("Error");
             operacionActual = "";
-            mensajeError("Error en la operación. Pulsa 'C' para limpiar.");
+            mensajeError("Pulsa 'C' para limpiar.");
         }
     }//GEN-LAST:event_btnIgualActionPerformed
 
@@ -1266,17 +1293,17 @@ public class Main extends javax.swing.JFrame {
 
     private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
         if (!modoCalculadoraActivo) {
-            mensajeError("Activa el 'Modo Calculadora' primero (botón azul)");
+            mensajeError("Activa el 'Modo Calculadora'");
             return;
         }
         if (mesaSeleccionada == null) {
-            mensajeError("Primero selecciona una mesa haciendo clic en ella");
+            mensajeError("Primero selecciona una mesa");
             return;
         }
         
         String nombre = JOptionPane.showInputDialog(this, "¿Cómo se llama el producto?", "Nuevo Producto", JOptionPane.QUESTION_MESSAGE);
         if (nombre == null || nombre.trim().isEmpty()) {
-            mostrarMensaje("CANCELADO: Operación cancelada.");
+            mostrarMensaje(" Operación CANCELADA");
             return;
         }
         
@@ -1286,7 +1313,7 @@ public class Main extends javax.swing.JFrame {
         operacionActual = "";
         displayCalculadora.setText("0");
         
-        mostrarMensaje("PASO 1/2: Ingresa la CANTIDAD para '" + nombreProductoTemporal + "' en la calculadora y pulsa '='");
+        mostrarMensaje("Ingresa la CANTIDAD para '" + nombreProductoTemporal);
     }//GEN-LAST:event_btnAñadirActionPerformed
 
     private void btnMesa2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMesa2ActionPerformed
@@ -1319,14 +1346,15 @@ public class Main extends javax.swing.JFrame {
         }
         
         mostrarMensaje("PREPARANDO FACTURA para Mesa " + mesaSeleccionada.getNumero());
-        
+        String nombreCliente=JOptionPane.showInputDialog(this, "Ingresa Nombre");
         String idCliente = JOptionPane.showInputDialog(this, "Introduce DNI, NIE o CIF del cliente:");
+        
         if (idCliente == null || idCliente.trim().isEmpty()) {
-            mostrarMensaje("CANCELADO: Operación de factura cancelada.");
+            mostrarMensaje("Operación de factura CANCELADA.");
             return;
         }
         
-        procesarPago(mesaSeleccionada, "FACTURA", idCliente.trim().toUpperCase());
+        procesarPago(mesaSeleccionada, "FACTURA", nombreCliente.trim().toUpperCase(), idCliente.trim().toUpperCase());
     }//GEN-LAST:event_btnFacturaActionPerformed
 
     private void btn0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn0ActionPerformed
@@ -1409,6 +1437,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btnTarjeta;
     private javax.swing.JButton btnTicket;
     private javax.swing.JTextField displayCalculadora;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabelEmpresa;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -1417,6 +1446,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
