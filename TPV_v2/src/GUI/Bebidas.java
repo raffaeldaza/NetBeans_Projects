@@ -15,32 +15,26 @@ public class Bebidas extends javax.swing.JDialog {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Bebidas.class.getName());
     
-      private List<Producto> listaProductos;
+     private List<Producto> listaProductos;
     private Main mainRef;
-    private Producto productoSeleccionado;
-    /**
-     * Creates new form Bebidas
-     */
-  public Bebidas(java.awt.Frame parent, boolean modal, List<Producto> productos, Main main) {
+
+    public Bebidas(java.awt.Frame parent, boolean modal, List<Producto> productos, Main main) {
         super(parent, modal);
         this.listaProductos = productos;
-        this.mainRef = main; // ⬅️ Guardamos la referencia
+        this.mainRef = main;
         initComponents();
     }
 
- private void añadirSinCerrar(String nombreBuscado) {
-    for (Producto p : listaProductos) {
-        if (p.getNombre().equalsIgnoreCase(nombreBuscado)) {
-            // Llama al método público de Main.java
-            // Asumiendo que tu instancia de Main se llama 'mainRef'
-            if (mainRef != null) {
-                mainRef.agregarProducto(p); 
+    private void añadirSinCerrar(String nombreBuscado) {
+        for (Producto p : listaProductos) {
+            if (p.getNombre().equalsIgnoreCase(nombreBuscado)) {
+                if (mainRef != null) {
+                    mainRef.agregarProducto(p);
+                }
+                break;
             }
-            break;
         }
     }
-}
-   
    
    
  

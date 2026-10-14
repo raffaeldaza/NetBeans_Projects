@@ -8,10 +8,11 @@ package dto;
  *
  * @author DAM_204
  */
+
 public class Producto {
     private String nombre;
     private double precio;
-    private  String categoria;
+    private String categoria;
 
     public Producto(String nombre, double precio, String categoria) {
         this.nombre = nombre;
@@ -30,13 +31,11 @@ public class Producto {
     public String getCategoria() {
         return categoria;
     }
-    
+
     @Override
     public String toString() {
         return nombre + " - " + String.format("%.2f€", precio);
     }
-
-}   
-    
+}
     
 

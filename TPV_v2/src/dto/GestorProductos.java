@@ -18,18 +18,12 @@ import java.util.List;
 
 
 public class GestorProductos {
-
     public static List<Producto> cargarProductos(String rutaFichero) {
-        
-        
         List<Producto> productos = new ArrayList<>();
-        
         try (BufferedReader br = new BufferedReader(new FileReader(rutaFichero))) {
             String linea;
             while ((linea = br.readLine()) != null) {
-                // Ignorar comentarios o líneas vacías
                 if (linea.startsWith("#") || linea.trim().isEmpty()) continue;
-                
                 String[] partes = linea.split(";");
                 if (partes.length == 3) {
                     productos.add(new Producto(partes[1], Double.parseDouble(partes[2]), partes[0]));
