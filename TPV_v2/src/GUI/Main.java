@@ -383,6 +383,7 @@ public class Main extends javax.swing.JFrame {
         jLabelEmpresa = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
         jComboBox1 = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         btnComidas = new javax.swing.JButton();
         btnBebidas = new javax.swing.JButton();
@@ -456,23 +457,29 @@ public class Main extends javax.swing.JFrame {
         jLabelEmpresa.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         jComboBox1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Camarero 1", "Camarero 2", "Camarero 3", "Camarero 4" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Alfonso", "Natalia", "Andrea", "Pedro" }));
+
+        jLabel1.setText("Camarero :");
 
         javax.swing.GroupLayout jPanel16Layout = new javax.swing.GroupLayout(jPanel16);
         jPanel16.setLayout(jPanel16Layout);
         jPanel16Layout.setHorizontalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                .addContainerGap(62, Short.MAX_VALUE)
+                .addContainerGap(125, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(46, 46, 46)
                 .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(35, 35, 35))
+                .addContainerGap())
         );
         jPanel16Layout.setVerticalGroup(
             jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel16Layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(jPanel16Layout.createSequentialGroup()
+                .addGap(15, 15, 15)
+                .addGroup(jPanel16Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -501,6 +508,7 @@ public class Main extends javax.swing.JFrame {
         btnComidas.setBackground(new java.awt.Color(142, 202, 230));
         btnComidas.setForeground(new java.awt.Color(2, 48, 71));
         btnComidas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comidas.png"))); // NOI18N
+        btnComidas.setToolTipText("Menú Comidas");
         btnComidas.setMaximumSize(new java.awt.Dimension(120, 50));
         btnComidas.setMinimumSize(new java.awt.Dimension(120, 50));
         btnComidas.setPreferredSize(new java.awt.Dimension(120, 50));
@@ -509,6 +517,7 @@ public class Main extends javax.swing.JFrame {
 
         btnBebidas.setBackground(new java.awt.Color(142, 202, 230));
         btnBebidas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/bebidas.png"))); // NOI18N
+        btnBebidas.setToolTipText("Menú Bebidas");
         btnBebidas.addActionListener(this::btnBebidasActionPerformed);
         jPanel3.add(btnBebidas);
 
@@ -653,6 +662,7 @@ public class Main extends javax.swing.JFrame {
         btnAñadir.setBackground(new java.awt.Color(33, 197, 79));
         btnAñadir.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnAñadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/comercio-electronico.png"))); // NOI18N
+        btnAñadir.setToolTipText("Añadir Producto");
         btnAñadir.setMargin(new java.awt.Insets(1, 1, 1, 1));
         btnAñadir.addActionListener(this::btnAñadirActionPerformed);
         jPanel13.add(btnAñadir);
@@ -660,12 +670,14 @@ public class Main extends javax.swing.JFrame {
         btnBorrar.setBackground(new java.awt.Color(251, 170, 69));
         btnBorrar.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnBorrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/borrar.png"))); // NOI18N
+        btnBorrar.setToolTipText("Borrar un Producto");
         btnBorrar.addActionListener(this::btnBorrarActionPerformed);
         jPanel13.add(btnBorrar);
 
         btnModoCalculadora.setBackground(new java.awt.Color(33, 158, 188));
         btnModoCalculadora.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnModoCalculadora.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/calculadora (1).png"))); // NOI18N
+        btnModoCalculadora.setToolTipText("Modo Calculadora");
         btnModoCalculadora.addActionListener(this::btnModoCalculadoraActionPerformed);
         jPanel13.add(btnModoCalculadora);
 
@@ -679,6 +691,7 @@ public class Main extends javax.swing.JFrame {
 
         btnIgual.setFont(new java.awt.Font("Segoe UI", 0, 48)); // NOI18N
         btnIgual.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/igual (1).png"))); // NOI18N
+        btnIgual.setToolTipText("Total");
         btnIgual.addActionListener(this::btnIgualActionPerformed);
         jPanel10.add(btnIgual);
 
@@ -733,21 +746,25 @@ public class Main extends javax.swing.JFrame {
 
         btnEfectivo.setBackground(new java.awt.Color(33, 158, 188));
         btnEfectivo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/flujo-de-efectivo.png"))); // NOI18N
+        btnEfectivo.setToolTipText("Pago con Efectivo €~$");
         btnEfectivo.addActionListener(this::btnEfectivoActionPerformed);
         jPanel11.add(btnEfectivo);
 
         btnTarjeta.setBackground(new java.awt.Color(33, 158, 188));
         btnTarjeta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/tarjeta-de-credito.png"))); // NOI18N
+        btnTarjeta.setToolTipText("Pago con Tarjeta");
         btnTarjeta.addActionListener(this::btnTarjetaActionPerformed);
         jPanel11.add(btnTarjeta);
 
         btnTicket.setBackground(new java.awt.Color(142, 202, 230));
         btnTicket.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/cuenta.png"))); // NOI18N
+        btnTicket.setToolTipText("Imprimir Ticket");
         btnTicket.addActionListener(this::btnTicketActionPerformed);
         jPanel11.add(btnTicket);
 
         btnFactura.setBackground(new java.awt.Color(142, 202, 230));
         btnFactura.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/factura.png"))); // NOI18N
+        btnFactura.setToolTipText("Imprimir Factura");
         btnFactura.addActionListener(this::btnFacturaActionPerformed);
         jPanel11.add(btnFactura);
 
@@ -806,7 +823,7 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(18, Short.MAX_VALUE))
         );
 
-        jPanel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel14.setBorder(new javax.swing.border.MatteBorder(null));
         jPanel14.setForeground(new java.awt.Color(224, 225, 221));
 
         btnMesa3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/mesas/mesa3.png"))); // NOI18N
@@ -964,7 +981,7 @@ public class Main extends javax.swing.JFrame {
         );
 
         jTextMensaje.setEditable(false);
-        jTextMensaje.setBackground(new java.awt.Color(240, 248, 255));
+        jTextMensaje.setBackground(new java.awt.Color(102, 255, 51));
         jTextMensaje.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jTextMensaje.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
 
@@ -972,16 +989,14 @@ public class Main extends javax.swing.JFrame {
         jPanel9.setLayout(jPanel9Layout);
         jPanel9Layout.setHorizontalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel9Layout.createSequentialGroup()
-                .addComponent(jTextMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 471, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+            .addComponent(jTextMensaje, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 437, Short.MAX_VALUE)
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel9Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTextMensaje, javax.swing.GroupLayout.DEFAULT_SIZE, 68, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jTextMensaje, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -991,10 +1006,10 @@ public class Main extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(70, 70, 70)
-                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 679, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(67, 67, 67)
+                        .addComponent(jPanel9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -1438,6 +1453,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JButton btnTicket;
     private javax.swing.JTextField displayCalculadora;
     private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelEmpresa;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
